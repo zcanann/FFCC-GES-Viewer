@@ -7,7 +7,7 @@
           <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Project Explorer" IsSelected="True" ContentId="ProjectExplorerViewModel" FloatingLeft="-61" FloatingTop="476" FloatingWidth="1270" FloatingHeight="726" LastActivationTimeStamp="12/10/2022 01:38:06" />
         </LayoutAnchorablePane>
         <LayoutAnchorablePane Id="9e24467d-d273-4039-b9f6-0170695cb8ff" DockWidth="1.720712070230506*" DockHeight="1.16110216099106*">
-          <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Memory Viewer" IsSelected="True" ContentId="MemoryViewerViewModel" FloatingLeft="336" FloatingTop="333" FloatingWidth="1270" FloatingHeight="726" LastActivationTimeStamp="12/10/2022 17:35:09" PreviousContainerId="bb71dcd2-1626-4824-96f1-9a2e1ffe7866" PreviousContainerIndex="3" />
+          <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Memory Viewer" IsSelected="True" ContentId="GESViewerViewModel" FloatingLeft="336" FloatingTop="333" FloatingWidth="1270" FloatingHeight="726" LastActivationTimeStamp="12/10/2022 17:35:09" PreviousContainerId="bb71dcd2-1626-4824-96f1-9a2e1ffe7866" PreviousContainerIndex="3" />
           <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Pointer Scanner" ContentId="PointerScannerViewModel" LastActivationTimeStamp="06/02/2018 13:06:36" />
           <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Settings" ContentId="SettingsViewModel" LastActivationTimeStamp="12/08/2022 22:36:57" />
         </LayoutAnchorablePane>

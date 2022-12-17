@@ -2,7 +2,7 @@
 {
     using GES.Source.Controls;
     using GES.Source.Docking;
-    using GES.Source.MemoryViewer;
+    using GES.Source.GESViewer;
     using GES.Source.Output;
     using GES.Source.ProcessSelector;
     using GES.Source.PropertyViewer;
@@ -91,11 +91,11 @@
         /// <summary>
         /// Gets the Memory Viewer view model.
         /// </summary>
-        public MemoryViewerViewModel MemoryViewerViewModel
+        public GESViewerViewModel GESViewerViewModel
         {
             get
             {
-                return MemoryViewerViewModel.GetInstance();
+                return GESViewerViewModel.GetInstance();
             }
         }
 

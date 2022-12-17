@@ -166,15 +166,6 @@
                             Style="{Binding .}" />
                     </shell:MenuItem>
 
-                    <!--  Edit Header  -->
-                    <shell:MenuItem DataContext="{Binding Source={StaticResource ViewModelLocator}}" Header="Edit">
-                        <shell:MenuItem
-                            Header="Settings"
-                            IsCheckable="True"
-                            IsChecked="{Binding SettingsViewModel.IsVisible, Mode=TwoWay}"
-                            Style="{Binding .}" />
-                    </shell:MenuItem>
-
                     <!--  Layout Header  -->
                     <shell:MenuItem DataContext="{Binding Source={StaticResource ViewModelLocator}}" Header="Layout">
                         <shell:MenuItem
@@ -204,7 +195,7 @@
                         <shell:MenuItem
                             Header="Memory Viewer"
                             IsCheckable="True"
-                            IsChecked="{Binding MemoryViewerViewModel.IsVisible, Mode=TwoWay}"
+                            IsChecked="{Binding GESViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                     </shell:MenuItem>
                 </shell:Menu>
@@ -287,11 +278,11 @@
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.DataTemplateErrorViewTemplate>
                         <!--  Memory Viewer  -->
-                        <view:ViewTemplateSelector.MemoryViewerViewTemplate>
+                        <view:ViewTemplateSelector.GESViewerViewTemplate>
                             <shell:DataTemplate>
-                                <view:MemoryViewer />
+                                <view:GESViewer />
                             </shell:DataTemplate>
-                        </view:ViewTemplateSelector.MemoryViewerViewTemplate>
+                        </view:ViewTemplateSelector.GESViewerViewTemplate>
                         <!--  Process Selector  -->
                         <view:ViewTemplateSelector.ProcessSelectorViewTemplate>
                             <shell:DataTemplate>

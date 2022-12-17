@@ -1,6 +1,6 @@
 ﻿namespace GES.View
 {
-    using GES.Source.MemoryViewer;
+    using GES.Source.GESViewer;
     using GES.Source.Output;
     using GES.Source.ProcessSelector;
     using GES.Source.PropertyViewer;
@@ -32,7 +32,7 @@
         /// <summary>
         /// The template for the Memory Viewer.
         /// </summary>
-        private DataTemplate memoryViewerViewTemplate;
+        private DataTemplate gesViewerViewTemplate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewTemplateSelector" /> class.
@@ -101,17 +101,17 @@
         /// <summary>
         /// Gets or sets the template for the Memory Viewer.
         /// </summary>
-        public DataTemplate MemoryViewerViewTemplate
+        public DataTemplate GESViewerViewTemplate
         {
             get
             {
-                return this.memoryViewerViewTemplate;
+                return this.gesViewerViewTemplate;
             }
 
             set
             {
-                this.memoryViewerViewTemplate = value;
-                this.DataTemplates[typeof(MemoryViewerViewModel)] = value;
+                this.gesViewerViewTemplate = value;
+                this.DataTemplates[typeof(GESViewerViewModel)] = value;
             }
         }
 
