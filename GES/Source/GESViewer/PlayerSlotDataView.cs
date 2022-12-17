@@ -15,6 +15,19 @@ namespace GES.Source.GESViewer
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public Int32 PlayerSlotIndex
+        {
+            get
+            {
+                return this.Slot.PlayerSlotIndex + 1;
+            }
+
+            set
+            {
+                this.Slot.PlayerSlotIndex = value;
+            }
+        }
+
         public Byte Health
         {
             get
@@ -93,14 +106,29 @@ namespace GES.Source.GESViewer
             }
         }
 
+        public Int16[] Artifacts
+        {
+            get
+            {
+                return this.Slot.artifacts;
+            }
+
+            set
+            {
+                this.Slot.artifacts = value;
+            }
+        }
+
         public void RefreshAllProperties()
         {
+            this.RaisePropertyChanged(nameof(this.PlayerSlotIndex));
             this.RaisePropertyChanged(nameof(this.Health));
             this.RaisePropertyChanged(nameof(this.EquipmentWeapon));
             this.RaisePropertyChanged(nameof(this.EquipmentArmor));
             this.RaisePropertyChanged(nameof(this.EquipmentTribal));
             this.RaisePropertyChanged(nameof(this.EquipmentAccessory));
             this.RaisePropertyChanged(nameof(this.Items));
+            this.RaisePropertyChanged(nameof(this.Artifacts));
         }
 
         /// <summary>

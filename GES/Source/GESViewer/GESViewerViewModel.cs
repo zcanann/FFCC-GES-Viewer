@@ -22,6 +22,8 @@
 
         private const Int32 SlotCount = 8;
 
+        private const Int32 PlayerCount = 4;
+
         private UInt64[] slotDataAddresses = new UInt64[SlotCount]
         {
             0x23BB90,
@@ -34,18 +36,26 @@
             0x2410E0,
         };
 
+        private UInt64 equipmentListAddress = 0x35800;
+
         /// <summary>
         /// Prevents a default instance of the <see cref="HeapVisualizerViewModel" /> class from being created.
         /// </summary>
-        private GESViewerViewModel() : base("Actor Reference Count Visualizer")
+        private GESViewerViewModel() : base("GES Visualizer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
+            this.EquipmentLists = new FullyObservableCollection<EquipmentListDataView>();
 
             for (int index = 0; index < SlotCount; index++)
             {
                 this.PlayerSlots.Add(new PlayerSlotDataView(new PlayerSlotData()));
+            }
+
+            for (int index = 0; index < PlayerCount; index++)
+            {
+                this.EquipmentLists.Add(new EquipmentListDataView(new EquipmentListData()));
             }
 
             Application.Current.Exit += this.OnAppExit;
@@ -62,6 +72,11 @@
         /// Gets the list of actor reference count slots.
         /// </summary>
         public FullyObservableCollection<PlayerSlotDataView> PlayerSlots { get; private set; }
+
+        /// <summary>
+        /// Gets the list of actor reference count slots.
+        /// </summary>
+        public FullyObservableCollection<EquipmentListDataView> EquipmentLists { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -114,14 +129,21 @@
         private unsafe void UpdateActorSlots()
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
+            UInt64[] gbaCubeMemoryBases = new UInt64[PlayerCount]
+            {
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_0", EmulatorType.Dolphin),
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_1", EmulatorType.Dolphin),
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_2", EmulatorType.Dolphin),
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_3", EmulatorType.Dolphin),
+            };
 
-            for (Int32 slotIndex = 0; slotIndex < 4; slotIndex++)
+            for (Int32 slotIndex = 0; slotIndex < SlotCount; slotIndex++)
             {
                 UInt64 slotPointer = gameCubeMemoryBase + slotDataAddresses[slotIndex];
 
                 // Read the entire actor reference counting table
-                bool success;
-                byte[] playerSlotData = MemoryReader.Instance.ReadBytes(
+                Boolean success;
+                Byte[] playerSlotData = MemoryReader.Instance.ReadBytes(
                     SessionManager.Session.OpenedProcess,
                     slotPointer,
                     typeof(PlayerSlotData).StructLayoutAttribute.Size,
@@ -135,6 +157,30 @@
                     {
                         this.PlayerSlots[slotIndex].Slot = result;
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
+                    }
+                }
+            }
+
+            for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
+            {
+                UInt64 slotPointer = gbaCubeMemoryBases[playerIndex] + equipmentListAddress;
+
+                // Read the entire actor reference counting table
+                Boolean success;
+                Byte[] playerSlotData = MemoryReader.Instance.ReadBytes(
+                    SessionManager.Session.OpenedProcess,
+                    slotPointer,
+                    typeof(EquipmentListData).StructLayoutAttribute.Size,
+                    out success);
+
+                if (success)
+                {
+                    EquipmentListData result = EquipmentListData.FromByteArray(playerSlotData, playerIndex);
+
+                    if (result != null)
+                    {
+                        this.EquipmentLists[playerIndex].EquipmentList = result;
+                        this.EquipmentLists[playerIndex].RefreshAllProperties();
                     }
                 }
             }
