@@ -31,9 +31,8 @@ namespace GES.Source.GESViewer
             Boolean hasRace = (this.Properties[0] & 0b1111) != 0;
             Boolean hasSlot = (this.Properties[1] & 0b0001) != 0
                  || (this.Properties[1] & 0b0100) != 0
-                 || (this.Properties[1] & 0b1000) != 0
-                 || (this.Properties[1] & 16) != 0
-                 || (this.Properties[1] & 32) != 0;
+                 || (this.Properties[1] & 0b0010) != 0 || (this.Properties[1] & 0b1000) != 0
+                 || (this.Properties[1] & 16) != 0 || (this.Properties[1] & 32) != 0;
 
             if (hasRace || hasSlot)
             {
@@ -70,7 +69,7 @@ namespace GES.Source.GESViewer
                 {
                     result += "C";
                 }
-                if ((this.Properties[1] & 0b1000) != 0)
+                if ((this.Properties[1] & 0b1000) != 0 || (this.Properties[1] & 0b0010) != 0)
                 {
                     result += "T";
                 }
