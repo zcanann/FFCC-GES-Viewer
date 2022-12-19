@@ -25,6 +25,7 @@
             <converters:IntToHexConverter x:Key="IntToHexConverter" />
             <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
             <converters:ItemToNameConverter x:Key="ItemToNameConverter" />
+            <converters:ExtendedInventorySlotToColorConverter x:Key="ExtendedInventorySlotToColorConverter" />
             <converters:BooleanToVisibilityConverter
                 x:Key="BooleanToHiddenConverter"
                 False="Hidden"
@@ -108,18 +109,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -130,7 +135,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -140,7 +145,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -216,18 +221,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="2"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -238,7 +247,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -248,7 +257,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -324,18 +333,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="3"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -346,7 +359,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -356,7 +369,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -432,18 +445,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="4"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -454,7 +471,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -464,7 +481,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -540,18 +557,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="5"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -562,7 +583,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -572,7 +593,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -648,18 +669,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="6"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -670,7 +695,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -680,7 +705,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -756,18 +781,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="7"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -778,7 +807,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -788,7 +817,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -864,18 +893,22 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
+                        Header="8"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="#ffe7b5">
-                                    <Image Source="{Binding Path=., Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                    <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -886,7 +919,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -896,7 +929,7 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=., Converter={StaticResource ItemToNameConverter}}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

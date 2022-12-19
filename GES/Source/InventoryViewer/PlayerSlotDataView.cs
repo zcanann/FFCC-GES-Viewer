@@ -119,7 +119,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public UInt16[] RawItems
+        public RawItemEntry[] RawItems
         {
             get
             {

@@ -32,12 +32,12 @@
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
-            this.EquipmentData = new FullyObservableCollection<EquipmentDataView>();
+            this.PlayerEquipmentData = new FullyObservableCollection<EquipmentDataView>();
             this.CachedPlayerSlotData = new Byte[PlayerCount][];
 
             for (int index = 0; index < PlayerCount; index++)
             {
-                this.EquipmentData.Add(new EquipmentDataView(new EquipmentData()));
+                this.PlayerEquipmentData.Add(new EquipmentDataView(new EquipmentData()));
             }
 
             Application.Current.Exit += this.OnAppExit;
@@ -53,11 +53,11 @@
         /// <summary>
         /// Gets the list of actor reference count slots.
         /// </summary>
-        public FullyObservableCollection<EquipmentDataView> EquipmentData { get; private set; }
+        public FullyObservableCollection<EquipmentDataView> PlayerEquipmentData { get; private set; }
 
         private Byte[][] CachedPlayerSlotData { get; set; }
 
-        private Byte[] PlayerSlotData { get; set; }
+        private Byte[] RawEquipmentData { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -121,16 +121,16 @@
             {
                 UInt64 slotPointer = gbaCubeMemoryBases[playerIndex] + equipmentListAddress;
 
-                if (this.PlayerSlotData == null)
+                if (this.RawEquipmentData == null)
                 {
-                    this.PlayerSlotData = new Byte[typeof(EquipmentData).StructLayoutAttribute.Size];
+                    this.RawEquipmentData = new Byte[typeof(EquipmentData).StructLayoutAttribute.Size];
                 }
 
                 // Read the entire actor reference counting table
                 Boolean success;
                 MemoryReader.Instance.ReadBytes(
                     SessionManager.Session.OpenedProcess,
-                    this.PlayerSlotData,
+                    this.RawEquipmentData,
                     slotPointer,
                     out success);
 
@@ -140,20 +140,22 @@
                     {
                         this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(EquipmentData).StructLayoutAttribute.Size];
                     }
-                    if (this.EquipmentData[playerIndex].EquipmentData == null)
+
+                    if (this.PlayerEquipmentData[playerIndex].EquipmentData == null)
                     {
-                        this.EquipmentData[playerIndex].EquipmentData = new EquipmentData();
+                        this.PlayerEquipmentData[playerIndex].EquipmentData = new EquipmentData();
                     }
 
-                    this.EquipmentData[playerIndex].EquipmentData.Refresh(this.PlayerSlotData, playerIndex);
+                    EquipmentData.Deserialize(this.PlayerEquipmentData[playerIndex].EquipmentData, this.RawEquipmentData);
+                    this.PlayerEquipmentData[playerIndex].EquipmentData.Refresh(playerIndex);
 
                     // Notify changes if new bytes differ from cached
-                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.PlayerSlotData))
+                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawEquipmentData))
                     {
-                        this.EquipmentData[playerIndex].RefreshAllProperties();
+                        this.PlayerEquipmentData[playerIndex].RefreshAllProperties();
                     }
 
-                    this.PlayerSlotData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
+                    this.RawEquipmentData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
                 }
             }
         }

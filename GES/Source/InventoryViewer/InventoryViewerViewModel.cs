@@ -8,6 +8,7 @@
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
 
@@ -43,6 +44,7 @@
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
+            this.CachedSlotData = new Byte[SlotCount][];
 
             for (int index = 0; index < SlotCount; index++)
             {
@@ -68,6 +70,9 @@
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
         /// </summary>
         private bool CanUpdate { get; set; }
+
+        private Byte[] RawPlayerSlotData { get; set; }
+        private Byte[][] CachedSlotData { get; set; }
 
         /// <summary>
         /// Gets a singleton instance of the <see cref="InventoryViewerViewModel"/> class.
@@ -120,23 +125,41 @@
             {
                 UInt64 slotPointer = gameCubeMemoryBase + slotDataAddresses[slotIndex];
 
+                if (this.RawPlayerSlotData == null)
+                {
+                    this.RawPlayerSlotData = new Byte[typeof(PlayerSlotData).StructLayoutAttribute.Size];
+                }
+
                 // Read the entire actor reference counting table
                 Boolean success;
-                Byte[] playerSlotData = MemoryReader.Instance.ReadBytes(
+                MemoryReader.Instance.ReadBytes(
                     SessionManager.Session.OpenedProcess,
+                    this.RawPlayerSlotData,
                     slotPointer,
-                    typeof(PlayerSlotData).StructLayoutAttribute.Size,
                     out success);
 
                 if (success)
                 {
-                    PlayerSlotData result = PlayerSlotData.FromByteArray(playerSlotData, slotIndex);
-
-                    if (result != null)
+                    if (this.CachedSlotData[slotIndex] == null)
                     {
-                        this.PlayerSlots[slotIndex].Slot = result;
+                        this.CachedSlotData[slotIndex] = new Byte[typeof(PlayerSlotData).StructLayoutAttribute.Size];
+                    }
+
+                    if (this.PlayerSlots[slotIndex].Slot == null)
+                    {
+                        this.PlayerSlots[slotIndex].Slot = new PlayerSlotData();
+                    }
+
+                    PlayerSlotData.Deserialize(this.PlayerSlots[slotIndex].Slot, this.RawPlayerSlotData);
+                    this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex);
+
+                    // Notify changes if new bytes differ from cached
+                    if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData))
+                    {
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
                     }
+
+                    this.RawPlayerSlotData.CopyTo(this.CachedSlotData[slotIndex], 0);
                 }
             }
         }

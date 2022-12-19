@@ -36,13 +36,43 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Max Selectable: " />
-            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=EquipmentData[0].ItemCount}" />
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Horizontal">
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Player 1 - Max Selectable: " />
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=PlayerEquipmentData[0].ItemCount}" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Player 2 - Max Selectable: " />
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=PlayerEquipmentData[1].ItemCount}" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="2"
+            Orientation="Horizontal">
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Player 3 - Max Selectable: " />
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=PlayerEquipmentData[2].ItemCount}" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="3"
+            Orientation="Horizontal">
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Player 4 - Max Selectable: " />
+            <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=PlayerEquipmentData[3].ItemCount}" />
         </StackPanel>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.ColumnSpan="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -61,7 +91,7 @@
                 CanUserResizeColumns="true"
                 ColumnWidth="*"
                 HeadersVisibility="Column"
-                ItemsSource="{Binding Path=EquipmentData[0].EquipmentSlotList}"
+                ItemsSource="{Binding Path=PlayerEquipmentData[0].EquipmentSlotList}"
                 RowHeaderWidth="0"
                 SelectionMode="Extended"
                 SelectionUnit="FullRow">
@@ -157,7 +187,7 @@
                             <DataTemplate>
                                 <TextBlock
                                     Margin="4,0,4,0"
-                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
                                     Text="{Binding Path=ItemSlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -249,7 +279,7 @@
                 CanUserResizeColumns="true"
                 ColumnWidth="*"
                 HeadersVisibility="Column"
-                ItemsSource="{Binding Path=EquipmentData[1].EquipmentSlotList}"
+                ItemsSource="{Binding Path=PlayerEquipmentData[1].EquipmentSlotList}"
                 RowHeaderWidth="0"
                 SelectionMode="Extended"
                 SelectionUnit="FullRow">
@@ -345,7 +375,7 @@
                             <DataTemplate>
                                 <TextBlock
                                     Margin="4,0,4,0"
-                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
                                     Text="{Binding Path=ItemSlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -437,7 +467,7 @@
                 CanUserResizeColumns="true"
                 ColumnWidth="*"
                 HeadersVisibility="Column"
-                ItemsSource="{Binding Path=EquipmentData[2].EquipmentSlotList}"
+                ItemsSource="{Binding Path=PlayerEquipmentData[2].EquipmentSlotList}"
                 RowHeaderWidth="0"
                 SelectionMode="Extended"
                 SelectionUnit="FullRow">
@@ -533,7 +563,7 @@
                             <DataTemplate>
                                 <TextBlock
                                     Margin="4,0,4,0"
-                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
                                     Text="{Binding Path=ItemSlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -625,7 +655,7 @@
                 CanUserResizeColumns="true"
                 ColumnWidth="*"
                 HeadersVisibility="Column"
-                ItemsSource="{Binding Path=EquipmentData[3].EquipmentSlotList}"
+                ItemsSource="{Binding Path=PlayerEquipmentData[3].EquipmentSlotList}"
                 RowHeaderWidth="0"
                 SelectionMode="Extended"
                 SelectionUnit="FullRow">
@@ -721,7 +751,7 @@
                             <DataTemplate>
                                 <TextBlock
                                     Margin="4,0,4,0"
-                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
                                     Text="{Binding Path=ItemSlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

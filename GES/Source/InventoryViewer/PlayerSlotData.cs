@@ -1,9 +1,17 @@
 ﻿
 namespace GES.Source.InventoryViewer
 {
+    using GES.Source.EquipmentViewer;
     using System;
     using System.Buffers.Binary;
     using System.Runtime.InteropServices;
+
+    public class RawItemEntry
+    {
+        public UInt16 ItemId { get; set; }
+
+        public Byte Index { get; set; }
+    }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 724)]
     public class PlayerSlotData
@@ -64,62 +72,74 @@ namespace GES.Source.InventoryViewer
 
         public Int32 PlayerSlotIndex { get; set; }
 
-        public UInt16[] rawItems;
+        public RawItemEntry[] rawItems;
 
-        public static PlayerSlotData FromByteArray(Byte[] bytes, Int32 playerSlotIndex)
+        public static void Deserialize(PlayerSlotData entry, Byte[] bytes)
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
 
-            if (handle.IsAllocated)
+            try
             {
-                try
+                if (handle.IsAllocated)
                 {
-                    PlayerSlotData result = Marshal.PtrToStructure<PlayerSlotData>(handle.AddrOfPinnedObject());
-
-                    // Pull out the full "out of bounds inventory" range that bleeds into other memory (artifacts, gil, etc)
-                    Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(212);
-                    Span<UInt16> inventoryBytesRaw = MemoryMarshal.Cast<Byte, UInt16>(inventoryBytes);
-                    result.rawItems = inventoryBytesRaw.ToArray();
-
-                    for (Int32 index = 0; index < result.rawItems.Length; index++)
-                    {
-                        result.rawItems[index] = BinaryPrimitives.ReverseEndianness(result.rawItems[index]);
-                    }
-
-                    result.PlayerSlotIndex = playerSlotIndex;
-
-                    result.equipmentWeapon = BinaryPrimitives.ReverseEndianness(result.equipmentWeapon);
-                    result.equipmentArmor = BinaryPrimitives.ReverseEndianness(result.equipmentArmor);
-                    result.equipmentTribal = BinaryPrimitives.ReverseEndianness(result.equipmentTribal);
-                    result.equipmentAccessory = BinaryPrimitives.ReverseEndianness(result.equipmentAccessory);
-
-                    // Fix GC endianness
-                    for (Int32 index = 0; index < result.items.Length; index++)
-                    {
-                        result.items[index] = BinaryPrimitives.ReverseEndianness(result.items[index]);
-                    }
-
-                    for (Int32 index = 0; index < result.artifacts.Length; index++)
-                    {
-                        result.artifacts[index] = BinaryPrimitives.ReverseEndianness(result.artifacts[index]);
-                    }
-
-                    for (Int32 index = 0; index < result.commandListInventorySlotRef.Length; index++)
-                    {
-                        result.commandListInventorySlotRef[index] = BinaryPrimitives.ReverseEndianness(result.commandListInventorySlotRef[index]);
-                    }
-
-                    result.gil = BinaryPrimitives.ReverseEndianness(result.gil);
-
-                    return result;
-                }
-                finally
-                {
-                    handle.Free();
+                    Marshal.PtrToStructure<PlayerSlotData>(handle.AddrOfPinnedObject(), entry);
                 }
             }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                handle.Free();
+            }
+        }
 
-            return null;
+        public void Refresh(Byte[] bytes, Int32 playerSlotIndex)
+        {
+            // Pull out the full "out of bounds inventory" range that bleeds into other memory (artifacts, gil, etc)
+            Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(212);
+            Span<UInt16> inventoryBytesRaw = MemoryMarshal.Cast<Byte, UInt16>(inventoryBytes);
+
+            if (this.rawItems == null)
+            {
+                this.rawItems = new RawItemEntry[inventoryBytesRaw.Length];
+            }
+
+            for (Int32 index = 0; index < inventoryBytesRaw.Length; index++)
+            {
+                if (this.rawItems[index] == null)
+                {
+                    this.rawItems[index] = new RawItemEntry();
+                }
+
+                this.rawItems[index].ItemId = BinaryPrimitives.ReverseEndianness(inventoryBytesRaw[index]);
+                this.rawItems[index].Index = (Byte)index;
+            }
+
+            this.PlayerSlotIndex = playerSlotIndex;
+
+            this.equipmentWeapon = BinaryPrimitives.ReverseEndianness(this.equipmentWeapon);
+            this.equipmentArmor = BinaryPrimitives.ReverseEndianness(this.equipmentArmor);
+            this.equipmentTribal = BinaryPrimitives.ReverseEndianness(this.equipmentTribal);
+            this.equipmentAccessory = BinaryPrimitives.ReverseEndianness(this.equipmentAccessory);
+
+            // Fix GC endianness
+            for (Int32 index = 0; index < this.items.Length; index++)
+            {
+                this.items[index] = BinaryPrimitives.ReverseEndianness(this.items[index]);
+            }
+
+            for (Int32 index = 0; index < this.artifacts.Length; index++)
+            {
+                this.artifacts[index] = BinaryPrimitives.ReverseEndianness(this.artifacts[index]);
+            }
+
+            for (Int32 index = 0; index < this.commandListInventorySlotRef.Length; index++)
+            {
+                this.commandListInventorySlotRef[index] = BinaryPrimitives.ReverseEndianness(this.commandListInventorySlotRef[index]);
+            }
+
+            this.gil = BinaryPrimitives.ReverseEndianness(this.gil);
         }
     }
     //// End class

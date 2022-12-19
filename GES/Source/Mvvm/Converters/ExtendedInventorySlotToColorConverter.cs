@@ -2,27 +2,27 @@
 {
     using GES.Source.Controls;
     using GES.Source.EquipmentViewer;
+    using GES.Source.InventoryViewer;
     using System;
     using System.Globalization;
     using System.Windows.Data;
     using System.Windows.Media;
 
-    public class InventorySlotColorConverter : IValueConverter
+    public class ExtendedInventorySlotToColorConverter : IValueConverter
     {
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            EquipmentEntry equipmentEntry = value as EquipmentEntry;
+            RawItemEntry equipmentEntry = value as RawItemEntry;
 
-            if (equipmentEntry != null && equipmentEntry.Parent != null)
+            if (equipmentEntry != null)
             {
-                if (equipmentEntry.ItemSlotId >= 64)
+                if (equipmentEntry.Index >= 128)
                 {
                     return System.Windows.Media.Brushes.Red;
                 }
-
-                if (equipmentEntry.SlotId >= equipmentEntry.Parent.itemCount)
+                else if (equipmentEntry.Index >= 64)
                 {
-                    return System.Windows.Media.Brushes.Orange;
+                    return System.Windows.Media.Brushes.OrangeRed;
                 }
             }
 

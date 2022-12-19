@@ -31,7 +31,7 @@
 
                 if (itemId == 0)
                 {
-                    return Images.CollectValues;
+                    return null;
                 }
                 else if (itemId >= 1 && itemId <= 0x11)
                 {
