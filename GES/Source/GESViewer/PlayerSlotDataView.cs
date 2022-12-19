@@ -119,6 +119,19 @@ namespace GES.Source.GESViewer
             }
         }
 
+        public UInt16[] RawItems
+        {
+            get
+            {
+                return this.Slot.rawItems;
+            }
+
+            set
+            {
+                this.Slot.rawItems = value;
+            }
+        }
+
         public void RefreshAllProperties()
         {
             this.RaisePropertyChanged(nameof(this.PlayerSlotIndex));
@@ -129,6 +142,7 @@ namespace GES.Source.GESViewer
             this.RaisePropertyChanged(nameof(this.EquipmentAccessory));
             this.RaisePropertyChanged(nameof(this.Items));
             this.RaisePropertyChanged(nameof(this.Artifacts));
+            this.RaisePropertyChanged(nameof(this.RawItems));
         }
 
         /// <summary>

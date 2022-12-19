@@ -58,6 +58,7 @@
                 this.EquipmentLists.Add(new EquipmentListDataView(new EquipmentListData()));
             }
 
+            this.ActiveSlot = this.PlayerSlots[0];
             Application.Current.Exit += this.OnAppExit;
 
             this.RunUpdateLoop();
@@ -67,6 +68,11 @@
         {
             this.CanUpdate = false;
         }
+
+        /// <summary>
+        /// Gets the list of actor reference count slots.
+        /// </summary>
+        public PlayerSlotDataView ActiveSlot { get; private set; }
 
         /// <summary>
         /// Gets the list of actor reference count slots.

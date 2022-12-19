@@ -10,6 +10,37 @@
     /// </summary>
     public class Images
     {
+        public static readonly BitmapImage Icon_Accessory = Images.LoadImage("Items/Icon_Accessory.png");
+        public static readonly BitmapImage Icon_Artifact = Images.LoadImage("Items/Icon_Artifact.png");
+        public static readonly BitmapImage Icon_Apple = Images.LoadImage("Items/Icon_Apple.png");
+        public static readonly BitmapImage Icon_Barrel = Images.LoadImage("Items/Icon_Barrel.png");
+        public static readonly BitmapImage Icon_Berries = Images.LoadImage("Items/Icon_Berries.png");
+        public static readonly BitmapImage Icon_Bread = Images.LoadImage("Items/Icon_Bread.png");
+        public static readonly BitmapImage Icon_Carrot = Images.LoadImage("Items/Icon_Carrot.png");
+        public static readonly BitmapImage Icon_Cherries = Images.LoadImage("Items/Icon_Cherries.png");
+        public static readonly BitmapImage Icon_Chest = Images.LoadImage("Items/Icon_Chest.png");
+        public static readonly BitmapImage Icon_Corn = Images.LoadImage("Items/Icon_Corn.png");
+        public static readonly BitmapImage Icon_Fish = Images.LoadImage("Items/Icon_Fish.png");
+        public static readonly BitmapImage Icon_Flour = Images.LoadImage("Items/Icon_Flour.png");
+        public static readonly BitmapImage Icon_MagiciteAttack = Images.LoadImage("Items/Icon_MagiciteAttack.png");
+        public static readonly BitmapImage Icon_MagiciteBuff = Images.LoadImage("Items/Icon_MagiciteBuff.png");
+        public static readonly BitmapImage Icon_Meat = Images.LoadImage("Items/Icon_Meat.png");
+        public static readonly BitmapImage Icon_Metal = Images.LoadImage("Items/Icon_Metal.png");
+        public static readonly BitmapImage Icon_PhoenixDown = Images.LoadImage("Items/Icon_PhoenixDown.png");
+        public static readonly BitmapImage Icon_Potato = Images.LoadImage("Items/Icon_Potato.png");
+        public static readonly BitmapImage Icon_Pouch = Images.LoadImage("Items/Icon_Pouch.png");
+        public static readonly BitmapImage Icon_Recipe = Images.LoadImage("Items/Icon_Recipe.png");
+        public static readonly BitmapImage Icon_Seed = Images.LoadImage("Items/Icon_Seed.png");
+        public static readonly BitmapImage Icon_TribalClavat = Images.LoadImage("Items/Icon_TribalClavat.png");
+        public static readonly BitmapImage Icon_TribalLilty = Images.LoadImage("Items/Icon_TribalLilty.png");
+        public static readonly BitmapImage Icon_TribalSelkie = Images.LoadImage("Items/Icon_TribalSelkie.png");
+        public static readonly BitmapImage Icon_TribalYuke = Images.LoadImage("Items/Icon_TribalYuke.png");
+        public static readonly BitmapImage Icon_WeaponClavat = Images.LoadImage("Items/Icon_WeaponClavat.png");
+        public static readonly BitmapImage Icon_WeaponLilty = Images.LoadImage("Items/Icon_WeaponLilty.png");
+        public static readonly BitmapImage Icon_WeaponSelkie = Images.LoadImage("Items/Icon_WeaponSelkie.png");
+        public static readonly BitmapImage Icon_WeaponYuke = Images.LoadImage("Items/Icon_WeaponYuke.png");
+        public static readonly BitmapImage Icon_Wheat = Images.LoadImage("Items/Icon_Wheat.png");
+
         /// <summary>
         /// Image of one blue block.
         /// </summary>

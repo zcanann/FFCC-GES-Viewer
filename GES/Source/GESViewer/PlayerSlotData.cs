@@ -5,7 +5,7 @@ namespace GES.Source.GESViewer
     using System.Buffers.Binary;
     using System.Runtime.InteropServices;
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 564)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 724)]
     public class PlayerSlotData
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
@@ -44,8 +44,8 @@ namespace GES.Source.GESViewer
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 96)] // 192 bytes
         public Int16[] artifacts;
 
-        [MarshalAs(UnmanagedType.I8)]
-        public UInt64 artifactPadding;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)] // 8 bytes
+        public Int16[] treasures;
 
         [MarshalAs(UnmanagedType.I2)]
         public UInt16 unknown4;
@@ -59,7 +59,12 @@ namespace GES.Source.GESViewer
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)] // 12 bytes
         public UInt16[] commandListInventorySlotRef;
 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 160)]
+        public Byte[] unknown6;
+
         public Int32 PlayerSlotIndex { get; set; }
+
+        public UInt16[] rawItems;
 
         public static PlayerSlotData FromByteArray(Byte[] bytes, Int32 playerSlotIndex)
         {
@@ -70,6 +75,16 @@ namespace GES.Source.GESViewer
                 try
                 {
                     PlayerSlotData result = Marshal.PtrToStructure<PlayerSlotData>(handle.AddrOfPinnedObject());
+
+                    // Pull out the full "out of bounds inventory" range that bleeds into other memory (artifacts, gil, etc)
+                    Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(212);
+                    Span<UInt16> inventoryBytesRaw = MemoryMarshal.Cast<Byte, UInt16>(inventoryBytes);
+                    result.rawItems = inventoryBytesRaw.ToArray();
+
+                    for (Int32 index = 0; index < result.rawItems.Length; index++)
+                    {
+                        result.rawItems[index] = BinaryPrimitives.ReverseEndianness(result.rawItems[index]);
+                    }
 
                     result.PlayerSlotIndex = playerSlotIndex;
 
