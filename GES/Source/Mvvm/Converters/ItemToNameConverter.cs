@@ -526,7 +526,7 @@
 
                 if (itemId >= 0x01F5 && itemId <= 0x7FFF)
                 {
-                    return "<Invalid> (Crash or lag likely)";
+                    return "<Invalid> (Lag/Crash)";
                 }
                 else
                 {

@@ -193,9 +193,14 @@
                             IsChecked="{Binding OutputViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                         <shell:MenuItem
-                            Header="Memory Viewer"
+                            Header="Inventory Viewer"
                             IsCheckable="True"
-                            IsChecked="{Binding GESViewerViewModel.IsVisible, Mode=TwoWay}"
+                            IsChecked="{Binding InventoryViewerViewModel.IsVisible, Mode=TwoWay}"
+                            Style="{Binding .}" />
+                        <shell:MenuItem
+                            Header="Equipment Viewer"
+                            IsCheckable="True"
+                            IsChecked="{Binding EquipmentViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                     </shell:MenuItem>
                 </shell:Menu>
@@ -277,12 +282,18 @@
                                 <view:DataTemplateError />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.DataTemplateErrorViewTemplate>
-                        <!--  Memory Viewer  -->
-                        <view:ViewTemplateSelector.GESViewerViewTemplate>
+                        <!--  Inventory Viewer  -->
+                        <view:ViewTemplateSelector.InventoryViewerViewTemplate>
                             <shell:DataTemplate>
-                                <view:GESViewer />
+                                <view:InventoryViewer />
                             </shell:DataTemplate>
-                        </view:ViewTemplateSelector.GESViewerViewTemplate>
+                        </view:ViewTemplateSelector.InventoryViewerViewTemplate>
+                        <!--  Equipment Viewer  -->
+                        <view:ViewTemplateSelector.EquipmentViewerViewTemplate>
+                            <shell:DataTemplate>
+                                <view:EquipmentViewer />
+                            </shell:DataTemplate>
+                        </view:ViewTemplateSelector.EquipmentViewerViewTemplate>
                         <!--  Process Selector  -->
                         <view:ViewTemplateSelector.ProcessSelectorViewTemplate>
                             <shell:DataTemplate>

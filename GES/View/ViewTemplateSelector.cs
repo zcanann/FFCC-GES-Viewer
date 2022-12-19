@@ -1,6 +1,7 @@
 ﻿namespace GES.View
 {
-    using GES.Source.GESViewer;
+    using GES.Source.EquipmentViewer;
+    using GES.Source.InventoryViewer;
     using GES.Source.Output;
     using GES.Source.ProcessSelector;
     using GES.Source.PropertyViewer;
@@ -30,9 +31,14 @@
         private DataTemplate outputViewTemplate;
 
         /// <summary>
-        /// The template for the Memory Viewer.
+        /// The template for the Inventory Viewer.
         /// </summary>
-        private DataTemplate gesViewerViewTemplate;
+        private DataTemplate inventoryViewerViewTemplate;
+
+        /// <summary>
+        /// The template for the Inventory Viewer.
+        /// </summary>
+        private DataTemplate equipmentViewerViewTemplate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewTemplateSelector" /> class.
@@ -99,19 +105,36 @@
         }
 
         /// <summary>
-        /// Gets or sets the template for the Memory Viewer.
+        /// Gets or sets the template for the Inventory Viewer.
         /// </summary>
-        public DataTemplate GESViewerViewTemplate
+        public DataTemplate InventoryViewerViewTemplate
         {
             get
             {
-                return this.gesViewerViewTemplate;
+                return this.inventoryViewerViewTemplate;
             }
 
             set
             {
-                this.gesViewerViewTemplate = value;
-                this.DataTemplates[typeof(GESViewerViewModel)] = value;
+                this.inventoryViewerViewTemplate = value;
+                this.DataTemplates[typeof(InventoryViewerViewModel)] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the template for the Equipment Viewer.
+        /// </summary>
+        public DataTemplate EquipmentViewerViewTemplate
+        {
+            get
+            {
+                return this.equipmentViewerViewTemplate;
+            }
+
+            set
+            {
+                this.equipmentViewerViewTemplate = value;
+                this.DataTemplates[typeof(EquipmentViewerViewModel)] = value;
             }
         }
 

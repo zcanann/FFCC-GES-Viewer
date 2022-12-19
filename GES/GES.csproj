@@ -124,6 +124,14 @@
     <None Remove="Content\Images\Search.png" />
     <None Remove="Content\Images\SelectProcess.png" />
     <None Remove="Content\Images\Stop.png" />
+    <None Remove="Content\Images\Tribe\Icon_ClavatF.png" />
+    <None Remove="Content\Images\Tribe\Icon_ClavatM.png" />
+    <None Remove="Content\Images\Tribe\Icon_LiltyF.png" />
+    <None Remove="Content\Images\Tribe\Icon_LiltyM.png" />
+    <None Remove="Content\Images\Tribe\Icon_SelkieF.png" />
+    <None Remove="Content\Images\Tribe\Icon_SelkieM.png" />
+    <None Remove="Content\Images\Tribe\Icon_YukeF.png" />
+    <None Remove="Content\Images\Tribe\Icon_YukeM.png" />
     <None Remove="Content\Images\Unchanged.png" />
     <None Remove="Content\Images\Undo.png" />
     <None Remove="Content\Images\Union.png" />
@@ -265,6 +273,14 @@
     <Resource Include="Content\Images\Search.png" />
     <Resource Include="Content\Images\SelectProcess.png" />
     <Resource Include="Content\Images\Stop.png" />
+    <Resource Include="Content\Images\Tribe\Icon_ClavatF.png" />
+    <Resource Include="Content\Images\Tribe\Icon_ClavatM.png" />
+    <Resource Include="Content\Images\Tribe\Icon_LiltyF.png" />
+    <Resource Include="Content\Images\Tribe\Icon_LiltyM.png" />
+    <Resource Include="Content\Images\Tribe\Icon_SelkieF.png" />
+    <Resource Include="Content\Images\Tribe\Icon_SelkieM.png" />
+    <Resource Include="Content\Images\Tribe\Icon_YukeF.png" />
+    <Resource Include="Content\Images\Tribe\Icon_YukeM.png" />
     <Resource Include="Content\Images\Unchanged.png" />
     <Resource Include="Content\Images\Undo.png" />
     <Resource Include="Content\Images\Union.png" />
@@ -303,6 +319,9 @@
     <Page Update="View\DataTemplateError.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="View\EquipmentViewer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="View\MainWindow.xaml">
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
@@ -312,7 +331,7 @@
     <Page Update="View\PropertyViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="View\GESViewer.xaml">
+    <Page Update="View\InventoryViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\Styles\AvalonDockOverrides\AnchorablePaneTitle.xaml">

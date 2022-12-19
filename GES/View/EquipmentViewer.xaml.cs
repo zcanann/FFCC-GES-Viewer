@@ -3,14 +3,14 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// A memory viewer user control.
+    /// A equipment viewer user control.
     /// </summary>
-    public partial class GESViewer : UserControl
+    public partial class EquipmentViewer : UserControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GESViewer" /> class.
+        /// Initializes a new instance of the <see cref="EquipmentViewer" /> class.
         /// </summary>
-        public GESViewer()
+        public EquipmentViewer()
         {
             this.InitializeComponent();
         }

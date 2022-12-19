@@ -1,5 +1,5 @@
 ﻿
-namespace GES.Source.GESViewer
+namespace GES.Source.InventoryViewer
 {
     using System;
     using System.Buffers.Binary;

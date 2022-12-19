@@ -41,6 +41,15 @@
         public static readonly BitmapImage Icon_WeaponYuke = Images.LoadImage("Items/Icon_WeaponYuke.png");
         public static readonly BitmapImage Icon_Wheat = Images.LoadImage("Items/Icon_Wheat.png");
 
+        public static readonly BitmapImage Icon_ClavatF = Images.LoadImage("Tribe/Icon_ClavatF.png");
+        public static readonly BitmapImage Icon_ClavatM = Images.LoadImage("Tribe/Icon_ClavatM.png");
+        public static readonly BitmapImage Icon_LiltyF = Images.LoadImage("Tribe/Icon_LiltyF.png");
+        public static readonly BitmapImage Icon_LiltyM = Images.LoadImage("Tribe/Icon_LiltyM.png");
+        public static readonly BitmapImage Icon_SelkieF = Images.LoadImage("Tribe/Icon_SelkieF.png");
+        public static readonly BitmapImage Icon_SelkieM = Images.LoadImage("Tribe/Icon_SelkieM.png");
+        public static readonly BitmapImage Icon_YukeF = Images.LoadImage("Tribe/Icon_YukeF.png");
+        public static readonly BitmapImage Icon_YukeM = Images.LoadImage("Tribe/Icon_YukeM.png");
+
         /// <summary>
         /// Image of one blue block.
         /// </summary>

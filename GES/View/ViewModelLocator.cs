@@ -2,7 +2,8 @@
 {
     using GES.Source.Controls;
     using GES.Source.Docking;
-    using GES.Source.GESViewer;
+    using GES.Source.EquipmentViewer;
+    using GES.Source.InventoryViewer;
     using GES.Source.Output;
     using GES.Source.ProcessSelector;
     using GES.Source.PropertyViewer;
@@ -89,13 +90,24 @@
         }
 
         /// <summary>
-        /// Gets the Memory Viewer view model.
+        /// Gets the Inventory Viewer view model.
         /// </summary>
-        public GESViewerViewModel GESViewerViewModel
+        public InventoryViewerViewModel InventoryViewerViewModel
         {
             get
             {
-                return GESViewerViewModel.GetInstance();
+                return InventoryViewerViewModel.GetInstance();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Equipment Viewer view model.
+        /// </summary>
+        public EquipmentViewerViewModel EquipmentViewerViewModel
+        {
+            get
+            {
+                return EquipmentViewerViewModel.GetInstance();
             }
         }
 
