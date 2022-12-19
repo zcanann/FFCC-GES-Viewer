@@ -1,4 +1,4 @@
-﻿namespace Squalr.Source.Mvvm.Converters
+﻿namespace GES.Source.Mvvm.Converters
 {
     using GES.Content;
     using System;
@@ -185,7 +185,7 @@
                 {
                     return Images.Icon_Recipe;
                 }
-                else if (itemId >= 0x01F5)
+                else if (itemId >= 0x01F5 && itemId <= 0x7FFF)
                 {
                     return Images.CollectValues;
                 }
