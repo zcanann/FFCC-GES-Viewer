@@ -4,7 +4,6 @@
     using GES.Engine.Common.Logging;
     using GES.Source.Docking;
     using GES.Source.Output;
-    using GES.Source.Updater;
     using System;
     using System.Threading;
     using System.Windows;
@@ -28,15 +27,7 @@
         {
             // Attach the logger view model to the engine's output
             Logger.Subscribe(OutputViewModel.GetInstance());
-
-            ApplicationUpdater.UpdateApp();
-
-            if (Vectors.HasVectorSupport)
-            {
-                Logger.Log(LogLevel.Info, "Hardware acceleration enabled (vector size: " + (Vectors.VectorSize * 8) + " bit)");
-            }
-
-            Logger.Log(LogLevel.Info, "GES started");
+            Logger.Log(LogLevel.Info, "FFCC GES Tools started");
         }
 
         /// <summary>
