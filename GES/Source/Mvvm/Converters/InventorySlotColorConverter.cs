@@ -1,22 +1,20 @@
 ﻿namespace GES.Source.Mvvm.Converters
 {
     using GES.Source.Controls;
-    using GES.Source.EquipmentViewer;
     using System;
-    using System.Drawing;
     using System.Globalization;
     using System.Windows.Data;
     using System.Windows.Media;
 
-    public class EquipmentColorConverter : IValueConverter
+    public class InventorySlotColorConverter : IValueConverter
     {
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            EquipmentEntry equipmentEntry = value as EquipmentEntry;
-
-            if (equipmentEntry != null && equipmentEntry.Parent != null)
+            if (value is Byte)
             {
-                if (equipmentEntry.SlotId >= equipmentEntry.Parent.itemCount)
+                Byte inventorySlot = (Byte)value;
+
+                if (inventorySlot >= 64)
                 {
                     return System.Windows.Media.Brushes.Red;
                 }

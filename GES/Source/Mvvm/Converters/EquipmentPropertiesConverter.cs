@@ -20,6 +20,11 @@
                 {
                     if (equipmentEntry.IsClavat)
                     {
+                        if (equipmentEntry.IsFemaleOnly)
+                        {
+                            return Images.Icon_ClavatF;
+                        }
+
                         return Images.Icon_ClavatM;
                     }
                 }
@@ -27,6 +32,11 @@
                 {
                     if (equipmentEntry.IsLilty)
                     {
+                        if (equipmentEntry.IsFemaleOnly)
+                        {
+                            return Images.Icon_LiltyF;
+                        }
+
                         return Images.Icon_LiltyM;
                     }
                 }
@@ -34,6 +44,11 @@
                 {
                     if (equipmentEntry.IsYuke)
                     {
+                        if (equipmentEntry.IsFemaleOnly)
+                        {
+                            return Images.Icon_YukeF;
+                        }
+
                         return Images.Icon_YukeM;
                     }
                 }
@@ -41,6 +56,11 @@
                 {
                     if (equipmentEntry.IsSelkie)
                     {
+                        if (equipmentEntry.IsFemaleOnly)
+                        {
+                            return Images.Icon_SelkieF;
+                        }
+
                         return Images.Icon_SelkieM;
                     }
                 }

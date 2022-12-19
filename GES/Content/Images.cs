@@ -50,6 +50,9 @@
         public static readonly BitmapImage Icon_YukeF = Images.LoadImage("Tribe/Icon_YukeF.png");
         public static readonly BitmapImage Icon_YukeM = Images.LoadImage("Tribe/Icon_YukeM.png");
 
+        public static readonly BitmapImage Icon_GenderM = Images.LoadImage("Gender/Icon_M.png");
+        public static readonly BitmapImage Icon_GenderF = Images.LoadImage("Gender/Icon_F.png");
+
         /// <summary>
         /// Image of one blue block.
         /// </summary>

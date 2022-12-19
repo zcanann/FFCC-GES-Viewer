@@ -7,6 +7,7 @@
     using GES.Source;
     using GES.Source.Docking;
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
 
@@ -32,6 +33,7 @@
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
             this.EquipmentData = new FullyObservableCollection<EquipmentDataView>();
+            this.CachedPlayerSlotData = new Byte[PlayerCount][];
 
             for (int index = 0; index < PlayerCount; index++)
             {
@@ -52,6 +54,10 @@
         /// Gets the list of actor reference count slots.
         /// </summary>
         public FullyObservableCollection<EquipmentDataView> EquipmentData { get; private set; }
+
+        private Byte[][] CachedPlayerSlotData { get; set; }
+
+        private Byte[] PlayerSlotData { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -96,7 +102,7 @@
                         }
                     }
 
-                    await Task.Delay(250);
+                    await Task.Delay(200);
                 }
             });
         }
@@ -115,23 +121,39 @@
             {
                 UInt64 slotPointer = gbaCubeMemoryBases[playerIndex] + equipmentListAddress;
 
+                if (this.PlayerSlotData == null)
+                {
+                    this.PlayerSlotData = new Byte[typeof(EquipmentData).StructLayoutAttribute.Size];
+                }
+
                 // Read the entire actor reference counting table
                 Boolean success;
-                Byte[] playerSlotData = MemoryReader.Instance.ReadBytes(
+                MemoryReader.Instance.ReadBytes(
                     SessionManager.Session.OpenedProcess,
+                    this.PlayerSlotData,
                     slotPointer,
-                    typeof(EquipmentData).StructLayoutAttribute.Size,
                     out success);
 
                 if (success)
                 {
-                    EquipmentData result = EquipmentViewer.EquipmentData.FromByteArray(playerSlotData, playerIndex);
-
-                    if (result != null)
+                    if (this.CachedPlayerSlotData[playerIndex] == null)
                     {
-                        this.EquipmentData[playerIndex].EquipmentData = result;
+                        this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(EquipmentData).StructLayoutAttribute.Size];
+                    }
+                    if (this.EquipmentData[playerIndex].EquipmentData == null)
+                    {
+                        this.EquipmentData[playerIndex].EquipmentData = new EquipmentData();
+                    }
+
+                    this.EquipmentData[playerIndex].EquipmentData.Refresh(this.PlayerSlotData, playerIndex);
+
+                    // Notify changes if new bytes differ from cached
+                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.PlayerSlotData))
+                    {
                         this.EquipmentData[playerIndex].RefreshAllProperties();
                     }
+
+                    this.PlayerSlotData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
                 }
             }
         }

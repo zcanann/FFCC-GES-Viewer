@@ -44,6 +44,8 @@
     <None Remove="Content\Images\Edit.png" />
     <None Remove="Content\Images\ENotation.png" />
     <None Remove="Content\Images\Equal.png" />
+    <None Remove="Content\Images\Gender\Icon_F.png" />
+    <None Remove="Content\Images\Gender\Icon_M.png" />
     <None Remove="Content\Images\GES.png" />
     <None Remove="Content\Images\GESdev.png" />
     <None Remove="Content\Images\Glitch.png" />
@@ -193,6 +195,8 @@
     <Resource Include="Content\Images\Edit.png" />
     <Resource Include="Content\Images\ENotation.png" />
     <Resource Include="Content\Images\Equal.png" />
+    <Resource Include="Content\Images\Gender\Icon_F.png" />
+    <Resource Include="Content\Images\Gender\Icon_M.png" />
     <Resource Include="Content\Images\GES.png" />
     <Resource Include="Content\Images\GESdev.png" />
     <Resource Include="Content\Images\Glitch.png" />

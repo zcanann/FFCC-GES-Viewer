@@ -8,49 +8,48 @@ namespace GES.Source.EquipmentViewer
     public class EquipmentData
     {
         [MarshalAs(UnmanagedType.I1)]
-        public byte itemCount;
+        public Byte itemCount;
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256 + 2048)]
-        public byte[] freeSpace;
+        public Byte[] freeSpace;
 
-        public int PlayerIndex { get; set; }
+        public Int32 PlayerIndex { get; set; }
 
         public EquipmentEntry[] equipmentSlotList;
 
-        public static EquipmentData FromByteArray(byte[] bytes, int playerSlotIndex)
+        public void Refresh(Byte[] bytes, Int32 playerSlotIndex)
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
 
-            if (handle.IsAllocated)
+            try
             {
-                try
+                if (handle.IsAllocated)
                 {
-                    EquipmentData result = Marshal.PtrToStructure<EquipmentData>(handle.AddrOfPinnedObject());
+                    Marshal.PtrToStructure<EquipmentData>(handle.AddrOfPinnedObject(), this);
 
-                    result.PlayerIndex = playerSlotIndex;
+                    this.PlayerIndex = playerSlotIndex;
 
-                    int remainder = (result.itemCount + 1) % 4;
-                    int alignment = result.itemCount + (remainder == 0 ? 0 : 4 - remainder);
+                    Int32 remainder = (this.itemCount + 1) % 4;
+                    Int32 propertiesStart = this.itemCount + (remainder == 0 ? 0 : 4 - remainder);
 
-                    result.equipmentSlotList = new EquipmentEntry[256];
+                    this.equipmentSlotList = new EquipmentEntry[256];
 
-                    for (int index = 0; index < 256; index++)
+                    for (Int32 index = 0; index < 256; index++)
                     {
-                        byte[] itemProperties = new byte[8];
-                        Array.Copy(result.freeSpace, index * 8 + alignment, itemProperties, 0, 8);
+                        Byte[] itemProperties = new Byte[8];
+                        Array.Copy(this.freeSpace, propertiesStart + index * 8, itemProperties, 0, 8);
 
-                        result.equipmentSlotList[index] = new EquipmentEntry(result, (Byte)index, result.freeSpace[index], itemProperties);
+                        this.equipmentSlotList[index] = new EquipmentEntry(this, (Byte)index, this.freeSpace[index], itemProperties);
                     }
-
-                    return result;
-                }
-                finally
-                {
-                    handle.Free();
                 }
             }
-
-            return null;
+            catch(Exception)
+            {
+            }
+            finally
+            {
+                handle.Free();
+            }
         }
     }
     //// End class

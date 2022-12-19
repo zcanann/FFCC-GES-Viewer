@@ -18,7 +18,7 @@
             {
                 if (paramString.Equals("Weapon", StringComparison.OrdinalIgnoreCase))
                 {
-                    if ((equipmentEntry.Properties[1] & 0b0001) != 0)
+                    if (equipmentEntry.IsWeapon)
                     {
                         if (equipmentEntry.IsClavat)
                         {
@@ -43,42 +43,39 @@
                 }
                 else if (paramString.Equals("Chest", StringComparison.OrdinalIgnoreCase))
                 {
-                    if ((equipmentEntry.Properties[1] & 0b0010) != 0)
+                    if (equipmentEntry.IsChest)
                     {
                         return Images.Icon_Chest;
                     }
                 }
                 else if (paramString.Equals("Tribal", StringComparison.OrdinalIgnoreCase))
                 {
-                    if ((equipmentEntry.Properties[1] & 0b1000) != 0 || (equipmentEntry.Properties[1] & 0b0010) != 0)
+                    if (equipmentEntry.IsTribal)
                     {
-                        if ((equipmentEntry.Properties[1] & 0b0001) != 0)
+                        if (equipmentEntry.IsClavat)
                         {
-                            if (equipmentEntry.IsClavat)
-                            {
-                                return Images.Icon_TribalClavat;
-                            }
-                            else if (equipmentEntry.IsLilty)
-                            {
-                                return Images.Icon_TribalLilty;
-                            }
-                            else if (equipmentEntry.IsYuke)
-                            {
-                                return Images.Icon_TribalYuke;
-                            }
-                            else if (equipmentEntry.IsSelkie)
-                            {
-                                return Images.Icon_TribalSelkie;
-                            }
-
-                            // Default
+                            return Images.Icon_TribalClavat;
+                        }
+                        else if (equipmentEntry.IsLilty)
+                        {
                             return Images.Icon_TribalLilty;
                         }
+                        else if (equipmentEntry.IsYuke)
+                        {
+                            return Images.Icon_TribalYuke;
+                        }
+                        else if (equipmentEntry.IsSelkie)
+                        {
+                            return Images.Icon_TribalSelkie;
+                        }
+
+                        // Default
+                        return Images.Icon_TribalLilty;
                     }
                 }
                 else if (paramString.Equals("Accessory", StringComparison.OrdinalIgnoreCase))
                 {
-                    if ((equipmentEntry.Properties[1] & 16) != 0 || (equipmentEntry.Properties[1] & 32) != 0)
+                    if (equipmentEntry.IsAccessory)
                     {
                         return Images.Icon_Accessory;
                     }

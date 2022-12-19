@@ -140,6 +140,20 @@
             return buffer;
         }
 
+        public void ReadBytes(Process process, Byte[] preallocated, UInt64 address, out Boolean success)
+        {
+            Int32 bytesRead;
+
+            if (preallocated == null || preallocated.Length <= 0)
+            {
+                success = false;
+                return;
+            }
+
+            // Read the data from the target process
+            success = NativeMethods.ReadProcessMemory(process == null ? IntPtr.Zero : process.Handle, address.ToIntPtr(), preallocated, preallocated.Length, out bytesRead) && preallocated.Length == bytesRead;
+        }
+
         /// <summary>
         /// Reads a string with a specified encoding in the remote process.
         /// </summary>

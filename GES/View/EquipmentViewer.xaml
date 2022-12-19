@@ -23,6 +23,7 @@
             <converters:ValueToMetricSize x:Key="ValueToMetricSize" />
             <converters:DataGridIndexConverter x:Key="DataGridIndexConverter" />
             <converters:IntToHexConverter x:Key="IntToHexConverter" />
+            <converters:InventorySlotColorConverter x:Key="InventorySlotColorConverter" />
             <converters:EquipmentColorConverter x:Key="EquipmentColorConverter" />
             <converters:EquipmentSlotIconConverter x:Key="EquipmentSlotIconConverter" />
             <converters:EquipmentPropertiesConverter x:Key="EquipmentPropertiesConverter" />
@@ -71,7 +72,7 @@
                                 <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
                             </Trigger>
                         </Style.Triggers>
-                        <Setter Property="Background" Value="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}" />
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
                         <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
                         <Setter Property="BorderBrush" Value="{StaticResource GESColorGray24}" />
                         <Setter Property="IsManipulationEnabled" Value="False" />
@@ -114,13 +115,16 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
+                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
-                        Width="68"
-                        Header="Equip Slot"
+                        Width="Auto"
+                        Header="Equips To"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -147,16 +151,19 @@
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         Width="Auto"
-                        Header="Item"
+                        Header="Item Slot"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemSlotId}" />
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Text="{Binding Path=ItemSlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
-                        Width="*"
+                        Width="Auto"
                         Header="Tribe"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
@@ -179,6 +186,612 @@
                                         Height="16"
                                         Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Selkie', Mode=OneWay}" />
                                 </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="M"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderM}"
+                                        Visibility="{Binding IsMale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="F"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderF}"
+                                        Visibility="{Binding IsFemale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="*"
+                        Header=""
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <DataGrid.ItemTemplate>
+                    <DataTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Visible">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </DataTemplate>
+                </DataGrid.ItemTemplate>
+            </DataGrid>
+            <DataGrid
+                Grid.Row="0"
+                Grid.Column="1"
+                AutoGenerateColumns="False"
+                Background="Transparent"
+                CanUserAddRows="False"
+                CanUserResizeColumns="true"
+                ColumnWidth="*"
+                HeadersVisibility="Column"
+                ItemsSource="{Binding Path=EquipmentData[1].EquipmentSlotList}"
+                RowHeaderWidth="0"
+                SelectionMode="Extended"
+                SelectionUnit="FullRow">
+                <DataGrid.Resources>
+                    <Style x:Key="NoFocus" TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorGray24}" />
+                        <Setter Property="IsManipulationEnabled" Value="False" />
+                        <Setter Property="IsTabStop" Value="False" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="4,0,4,0" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Style>
+                    <Style TargetType="{x:Type DataGrid}">
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                    </Style>
+                </DataGrid.Style>
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        CellStyle="{StaticResource NoFocus}"
+                        Header="Slot"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
+                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Equips To"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Weapon', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Chest', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Tribal', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Accessory', Mode=OneWay}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Item Slot"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Text="{Binding Path=ItemSlotId}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Tribe"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Clavat', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Lilty', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Yuke', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Selkie', Mode=OneWay}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="M"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderM}"
+                                        Visibility="{Binding IsMale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="F"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderF}"
+                                        Visibility="{Binding IsFemale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="*"
+                        Header=""
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <DataGrid.ItemTemplate>
+                    <DataTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Visible">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </DataTemplate>
+                </DataGrid.ItemTemplate>
+            </DataGrid>
+            <DataGrid
+                Grid.Row="0"
+                Grid.Column="2"
+                AutoGenerateColumns="False"
+                Background="Transparent"
+                CanUserAddRows="False"
+                CanUserResizeColumns="true"
+                ColumnWidth="*"
+                HeadersVisibility="Column"
+                ItemsSource="{Binding Path=EquipmentData[2].EquipmentSlotList}"
+                RowHeaderWidth="0"
+                SelectionMode="Extended"
+                SelectionUnit="FullRow">
+                <DataGrid.Resources>
+                    <Style x:Key="NoFocus" TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorGray24}" />
+                        <Setter Property="IsManipulationEnabled" Value="False" />
+                        <Setter Property="IsTabStop" Value="False" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="4,0,4,0" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Style>
+                    <Style TargetType="{x:Type DataGrid}">
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                    </Style>
+                </DataGrid.Style>
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        CellStyle="{StaticResource NoFocus}"
+                        Header="Slot"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
+                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Equips To"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Weapon', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Chest', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Tribal', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Accessory', Mode=OneWay}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Item Slot"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Text="{Binding Path=ItemSlotId}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Tribe"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Clavat', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Lilty', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Yuke', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Selkie', Mode=OneWay}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="M"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderM}"
+                                        Visibility="{Binding IsMale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="F"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderF}"
+                                        Visibility="{Binding IsFemale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="*"
+                        Header=""
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <DataGrid.ItemTemplate>
+                    <DataTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Visible">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </DataTemplate>
+                </DataGrid.ItemTemplate>
+            </DataGrid>
+            <DataGrid
+                Grid.Row="0"
+                Grid.Column="3"
+                AutoGenerateColumns="False"
+                Background="Transparent"
+                CanUserAddRows="False"
+                CanUserResizeColumns="true"
+                ColumnWidth="*"
+                HeadersVisibility="Column"
+                ItemsSource="{Binding Path=EquipmentData[3].EquipmentSlotList}"
+                RowHeaderWidth="0"
+                SelectionMode="Extended"
+                SelectionUnit="FullRow">
+                <DataGrid.Resources>
+                    <Style x:Key="NoFocus" TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorGray24}" />
+                        <Setter Property="IsManipulationEnabled" Value="False" />
+                        <Setter Property="IsTabStop" Value="False" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="4,0,4,0" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Style>
+                    <Style TargetType="{x:Type DataGrid}">
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                    </Style>
+                </DataGrid.Style>
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                        <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        CellStyle="{StaticResource NoFocus}"
+                        Header="Slot"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
+                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Equips To"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Weapon', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Chest', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Tribal', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentSlotIconConverter}, ConverterParameter='Accessory', Mode=OneWay}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Item Slot"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=ItemSlotId, Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                    Text="{Binding Path=ItemSlotId}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="Tribe"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Clavat', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Lilty', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Yuke', Mode=OneWay}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=., Converter={StaticResource EquipmentPropertiesConverter}, ConverterParameter='Selkie', Mode=OneWay}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="M"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderM}"
+                                        Visibility="{Binding IsMale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="Auto"
+                        Header="F"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_GenderF}"
+                                        Visibility="{Binding IsFemale, Converter={StaticResource BooleanToHiddenConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="*"
+                        Header=""
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
