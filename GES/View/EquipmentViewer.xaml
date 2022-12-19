@@ -148,7 +148,7 @@
                                 <TextBlock
                                     Margin="4,0,4,0"
                                     Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
-                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                    Text="{Binding Path=SlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -336,7 +336,7 @@
                                 <TextBlock
                                     Margin="4,0,4,0"
                                     Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
-                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                    Text="{Binding Path=SlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -524,7 +524,7 @@
                                 <TextBlock
                                     Margin="4,0,4,0"
                                     Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
-                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                    Text="{Binding Path=SlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -712,7 +712,7 @@
                                 <TextBlock
                                     Margin="4,0,4,0"
                                     Foreground="{Binding Path=., Converter={StaticResource EquipmentColorConverter}, Mode=OneWay}"
-                                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Converter={StaticResource DataGridIndexConverter}, Mode=OneWay}" />
+                                    Text="{Binding Path=SlotId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
