@@ -7,6 +7,7 @@
     using GES.Source;
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
+    using GES.Source.Main;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -26,7 +27,7 @@
         private const Int32 PlayerCount = 4;
         private const Int32 SlotCount = 8;
 
-        private UInt64[] slotDataAddresses = new UInt64[SlotCount]
+        private UInt64[] slotDataAddressesJP = new UInt64[SlotCount]
         {
             0x23BB90,
             0x23C7C0,
@@ -38,7 +39,27 @@
             0x2410E0,
         };
 
-        private UInt64[] slotMappingAddresses = new UInt64[PlayerCount]
+        private UInt64[] slotDataAddressesEN = new UInt64[SlotCount] // TODO: Find me
+        {
+            0x23BB90,
+            0x23C7C0,
+            0x23D3F0,
+            0x23E020,
+            0x23EC50,
+            0x23F880,
+            0x2404B0,
+            0x2410E0,
+        };
+
+        private UInt64[] slotMappingAddressesJP = new UInt64[PlayerCount]
+        {
+            0x23A7E3,
+            0x23A7E7,
+            0x23A7EB,
+            0x23A7EF,
+        };
+
+        private UInt64[] slotMappingAddressesEN = new UInt64[PlayerCount] // TODO: Find me
         {
             0x23A7E3,
             0x23A7E7,
@@ -142,6 +163,7 @@
         private unsafe void UpdateActorSlots()
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
+            UInt64[] slotMappingAddresses = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJP ? slotMappingAddressesJP : slotMappingAddressesEN;
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
@@ -159,6 +181,8 @@
                     this.RaisePropertyChanged(nameof(this.DisplayPlayerToSlotMap));
                 }
             }
+
+            UInt64[] slotDataAddresses = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJP ? slotDataAddressesJP : slotDataAddressesEN;
 
             for (Int32 slotIndex = 0; slotIndex < SlotCount; slotIndex++)
             {

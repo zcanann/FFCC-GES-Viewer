@@ -6,6 +6,7 @@
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.Docking;
+    using GES.Source.Main;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -23,7 +24,8 @@
 
         private const Int32 PlayerCount = 4;
 
-        private UInt64 equipmentListAddress = 0x35800;
+        private UInt64 equipmentListAddressEN = 0x3B800;
+        private UInt64 equipmentListAddressJP = 0x35800;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="HeapVisualizerViewModel" /> class from being created.
@@ -124,6 +126,8 @@
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_2", EmulatorType.Dolphin),
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_3", EmulatorType.Dolphin),
             };
+
+            UInt64 equipmentListAddress = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJP ? equipmentListAddressJP : equipmentListAddressEN;
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {

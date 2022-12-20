@@ -5,14 +5,19 @@
     using GES.Source.Docking;
     using GES.Source.Output;
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Windows;
+    using System.Windows.Documents;
 
     /// <summary>
     /// Main view model.
     /// </summary>
     public class MainViewModel : WindowHostViewModel
     {
+        public const String LanguageEN = "EN";
+        public const String LanguageJP = "JP";
+
         /// <summary>
         /// Singleton instance of the <see cref="MainViewModel" /> class
         /// </summary>
@@ -28,7 +33,20 @@
             // Attach the logger view model to the engine's output
             Logger.Subscribe(OutputViewModel.GetInstance());
             Logger.Log(LogLevel.Info, "FFCC GES Tools started");
+
+            this.LanguageList = new List<String>
+            {
+                LanguageJP,
+                LanguageEN,
+            };
+            this.SelectedLanguage = LanguageList[0];
+            this.RaisePropertyChanged(nameof(this.LanguageList));
+            this.RaisePropertyChanged(nameof(this.SelectedLanguage));
         }
+
+        public List<String> LanguageList { get; set; }
+
+        public String SelectedLanguage { get; set; }
 
         /// <summary>
         /// Default layout file for browsing cheats.
