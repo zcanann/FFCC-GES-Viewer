@@ -54,6 +54,7 @@
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
+            this.DisplayPlayerToSlotMap = new Dictionary<Int32, Int32>();
             this.PlayerToSlotMap = new Dictionary<Int32, Int32>();
             this.CachedSlotData = new Byte[SlotCount][];
 
@@ -64,7 +65,8 @@
 
             for (Int32 index = 0; index < PlayerCount; index++)
             {
-                this.PlayerToSlotMap[index] = index;
+                this.PlayerToSlotMap[index] = 99;
+                this.DisplayPlayerToSlotMap[index] = 99;
             }
 
             Application.Current.Exit += this.OnAppExit;
@@ -81,6 +83,8 @@
         /// Gets the list of actor reference count slots.
         /// </summary>
         public FullyObservableCollection<PlayerSlotDataView> PlayerSlots { get; private set; }
+
+        public Dictionary<Int32, Int32> DisplayPlayerToSlotMap { get; private set; }
 
         public Dictionary<Int32, Int32> PlayerToSlotMap { get; private set; }
 
@@ -112,7 +116,7 @@
             {
                 while (this.CanUpdate)
                 {
-                    if (this.IsVisible)
+                    // if (this.IsVisible)
                     {
                         try
                         {
@@ -148,9 +152,11 @@
                     slotPointer,
                     out success);
 
-                if (success)
+                if (success && this.PlayerToSlotMap[playerIndex] != result)
                 {
                     this.PlayerToSlotMap[playerIndex] = result;
+                    this.DisplayPlayerToSlotMap[playerIndex] = result + 1;
+                    this.RaisePropertyChanged(nameof(this.DisplayPlayerToSlotMap));
                 }
             }
 

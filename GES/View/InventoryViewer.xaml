@@ -24,6 +24,8 @@
             <converters:DataGridIndexConverter x:Key="DataGridIndexConverter" />
             <converters:IntToHexConverter x:Key="IntToHexConverter" />
             <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
+            <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
+
             <converters:ItemToNameConverter x:Key="ItemToNameConverter" />
             <converters:ExtendedInventorySlotToColorConverter x:Key="ExtendedInventorySlotToColorConverter" />
             <converters:BooleanToVisibilityConverter
@@ -109,10 +111,12 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -135,7 +139,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -145,18 +151,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
             <DataGrid
                 Grid.Row="0"
@@ -221,17 +222,19 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="2"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -247,7 +250,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -257,18 +262,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
             <DataGrid
                 Grid.Row="0"
@@ -333,17 +333,19 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="3"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -359,7 +361,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -369,18 +373,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
             <DataGrid
                 Grid.Row="0"
@@ -445,17 +444,19 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="4"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -471,7 +472,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -481,18 +484,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
             <DataGrid
                 Grid.Row="1"
@@ -557,17 +555,19 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="5"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -583,7 +583,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -593,18 +595,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
             <DataGrid
                 Grid.Row="1"
@@ -669,17 +666,19 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="6"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -695,7 +694,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -705,18 +706,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
             <DataGrid
                 Grid.Row="1"
@@ -781,17 +777,19 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="7"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -807,7 +805,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -817,18 +817,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
             <DataGrid
                 Grid.Row="1"
@@ -893,17 +888,19 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Margin="4,0,4,0"
-                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock
+                                        Margin="4,0,4,0"
+                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="8"
+                        Header="1"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -919,7 +916,9 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -929,18 +928,13 @@
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                <DataGrid.ItemTemplate>
-                    <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </DataTemplate>
-                </DataGrid.ItemTemplate>
             </DataGrid>
         </Grid>
     </Grid>

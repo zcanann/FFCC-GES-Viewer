@@ -50,6 +50,11 @@
         /// <summary>
         /// Theme color for panels.
         /// </summary>
+        public static readonly Color GESColorPanelAlt = Color.FromArgb(0x27, 0x27, 0x27);
+
+        /// <summary>
+        /// Theme color for panels.
+        /// </summary>
         public static readonly Color GESColorPanel = Color.FromArgb(0x20, 0x20, 0x20);
 
         /// <summary>

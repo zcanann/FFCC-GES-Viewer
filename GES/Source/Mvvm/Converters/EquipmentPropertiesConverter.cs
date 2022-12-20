@@ -16,52 +16,60 @@
 
             if (equipmentEntry != null && paramString != null)
             {
-                if (paramString.Equals("Clavat", StringComparison.OrdinalIgnoreCase))
+                if (paramString.Equals("Clavat_M", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsClavat)
+                    if (equipmentEntry.IsClavat && !equipmentEntry.IsFemaleOnly)
                     {
-                        if (equipmentEntry.IsFemaleOnly)
-                        {
-                            return Images.Icon_ClavatF;
-                        }
-
                         return Images.Icon_ClavatM;
                     }
                 }
-                else if (paramString.Equals("Lilty", StringComparison.OrdinalIgnoreCase))
+                else if (paramString.Equals("Clavat_F", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsLilty)
+                    if (equipmentEntry.IsClavat && !equipmentEntry.IsMaleOnly)
                     {
-                        if (equipmentEntry.IsFemaleOnly)
-                        {
-                            return Images.Icon_LiltyF;
-                        }
-
+                        return Images.Icon_ClavatF;
+                    }
+                }
+                else if (paramString.Equals("Lilty_M", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (equipmentEntry.IsLilty && !equipmentEntry.IsFemaleOnly)
+                    {
                         return Images.Icon_LiltyM;
                     }
                 }
-                else if (paramString.Equals("Yuke", StringComparison.OrdinalIgnoreCase))
+                else if (paramString.Equals("Lilty_F", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsYuke)
+                    if (equipmentEntry.IsLilty && !equipmentEntry.IsMaleOnly)
                     {
-                        if (equipmentEntry.IsFemaleOnly)
-                        {
-                            return Images.Icon_YukeF;
-                        }
-
+                        return Images.Icon_LiltyF;
+                    }
+                }
+                else if (paramString.Equals("Yuke_M", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (equipmentEntry.IsYuke && !equipmentEntry.IsFemaleOnly)
+                    {
                         return Images.Icon_YukeM;
                     }
                 }
-                else if (paramString.Equals("Selkie", StringComparison.OrdinalIgnoreCase))
+                else if (paramString.Equals("Yuke_F", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsSelkie)
+                    if (equipmentEntry.IsYuke && !equipmentEntry.IsMaleOnly)
                     {
-                        if (equipmentEntry.IsFemaleOnly)
-                        {
-                            return Images.Icon_SelkieF;
-                        }
-
+                        return Images.Icon_YukeF;
+                    }
+                }
+                else if (paramString.Equals("Selkie_M", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (equipmentEntry.IsSelkie && !equipmentEntry.IsFemaleOnly)
+                    {
                         return Images.Icon_SelkieM;
+                    }
+                }
+                else if (paramString.Equals("Selkie_F", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (equipmentEntry.IsSelkie && !equipmentEntry.IsMaleOnly)
+                    {
+                        return Images.Icon_SelkieF;
                     }
                 }
             }

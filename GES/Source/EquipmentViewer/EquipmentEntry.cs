@@ -92,10 +92,7 @@
             {
                 return this.Properties != null
                     && this.Properties.Length >= 1
-                    && ((this.Properties[0] >= 0x20 && this.Properties[0] <= 0x2F)
-                        || (this.Properties[0] >= 0x60 && this.Properties[0] <= 0x6F)
-                        || (this.Properties[0] >= 0xA0 && this.Properties[0] <= 0xAF)
-                        || (this.Properties[0] >= 0xE0 && this.Properties[0] <= 0xEF));
+                    && (this.Properties[0] & 0b100000) != 0;
             }
         }
 
@@ -105,10 +102,7 @@
             {
                 return this.Properties != null
                     && this.Properties.Length >= 1
-                    && ((this.Properties[0] >= 0x10 && this.Properties[0] <= 0x1F)
-                        || (this.Properties[0] >= 0x50 && this.Properties[0] <= 0x5F)
-                        || (this.Properties[0] >= 0x90 && this.Properties[0] <= 0x9F)
-                        || (this.Properties[0] >= 0xD0 && this.Properties[0] <= 0xDF));
+                    && (this.Properties[0] & 0b100000) != 0;
             }
         }
 

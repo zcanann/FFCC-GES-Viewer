@@ -20,6 +20,7 @@
                 {
                     if (equipmentEntry.IsWeapon)
                     {
+                        /*
                         if (equipmentEntry.IsClavat)
                         {
                             return Images.Icon_WeaponClavat;
@@ -35,7 +36,7 @@
                         else if (equipmentEntry.IsSelkie)
                         {
                             return Images.Icon_WeaponSelkie;
-                        }
+                        }*/
 
                         // Default
                         return Images.Icon_WeaponClavat;
@@ -52,6 +53,7 @@
                 {
                     if (equipmentEntry.IsTribal)
                     {
+                        /*
                         if (equipmentEntry.IsClavat)
                         {
                             return Images.Icon_TribalClavat;
@@ -67,10 +69,10 @@
                         else if (equipmentEntry.IsSelkie)
                         {
                             return Images.Icon_TribalSelkie;
-                        }
+                        }*/
 
                         // Default
-                        return Images.Icon_TribalLilty;
+                        return Images.Icon_TribalClavat;
                     }
                 }
                 else if (paramString.Equals("Accessory", StringComparison.OrdinalIgnoreCase))
