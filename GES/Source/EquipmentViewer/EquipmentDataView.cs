@@ -27,16 +27,16 @@
             }
         }
 
-        public byte ItemCount
+        public Byte ItemCount
         {
             get
             {
-                return EquipmentData.itemCount;
+                return EquipmentData.SerializableData.itemCount;
             }
 
             set
             {
-                EquipmentData.itemCount = value;
+                EquipmentData.SerializableData.itemCount = value;
             }
         }
 
@@ -53,11 +53,25 @@
             }
         }
 
+        public String JISText
+        {
+            get
+            {
+                return EquipmentData.JISText;
+            }
+
+            set
+            {
+                EquipmentData.JISText = value;
+            }
+        }
+
         public void RefreshAllProperties()
         {
             RaisePropertyChanged(nameof(PlayerIndex));
             RaisePropertyChanged(nameof(ItemCount));
             RaisePropertyChanged(nameof(EquipmentSlotList));
+            RaisePropertyChanged(nameof(JISText));
         }
 
         /// <summary>

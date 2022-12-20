@@ -8,6 +8,7 @@
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
@@ -22,6 +23,7 @@
         /// </summary>
         private static InventoryViewerViewModel actorReferenceCountVisualizerInstance = new InventoryViewerViewModel();
 
+        private const Int32 PlayerCount = 4;
         private const Int32 SlotCount = 8;
 
         private UInt64[] slotDataAddresses = new UInt64[SlotCount]
@@ -36,6 +38,14 @@
             0x2410E0,
         };
 
+        private UInt64[] slotMappingAddresses = new UInt64[PlayerCount]
+        {
+            0x23A7E3,
+            0x23A7E7,
+            0x23A7EB,
+            0x23A7EF,
+        };
+
         /// <summary>
         /// Prevents a default instance of the <see cref="InventoryViewerViewModel" /> class from being created.
         /// </summary>
@@ -44,11 +54,17 @@
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
+            this.PlayerToSlotMap = new Dictionary<Int32, Int32>();
             this.CachedSlotData = new Byte[SlotCount][];
 
-            for (int index = 0; index < SlotCount; index++)
+            for (Int32 index = 0; index < SlotCount; index++)
             {
                 this.PlayerSlots.Add(new PlayerSlotDataView(new PlayerSlotData()));
+            }
+
+            for (Int32 index = 0; index < PlayerCount; index++)
+            {
+                this.PlayerToSlotMap[index] = index;
             }
 
             Application.Current.Exit += this.OnAppExit;
@@ -65,6 +81,8 @@
         /// Gets the list of actor reference count slots.
         /// </summary>
         public FullyObservableCollection<PlayerSlotDataView> PlayerSlots { get; private set; }
+
+        public Dictionary<Int32, Int32> PlayerToSlotMap { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -121,13 +139,28 @@
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
 
+            for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
+            {
+                UInt64 slotPointer = gameCubeMemoryBase + slotMappingAddresses[playerIndex];
+                Boolean success;
+                Byte result = MemoryReader.Instance.Read<Byte>(
+                    SessionManager.Session.OpenedProcess,
+                    slotPointer,
+                    out success);
+
+                if (success)
+                {
+                    this.PlayerToSlotMap[playerIndex] = result;
+                }
+            }
+
             for (Int32 slotIndex = 0; slotIndex < SlotCount; slotIndex++)
             {
                 UInt64 slotPointer = gameCubeMemoryBase + slotDataAddresses[slotIndex];
 
                 if (this.RawPlayerSlotData == null)
                 {
-                    this.RawPlayerSlotData = new Byte[typeof(PlayerSlotData).StructLayoutAttribute.Size];
+                    this.RawPlayerSlotData = new Byte[typeof(PlayerSlotDataSerializable).StructLayoutAttribute.Size];
                 }
 
                 // Read the entire actor reference counting table
@@ -142,7 +175,7 @@
                 {
                     if (this.CachedSlotData[slotIndex] == null)
                     {
-                        this.CachedSlotData[slotIndex] = new Byte[typeof(PlayerSlotData).StructLayoutAttribute.Size];
+                        this.CachedSlotData[slotIndex] = new Byte[typeof(PlayerSlotDataSerializable).StructLayoutAttribute.Size];
                     }
 
                     if (this.PlayerSlots[slotIndex].Slot == null)
@@ -151,11 +184,11 @@
                     }
 
                     PlayerSlotData.Deserialize(this.PlayerSlots[slotIndex].Slot, this.RawPlayerSlotData);
-                    this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex);
 
                     // Notify changes if new bytes differ from cached
                     if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData))
                     {
+                        this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex);
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
                     }
 

@@ -14,7 +14,7 @@ namespace GES.Source.InventoryViewer
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 724)]
-    public class PlayerSlotData
+    public class PlayerSlotDataSerializable
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public Byte[] unknown;
@@ -69,6 +69,16 @@ namespace GES.Source.InventoryViewer
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 160)]
         public Byte[] unknown6;
+    }
+
+    public class PlayerSlotData
+    {
+        public PlayerSlotData()
+        {
+            this.SerializableData = new PlayerSlotDataSerializable();
+        }
+
+        public PlayerSlotDataSerializable SerializableData { get; set; }
 
         public Int32 PlayerSlotIndex { get; set; }
 
@@ -82,11 +92,13 @@ namespace GES.Source.InventoryViewer
             {
                 if (handle.IsAllocated)
                 {
-                    Marshal.PtrToStructure<PlayerSlotData>(handle.AddrOfPinnedObject(), entry);
+                    if (entry.SerializableData == null)
+                    {
+                        entry.SerializableData = new PlayerSlotDataSerializable();
+                    }
+
+                    Marshal.PtrToStructure<PlayerSlotDataSerializable>(handle.AddrOfPinnedObject(), entry.SerializableData);
                 }
-            }
-            catch (Exception)
-            {
             }
             finally
             {
@@ -97,7 +109,7 @@ namespace GES.Source.InventoryViewer
         public void Refresh(Byte[] bytes, Int32 playerSlotIndex)
         {
             // Pull out the full "out of bounds inventory" range that bleeds into other memory (artifacts, gil, etc)
-            Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(212);
+            Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(214);
             Span<UInt16> inventoryBytesRaw = MemoryMarshal.Cast<Byte, UInt16>(inventoryBytes);
 
             if (this.rawItems == null)
@@ -118,28 +130,29 @@ namespace GES.Source.InventoryViewer
 
             this.PlayerSlotIndex = playerSlotIndex;
 
-            this.equipmentWeapon = BinaryPrimitives.ReverseEndianness(this.equipmentWeapon);
-            this.equipmentArmor = BinaryPrimitives.ReverseEndianness(this.equipmentArmor);
-            this.equipmentTribal = BinaryPrimitives.ReverseEndianness(this.equipmentTribal);
-            this.equipmentAccessory = BinaryPrimitives.ReverseEndianness(this.equipmentAccessory);
+            this.SerializableData.equipmentWeapon = BinaryPrimitives.ReverseEndianness(this.SerializableData.equipmentWeapon);
+            this.SerializableData.equipmentArmor = BinaryPrimitives.ReverseEndianness(this.SerializableData.equipmentArmor);
+            this.SerializableData.equipmentTribal = BinaryPrimitives.ReverseEndianness(this.SerializableData.equipmentTribal);
+            this.SerializableData.equipmentAccessory = BinaryPrimitives.ReverseEndianness(this.SerializableData.equipmentAccessory);
+            this.SerializableData.inventoryItemCount = BinaryPrimitives.ReverseEndianness(this.SerializableData.inventoryItemCount);
 
             // Fix GC endianness
-            for (Int32 index = 0; index < this.items.Length; index++)
+            for (Int32 index = 0; index < this.SerializableData.items.Length; index++)
             {
-                this.items[index] = BinaryPrimitives.ReverseEndianness(this.items[index]);
+                this.SerializableData.items[index] = BinaryPrimitives.ReverseEndianness(this.SerializableData.items[index]);
             }
 
-            for (Int32 index = 0; index < this.artifacts.Length; index++)
+            for (Int32 index = 0; index < this.SerializableData.artifacts.Length; index++)
             {
-                this.artifacts[index] = BinaryPrimitives.ReverseEndianness(this.artifacts[index]);
+                this.SerializableData.artifacts[index] = BinaryPrimitives.ReverseEndianness(this.SerializableData.artifacts[index]);
             }
 
-            for (Int32 index = 0; index < this.commandListInventorySlotRef.Length; index++)
+            for (Int32 index = 0; index < this.SerializableData.commandListInventorySlotRef.Length; index++)
             {
-                this.commandListInventorySlotRef[index] = BinaryPrimitives.ReverseEndianness(this.commandListInventorySlotRef[index]);
+                this.SerializableData.commandListInventorySlotRef[index] = BinaryPrimitives.ReverseEndianness(this.SerializableData.commandListInventorySlotRef[index]);
             }
 
-            this.gil = BinaryPrimitives.ReverseEndianness(this.gil);
+            this.SerializableData.gil = BinaryPrimitives.ReverseEndianness(this.SerializableData.gil);
         }
     }
     //// End class

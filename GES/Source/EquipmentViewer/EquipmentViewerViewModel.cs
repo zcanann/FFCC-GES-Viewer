@@ -123,7 +123,7 @@
 
                 if (this.RawEquipmentData == null)
                 {
-                    this.RawEquipmentData = new Byte[typeof(EquipmentData).StructLayoutAttribute.Size];
+                    this.RawEquipmentData = new Byte[typeof(EquipmentDataSerializable).StructLayoutAttribute.Size];
                 }
 
                 // Read the entire actor reference counting table
@@ -138,7 +138,7 @@
                 {
                     if (this.CachedPlayerSlotData[playerIndex] == null)
                     {
-                        this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(EquipmentData).StructLayoutAttribute.Size];
+                        this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(EquipmentDataSerializable).StructLayoutAttribute.Size];
                     }
 
                     if (this.PlayerEquipmentData[playerIndex].EquipmentData == null)
@@ -147,11 +147,11 @@
                     }
 
                     EquipmentData.Deserialize(this.PlayerEquipmentData[playerIndex].EquipmentData, this.RawEquipmentData);
-                    this.PlayerEquipmentData[playerIndex].EquipmentData.Refresh(playerIndex);
 
                     // Notify changes if new bytes differ from cached
                     if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawEquipmentData))
                     {
+                        this.PlayerEquipmentData[playerIndex].EquipmentData.Refresh(this.RawEquipmentData, playerIndex);
                         this.PlayerEquipmentData[playerIndex].RefreshAllProperties();
                     }
 

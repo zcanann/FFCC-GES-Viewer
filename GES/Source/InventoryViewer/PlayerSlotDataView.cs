@@ -32,12 +32,12 @@ namespace GES.Source.InventoryViewer
         {
             get
             {
-                return this.Slot.health;
+                return this.Slot.SerializableData.health;
             }
 
             set
             {
-                this.Slot.health = value;
+                this.Slot.SerializableData.health = value;
             }
         }
 
@@ -45,12 +45,12 @@ namespace GES.Source.InventoryViewer
         {
             get
             {
-                return this.Slot.equipmentWeapon;
+                return this.Slot.SerializableData.equipmentWeapon;
             }
 
             set
             {
-                this.Slot.equipmentWeapon = value;
+                this.Slot.SerializableData.equipmentWeapon = value;
             }
         }
 
@@ -58,12 +58,12 @@ namespace GES.Source.InventoryViewer
         {
             get
             {
-                return this.Slot.equipmentArmor;
+                return this.Slot.SerializableData.equipmentArmor;
             }
 
             set
             {
-                this.Slot.equipmentArmor = value;
+                this.Slot.SerializableData.equipmentArmor = value;
             }
         }
 
@@ -71,12 +71,12 @@ namespace GES.Source.InventoryViewer
         {
             get
             {
-                return this.Slot.equipmentTribal;
+                return this.Slot.SerializableData.equipmentTribal;
             }
 
             set
             {
-                this.Slot.equipmentTribal = value;
+                this.Slot.SerializableData.equipmentTribal = value;
             }
         }
 
@@ -84,12 +84,12 @@ namespace GES.Source.InventoryViewer
         {
             get
             {
-                return this.Slot.equipmentAccessory;
+                return this.Slot.SerializableData.equipmentAccessory;
             }
 
             set
             {
-                this.Slot.equipmentAccessory = value;
+                this.Slot.SerializableData.equipmentAccessory = value;
             }
         }
 
@@ -97,12 +97,12 @@ namespace GES.Source.InventoryViewer
         {
             get
             {
-                return this.Slot.items;
+                return this.Slot.SerializableData.items;
             }
 
             set
             {
-                this.Slot.items = value;
+                this.Slot.SerializableData.items = value;
             }
         }
 
@@ -110,12 +110,12 @@ namespace GES.Source.InventoryViewer
         {
             get
             {
-                return this.Slot.artifacts;
+                return this.Slot.SerializableData.artifacts;
             }
 
             set
             {
-                this.Slot.artifacts = value;
+                this.Slot.SerializableData.artifacts = value;
             }
         }
 

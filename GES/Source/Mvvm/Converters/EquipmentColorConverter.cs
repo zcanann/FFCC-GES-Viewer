@@ -16,7 +16,7 @@
 
             if (equipmentEntry != null && equipmentEntry.Parent != null)
             {
-                if (equipmentEntry.SlotId >= equipmentEntry.Parent.itemCount)
+                if (equipmentEntry.SlotId >= equipmentEntry.Parent.SerializableData.itemCount)
                 {
                     return System.Windows.Media.Brushes.Red;
                 }
