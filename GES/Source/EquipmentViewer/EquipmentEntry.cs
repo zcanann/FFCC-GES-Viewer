@@ -18,15 +18,88 @@
 
         public Byte ItemSlotId { get; set; }
 
-        // Byte 0: Race(1 = Clavat, 2 = Lilty, 4 = Yuke 8 = Selkie)
+        // Byte 0: Tribe(1 = Clavat, 2 = Lilty, 4 = Yuke 8 = Selkie)
+        // Byte 0: Gender(32 = female, 16 = male). Female flag requries no tribe flag set (?)
         // Byte 1: Slot(1 = weapon, 4 = armor, 8 = belt, 16-48 = accessory)
         public Byte[] Properties { get; set; }
+
+        public Boolean IsClavatM
+        {
+            get
+            {
+                return this.IsClavat && (this.IsMaleOnly || !this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsLiltyM
+        {
+            get
+            {
+                return this.IsLilty && (this.IsMaleOnly || !this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsYukeM
+        {
+            get
+            {
+                return this.IsYuke && (this.IsMaleOnly || !this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsSelkieM
+        {
+            get
+            {
+                return this.IsSelkie && (this.IsMaleOnly || !this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsClavatF
+        {
+            get
+            {
+                return (this.IsClavat && !this.IsMaleOnly) || (this.IsClassless && this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsLiltyF
+        {
+            get
+            {
+                return (this.IsLilty && !this.IsMaleOnly) || (this.IsClassless && this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsYukeF
+        {
+            get
+            {
+                return (this.IsYuke && !this.IsMaleOnly) || (this.IsClassless && this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsSelkieF
+        {
+            get
+            {
+                return (this.IsSelkie && !this.IsMaleOnly) || (this.IsClassless && this.IsFemaleOnly);
+            }
+        }
+
+        public Boolean IsClassless
+        {
+            get
+            {
+                return this.HasProperties1 && (this.Properties[0] & 0b1111) == 0;
+            }
+        }
 
         public Boolean IsClavat
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 1 && ((this.Properties[0] & 0b0001) != 0 || (this.Properties[0] & 0b1111) == 0);
+                return this.HasProperties1 && (this.Properties[0] & 0b0001) != 0;
             }
         }
 
@@ -34,7 +107,7 @@
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 1 && ((this.Properties[0] & 0b0010) != 0 || (this.Properties[0] & 0b1111) == 0);
+                return this.HasProperties1 && (this.Properties[0] & 0b0010) != 0;
             }
         }
 
@@ -42,7 +115,7 @@
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 1 && ((this.Properties[0] & 0b0100) != 0 || (this.Properties[0] & 0b1111) == 0);
+                return this.HasProperties1 && (this.Properties[0] & 0b0100) != 0;
             }
         }
 
@@ -50,7 +123,7 @@
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 1 && ((this.Properties[0] & 0b1000) != 0 || (this.Properties[0] & 0b1111) == 0);
+                return this.HasProperties1 && (this.Properties[0] & 0b1000) != 0;
             }
         }
 
@@ -58,7 +131,7 @@
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 2 && (this.Properties[1] & 0b0001) != 0;
+                return this.HasProperties2 && (this.Properties[1] & 0b0001) != 0;
             }
         }
 
@@ -66,7 +139,7 @@
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 2 && (this.Properties[1] & 0b0100) != 0;
+                return this.HasProperties2 && (this.Properties[1] & 0b0100) != 0;
             }
         }
 
@@ -74,7 +147,7 @@
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 2 && ((this.Properties[1] & 0b0010) != 0 || (this.Properties[1] & 0b1000) != 0);
+                return this.HasProperties2 && ((this.Properties[1] & 0b0010) != 0 || (this.Properties[1] & 0b1000) != 0);
             }
         }
 
@@ -82,7 +155,7 @@
         {
             get
             {
-                return this.Properties != null && this.Properties.Length >= 2 && ((this.Properties[1] & 16) != 0 || (this.Properties[1] & 32) != 0);
+                return this.HasProperties2 && ((this.Properties[1] & 16) != 0 || (this.Properties[1] & 32) != 0);
             }
         }
 
@@ -106,19 +179,19 @@
             }
         }
 
-        public Boolean IsMale
+        private Boolean HasProperties1
         {
             get
             {
-                return !this.IsFemaleOnly;
+                return this.Properties != null && this.Properties.Length >= 1;
             }
         }
 
-        public Boolean IsFemale
+        private Boolean HasProperties2
         {
             get
             {
-                return !this.IsMaleOnly;
+                return this.Properties != null && this.Properties.Length >= 2;
             }
         }
     }

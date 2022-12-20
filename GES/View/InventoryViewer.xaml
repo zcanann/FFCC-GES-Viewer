@@ -234,7 +234,7 @@
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="1"
+                        Header="2"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -345,7 +345,7 @@
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="1"
+                        Header="3"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -456,7 +456,7 @@
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="1"
+                        Header="4"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -567,7 +567,7 @@
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="1"
+                        Header="5"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -678,7 +678,7 @@
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="1"
+                        Header="6"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -789,7 +789,7 @@
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="1"
+                        Header="7"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -900,7 +900,7 @@
                     <DataGridTemplateColumn
                         MinWidth="16"
                         MaxWidth="16"
-                        Header="1"
+                        Header="8"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

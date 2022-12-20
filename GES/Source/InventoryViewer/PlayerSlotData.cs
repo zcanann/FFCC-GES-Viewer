@@ -13,7 +13,7 @@ namespace GES.Source.InventoryViewer
         public Byte Index { get; set; }
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 724)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 726)]
     public class PlayerSlotDataSerializable
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
@@ -67,7 +67,7 @@ namespace GES.Source.InventoryViewer
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)] // 12 bytes
         public UInt16[] commandListInventorySlotRef;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 160)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 162)]
         public Byte[] unknown6;
     }
 

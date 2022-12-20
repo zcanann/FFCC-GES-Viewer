@@ -107,6 +107,14 @@
             });
         }
 
+        public void ExternalRefresh(Int32 playerIndex)
+        {
+            if (playerIndex >= 0 && playerIndex < this.PlayerEquipmentData.Count)
+            {
+                this.PlayerEquipmentData[playerIndex].RefreshAllProperties();
+            }
+        }
+
         private unsafe void UpdateActorSlots()
         {
             UInt64[] gbaCubeMemoryBases = new UInt64[PlayerCount]

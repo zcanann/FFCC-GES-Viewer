@@ -196,6 +196,17 @@
                     {
                         this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex);
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
+
+                        foreach (var Next in this.PlayerToSlotMap)
+                        {
+                            Int32 nextPlayerIndex = Next.Key;
+                            Int32 nextSlotIndex = Next.Value;
+
+                            if (nextSlotIndex == slotIndex)
+                            {
+                                EquipmentViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
+                            }
+                        }
                     }
 
                     this.RawPlayerSlotData.CopyTo(this.CachedSlotData[slotIndex], 0);

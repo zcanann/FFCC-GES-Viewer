@@ -18,35 +18,35 @@
             {
                 if (paramString.Equals("Clavat_M", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsClavat && !equipmentEntry.IsFemaleOnly)
+                    if (equipmentEntry.IsClavatM)
                     {
                         return Images.Icon_ClavatM;
                     }
                 }
                 else if (paramString.Equals("Clavat_F", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsClavat && !equipmentEntry.IsMaleOnly)
+                    if (equipmentEntry.IsClavatF)
                     {
                         return Images.Icon_ClavatF;
                     }
                 }
                 else if (paramString.Equals("Lilty_M", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsLilty && !equipmentEntry.IsFemaleOnly)
+                    if (equipmentEntry.IsLiltyM)
                     {
                         return Images.Icon_LiltyM;
                     }
                 }
                 else if (paramString.Equals("Lilty_F", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsLilty && !equipmentEntry.IsMaleOnly)
+                    if (equipmentEntry.IsLiltyF)
                     {
                         return Images.Icon_LiltyF;
                     }
                 }
                 else if (paramString.Equals("Yuke_M", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsYuke && !equipmentEntry.IsFemaleOnly)
+                    if (equipmentEntry.IsYukeM)
                     {
                         return Images.Icon_YukeM;
                     }
@@ -60,14 +60,14 @@
                 }
                 else if (paramString.Equals("Selkie_M", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsSelkie && !equipmentEntry.IsFemaleOnly)
+                    if (equipmentEntry.IsSelkieF)
                     {
                         return Images.Icon_SelkieM;
                     }
                 }
                 else if (paramString.Equals("Selkie_F", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (equipmentEntry.IsSelkie && !equipmentEntry.IsMaleOnly)
+                    if (equipmentEntry.IsSelkieF)
                     {
                         return Images.Icon_SelkieF;
                     }
