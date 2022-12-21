@@ -704,6 +704,7 @@
                 {
                     const String GbaVersionEn = "GCCEGC";
                     const String GbaVersionJp = "GCCJGC";
+                    const String GbaVersionPal = "GCCPGC";
 
                     Boolean readSuccess1 = false;
                     Boolean readSuccess2 = false;
@@ -714,7 +715,7 @@
                     {
                         String gbaGcVersion = Encoding.ASCII.GetString(gbmMagic);
 
-                        if (gbaGcVersion == GbaVersionEn || gbaGcVersion == GbaVersionJp)
+                        if (gbaGcVersion == GbaVersionEn || gbaGcVersion == GbaVersionJp || gbaGcVersion == GbaVersionPal)
                         {
                             modules.Add(new NormalizedModule("GBA_WM_" + controllerId[0].ToString(), region.BaseAddress, 0x40000));
                             modules.Add(new NormalizedModule("GBA_IM_" + controllerId[0].ToString(), region.BaseAddress + 0x40000, 0x8000));

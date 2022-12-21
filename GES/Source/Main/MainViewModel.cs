@@ -1,22 +1,29 @@
 ﻿namespace GES.Source.Main
 {
-    using GES.Engine.Common.Hardware;
     using GES.Engine.Common.Logging;
     using GES.Source.Docking;
+    using GES.Source.EquipmentViewer;
+    using GES.Source.InventoryViewer;
     using GES.Source.Output;
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Windows;
-    using System.Windows.Documents;
 
     /// <summary>
     /// Main view model.
     /// </summary>
     public class MainViewModel : WindowHostViewModel
     {
-        public const String LanguageEN = "EN";
-        public const String LanguageJP = "JP";
+        public const String VersionJP = "JP (日本語)";
+        public const String VersionEN = "EN (英語)";
+        public const String VersionPAL = "PAL (欧州)";
+
+        public const String LanguageEN = "English (英語)";
+        public const String LanguageJPN = "日本語 (Japanese)";
+
+        private String selectedVersion;
+        private String selectedLanguage;
 
         /// <summary>
         /// Singleton instance of the <see cref="MainViewModel" /> class
@@ -34,19 +41,62 @@
             Logger.Subscribe(OutputViewModel.GetInstance());
             Logger.Log(LogLevel.Info, "FFCC GES Tools started");
 
+            this.VersionList = new List<String>
+            {
+                VersionJP,
+                VersionEN,
+                VersionPAL,
+            };
             this.LanguageList = new List<String>
             {
-                LanguageJP,
                 LanguageEN,
+                LanguageJPN,
             };
-            this.SelectedLanguage = LanguageList[0];
+            this.SelectedVersion = VersionList[VersionList.Contains(GESSettings.SelectedVersion) ? VersionList.IndexOf(GESSettings.SelectedVersion) : 0];
+            this.SelectedLanguage = LanguageList[LanguageList.Contains(GESSettings.SelectedLanguage) ? LanguageList.IndexOf(GESSettings.SelectedLanguage) : 0];
+            this.RaisePropertyChanged(nameof(this.VersionList));
             this.RaisePropertyChanged(nameof(this.LanguageList));
+            this.RaisePropertyChanged(nameof(this.SelectedVersion));
             this.RaisePropertyChanged(nameof(this.SelectedLanguage));
         }
 
+        public List<String> VersionList { get; set; }
         public List<String> LanguageList { get; set; }
 
-        public String SelectedLanguage { get; set; }
+        public String SelectedVersion
+        {
+            get
+            {
+                return this.selectedVersion;
+            }
+
+            set
+            {
+                this.selectedVersion = value;
+                GESSettings.SelectedVersion = value;
+                this.RaisePropertyChanged(nameof(this.SelectedVersion));
+            }
+        }
+
+        public String SelectedLanguage
+        {
+            get
+            {
+                return this.selectedLanguage;
+            }
+
+            set
+            {
+                this.selectedLanguage = value;
+                GESSettings.SelectedLanguage = value;
+                this.RaisePropertyChanged(nameof(this.SelectedLanguage));
+
+                // Doesn't quite work.
+                // EquipmentViewerViewModel.GetInstance().ExternalRefreshAll();
+                // InventoryViewerViewModel.GetInstance().ExternalRefreshAll();
+            }
+        }
+
 
         /// <summary>
         /// Default layout file for browsing cheats.

@@ -26,11 +26,12 @@
 
         private UInt64 equipmentListAddressEN = 0x3B800;
         private UInt64 equipmentListAddressJP = 0x35800;
+        private UInt64 equipmentListAddressPal = 0x3D800;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="HeapVisualizerViewModel" /> class from being created.
         /// </summary>
-        private EquipmentViewerViewModel() : base("Equipment Visualizer")
+        private EquipmentViewerViewModel() : base("Equipment List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
@@ -109,6 +110,14 @@
             });
         }
 
+        public void ExternalRefreshAll()
+        {
+            foreach(EquipmentDataView equipmentDataView in this.PlayerEquipmentData)
+            {
+                equipmentDataView.RefreshAllProperties();
+            }
+        }
+
         public void ExternalRefresh(Int32 playerIndex)
         {
             if (playerIndex >= 0 && playerIndex < this.PlayerEquipmentData.Count)
@@ -127,7 +136,15 @@
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_3", EmulatorType.Dolphin),
             };
 
-            UInt64 equipmentListAddress = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJP ? equipmentListAddressJP : equipmentListAddressEN;
+            UInt64 equipmentListAddress;
+            
+            switch(MainViewModel.GetInstance().SelectedLanguage)
+            {
+                default:
+                case MainViewModel.VersionJP: equipmentListAddress = equipmentListAddressJP; break;
+                case MainViewModel.VersionEN: equipmentListAddress = equipmentListAddressEN; break;
+                case MainViewModel.VersionPAL: equipmentListAddress = equipmentListAddressPal; break;
+            }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {

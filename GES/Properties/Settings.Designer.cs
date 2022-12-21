@@ -25,13 +25,25 @@ namespace GES.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutomaticUpdates {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelectedLanguage {
             get {
-                return ((bool)(this["AutomaticUpdates"]));
+                return ((string)(this["SelectedLanguage"]));
             }
             set {
-                this["AutomaticUpdates"] = value;
+                this["SelectedLanguage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelectedVersion {
+            get {
+                return ((string)(this["SelectedVersion"]));
+            }
+            set {
+                this["SelectedVersion"] = value;
             }
         }
     }

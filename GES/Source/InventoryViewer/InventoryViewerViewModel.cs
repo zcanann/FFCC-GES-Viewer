@@ -39,16 +39,28 @@
             0x2410E0,
         };
 
-        private UInt64[] slotDataAddressesEN = new UInt64[SlotCount] // TODO: Find me
+        private UInt64[] slotDataAddressesEN = new UInt64[SlotCount]
         {
-            0x23BB90,
-            0x23C7C0,
-            0x23D3F0,
-            0x23E020,
-            0x23EC50,
-            0x23F880,
-            0x2404B0,
-            0x2410E0,
+            0x21F250,
+            0x21FE80,
+            0x220AB0,
+            0x2216E0,
+            0x222310,
+            0x222F40,
+            0x223B70,
+            0x2247A0,
+        };
+
+        private UInt64[] slotDataAddressesPAL = new UInt64[SlotCount]
+        {
+            0x220438,
+            0x220EC0,
+            0x221AF0,
+            0x222720,
+            0x223350,
+            0x223F80,
+            0x224BB0,
+            0x2257E0,
         };
 
         private UInt64[] slotMappingAddressesJP = new UInt64[PlayerCount]
@@ -59,12 +71,20 @@
             0x23A7EF,
         };
 
-        private UInt64[] slotMappingAddressesEN = new UInt64[PlayerCount] // TODO: Find me
+        private UInt64[] slotMappingAddressesEN = new UInt64[PlayerCount]
         {
-            0x23A7E3,
-            0x23A7E7,
-            0x23A7EB,
-            0x23A7EF,
+            0x21DEA3,
+            0x21DEA7,
+            0x21DEAB,
+            0x21DEAF,
+        };
+
+        private UInt64[] slotMappingAddressesPAL = new UInt64[PlayerCount]
+        {
+            0x21EEE3,
+            0x21EEE7,
+            0x21EEEB,
+            0x21EEEF,
         };
 
         /// <summary>
@@ -126,6 +146,14 @@
             return InventoryViewerViewModel.actorReferenceCountVisualizerInstance;
         }
 
+        public void ExternalRefreshAll()
+        {
+            foreach (PlayerSlotDataView playerSlotDataView in this.PlayerSlots)
+            {
+                playerSlotDataView.RefreshAllProperties();
+            }
+        }
+
         /// <summary>
         /// Begin the update loop for visualizing the heap.
         /// </summary>
@@ -163,7 +191,17 @@
         private unsafe void UpdateActorSlots()
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
-            UInt64[] slotMappingAddresses = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJP ? slotMappingAddressesJP : slotMappingAddressesEN;
+
+            UInt64[] slotMappingAddresses;
+            UInt64[] slotDataAddresses;
+
+            switch (MainViewModel.GetInstance().SelectedLanguage)
+            {
+                default:
+                case MainViewModel.VersionJP: slotMappingAddresses = slotMappingAddressesJP; slotDataAddresses = slotDataAddressesJP; break;
+                case MainViewModel.VersionEN: slotMappingAddresses = slotMappingAddressesEN; slotDataAddresses = slotDataAddressesEN; break;
+                case MainViewModel.VersionPAL: slotMappingAddresses = slotMappingAddressesPAL; slotDataAddresses = slotDataAddressesPAL; break;
+            }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
@@ -181,8 +219,6 @@
                     this.RaisePropertyChanged(nameof(this.DisplayPlayerToSlotMap));
                 }
             }
-
-            UInt64[] slotDataAddresses = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJP ? slotDataAddressesJP : slotDataAddressesEN;
 
             for (Int32 slotIndex = 0; slotIndex < SlotCount; slotIndex++)
             {

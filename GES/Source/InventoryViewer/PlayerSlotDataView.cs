@@ -1,6 +1,7 @@
 ﻿
 namespace GES.Source.InventoryViewer
 {
+    using GES.Source.Mvvm.Converters;
     using System;
     using System.ComponentModel;
 
