@@ -1,16 +1,16 @@
-﻿namespace GES.Source.EquipmentViewer
+﻿namespace GES.Source.CraftViewer
 {
     using System;
     using System.ComponentModel;
 
-    public class EquipmentDataView : INotifyPropertyChanged
+    public class CraftDataView : INotifyPropertyChanged
     {
-        public EquipmentDataView(EquipmentData equipmentData)
+        public CraftDataView(CraftData CraftData)
         {
-            this.EquipmentData = equipmentData;
+            this.CraftData = CraftData;
         }
 
-        public EquipmentData EquipmentData { get; set; }
+        public CraftData CraftData { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -18,12 +18,12 @@
         {
             get
             {
-                return EquipmentData.PlayerIndex + 1;
+                return CraftData.PlayerIndex + 1;
             }
 
             set
             {
-                EquipmentData.PlayerIndex = value;
+                CraftData.PlayerIndex = value;
             }
         }
 
@@ -31,25 +31,25 @@
         {
             get
             {
-                return EquipmentData.SerializableData.itemCount;
+                return CraftData.SerializableData.itemCount;
             }
 
             set
             {
-                EquipmentData.SerializableData.itemCount = value;
+                CraftData.SerializableData.itemCount = value;
             }
         }
 
-        public EquipmentEntry[] EquipmentSlotList
+        public CraftEntry[] CraftSlotList
         {
             get
             {
-                return EquipmentData.equipmentSlotList;
+                return CraftData.CraftSlotList;
             }
 
             set
             {
-                EquipmentData.equipmentSlotList = value;
+                CraftData.CraftSlotList = value;
             }
         }
 
@@ -57,12 +57,12 @@
         {
             get
             {
-                return EquipmentData.JISText;
+                return CraftData.JISText;
             }
 
             set
             {
-                EquipmentData.JISText = value;
+                CraftData.JISText = value;
             }
         }
 
@@ -70,7 +70,7 @@
         {
             RaisePropertyChanged(nameof(PlayerIndex));
             RaisePropertyChanged(nameof(ItemCount));
-            RaisePropertyChanged(nameof(EquipmentSlotList));
+            RaisePropertyChanged(nameof(CraftSlotList));
             RaisePropertyChanged(nameof(JISText));
         }
 

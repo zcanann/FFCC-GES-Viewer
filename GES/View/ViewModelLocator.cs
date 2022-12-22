@@ -1,6 +1,7 @@
 ﻿namespace GES.View
 {
     using GES.Source.Controls;
+    using GES.Source.CraftViewer;
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
@@ -108,6 +109,17 @@
             get
             {
                 return EquipmentViewerViewModel.GetInstance();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Craft Viewer view model.
+        /// </summary>
+        public CraftViewerViewModel CraftViewerViewModel
+        {
+            get
+            {
+                return CraftViewerViewModel.GetInstance();
             }
         }
 

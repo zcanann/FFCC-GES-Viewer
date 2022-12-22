@@ -1,28 +1,24 @@
 ﻿namespace GES.Source.Mvvm.Converters
 {
     using GES.Source.Controls;
-    using GES.Source.EquipmentViewer;
-    using GES.Source.InventoryViewer;
+    using GES.Source.CraftViewer;
     using System;
+    using System.Drawing;
     using System.Globalization;
     using System.Windows.Data;
     using System.Windows.Media;
 
-    public class ExtendedInventorySlotToColorConverter : IValueConverter
+    public class CraftColorConverter : IValueConverter
     {
-        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            RawItemEntry equipmentEntry = value as RawItemEntry;
+            CraftEntry CraftEntry = value as CraftEntry;
 
-            if (equipmentEntry != null)
+            if (CraftEntry != null && CraftEntry.Parent != null)
             {
-                if (equipmentEntry.Index >= 128)
+                if (CraftEntry.SlotId >= CraftEntry.Parent.SerializableData.itemCount)
                 {
                     return System.Windows.Media.Brushes.Red;
-                }
-                else if (equipmentEntry.Index >= 64)
-                {
-                    return System.Windows.Media.Brushes.OrangeRed;
                 }
             }
 
@@ -42,7 +38,7 @@
         /// <param name="parameter">Optional conversion parameter.</param>
         /// <param name="culture">Globalization info.</param>
         /// <returns>Throws see <see cref="NotImplementedException" />.</returns>
-        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

@@ -1,37 +1,37 @@
 ﻿
-namespace GES.Source.EquipmentViewer
+namespace GES.Source.CraftViewer
 {
     using GES.Source.InventoryViewer;
     using System;
     using System.Collections;
     using System.Runtime.InteropServices;
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = (1 + 256 + 2048))]
-    public class EquipmentDataSerializable
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = (1 + 256 + 256 * 56))]
+    public class CraftDataSerializable
     {
         [MarshalAs(UnmanagedType.I1)]
         public Byte itemCount;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256 + 2048)]
-        public Byte[] equipmentListData;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256 + 256 * 56)]
+        public Byte[] craftListRawData;
     }
 
-    public class EquipmentData
+    public class CraftData
     {
-        public EquipmentData()
+        public CraftData()
         {
-            this.SerializableData = new EquipmentDataSerializable();
+            this.SerializableData = new CraftDataSerializable();
         }
 
-        public EquipmentDataSerializable SerializableData;
+        public CraftDataSerializable SerializableData;
 
         public Int32 PlayerIndex { get; set; }
 
-        public EquipmentEntry[] equipmentSlotList;
+        public CraftEntry[] CraftSlotList;
 
         public String JISText { get; set; }
 
-        public static void Deserialize(EquipmentData entry, Byte[] bytes)
+        public static void Deserialize(CraftData entry, Byte[] bytes)
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
 
@@ -41,10 +41,10 @@ namespace GES.Source.EquipmentViewer
                 {
                     if (entry.SerializableData == null)
                     {
-                        entry.SerializableData = new EquipmentDataSerializable();
+                        entry.SerializableData = new CraftDataSerializable();
                     }
 
-                    Marshal.PtrToStructure<EquipmentDataSerializable>(handle.AddrOfPinnedObject(), entry.SerializableData);
+                    Marshal.PtrToStructure<CraftDataSerializable>(handle.AddrOfPinnedObject(), entry.SerializableData);
                 }
             }
             finally
@@ -60,14 +60,14 @@ namespace GES.Source.EquipmentViewer
             Int32 remainder = (this.SerializableData.itemCount + 1) % 4;
             Int32 propertiesStart = this.SerializableData.itemCount + (remainder == 0 ? 0 : 4 - remainder);
 
-            this.equipmentSlotList = new EquipmentEntry[256];
+            this.CraftSlotList = new CraftEntry[256];
 
             for (Int32 index = 0; index < 256; index++)
             {
-                Byte[] itemProperties = new Byte[8];
-                Array.Copy(this.SerializableData.equipmentListData, propertiesStart + index * 8, itemProperties, 0, 8);
+                Byte[] recipeProperties = new Byte[56];
+                Array.Copy(this.SerializableData.craftListRawData, propertiesStart + index * 56, recipeProperties, 0, 56);
 
-                this.equipmentSlotList[index] = new EquipmentEntry(this, (Byte)index, this.SerializableData.equipmentListData[index], itemProperties);
+                this.CraftSlotList[index] = new CraftEntry(this, (Byte)index, this.SerializableData.craftListRawData[index], recipeProperties);
             }
 
             this.JISText = System.Text.Encoding.GetEncoding("shift-jis").GetString(bytes);

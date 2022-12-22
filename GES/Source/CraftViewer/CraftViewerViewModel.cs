@@ -1,4 +1,4 @@
-﻿namespace GES.Source.EquipmentViewer
+﻿namespace GES.Source.CraftViewer
 {
     using GES.Engine.Common;
     using GES.Engine.Common.DataStructures;
@@ -13,34 +13,34 @@
     using System.Windows;
 
     /// <summary>
-    /// View model for the Heap Visualizer.
+    /// View model for the Craft Visualizer.
     /// </summary>
-    public class EquipmentViewerViewModel : ToolViewModel
+    public class CraftViewerViewModel : ToolViewModel
     {
         /// <summary>
         /// Singleton instance of the <see cref="ActorReferenceCountVisualizer" /> class.
         /// </summary>
-        private static EquipmentViewerViewModel actorReferenceCountVisualizerInstance = new EquipmentViewerViewModel();
+        private static CraftViewerViewModel actorReferenceCountVisualizerInstance = new CraftViewerViewModel();
 
         private const Int32 PlayerCount = 4;
 
-        private UInt64 equipmentListAddressEN = 0x3B800;
-        private UInt64 equipmentListAddressJP = 0x35800;
-        private UInt64 equipmentListAddressPal = 0x3D800;
+        private UInt64 CraftListAddressEN = 0x38800;
+        private UInt64 CraftListAddressJP = 0x32800;
+        private UInt64 CraftListAddressPal = 0x38800; // TODO
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="HeapVisualizerViewModel" /> class from being created.
+        /// Prevents a default instance of the <see cref="CraftViewerViewModel" /> class from being created.
         /// </summary>
-        private EquipmentViewerViewModel() : base("Equipment List Viewer")
+        private CraftViewerViewModel() : base("Craft List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
-            this.PlayerEquipmentData = new FullyObservableCollection<EquipmentDataView>();
+            this.PlayerCraftData = new FullyObservableCollection<CraftDataView>();
             this.CachedPlayerSlotData = new Byte[PlayerCount][];
 
             for (int index = 0; index < PlayerCount; index++)
             {
-                this.PlayerEquipmentData.Add(new EquipmentDataView(new EquipmentData()));
+                this.PlayerCraftData.Add(new CraftDataView(new CraftData()));
             }
 
             Application.Current.Exit += this.OnAppExit;
@@ -56,11 +56,11 @@
         /// <summary>
         /// Gets the list of actor reference count slots.
         /// </summary>
-        public FullyObservableCollection<EquipmentDataView> PlayerEquipmentData { get; private set; }
+        public FullyObservableCollection<CraftDataView> PlayerCraftData { get; private set; }
 
         private Byte[][] CachedPlayerSlotData { get; set; }
 
-        private Byte[] RawEquipmentData { get; set; }
+        private Byte[] RawCraftData { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -68,12 +68,12 @@
         private bool CanUpdate { get; set; }
 
         /// <summary>
-        /// Gets a singleton instance of the <see cref="EquipmentViewerViewModel"/> class.
+        /// Gets a singleton instance of the <see cref="CraftViewerViewModel"/> class.
         /// </summary>
         /// <returns>A singleton instance of the class.</returns>
-        public static EquipmentViewerViewModel GetInstance()
+        public static CraftViewerViewModel GetInstance()
         {
-            return EquipmentViewerViewModel.actorReferenceCountVisualizerInstance;
+            return CraftViewerViewModel.actorReferenceCountVisualizerInstance;
         }
 
         /// <summary>
@@ -112,17 +112,17 @@
 
         public void ExternalRefreshAll()
         {
-            foreach(EquipmentDataView equipmentDataView in this.PlayerEquipmentData)
+            foreach(CraftDataView CraftDataView in this.PlayerCraftData)
             {
-                equipmentDataView.RefreshAllProperties();
+                CraftDataView.RefreshAllProperties();
             }
         }
 
         public void ExternalRefresh(Int32 playerIndex)
         {
-            if (playerIndex >= 0 && playerIndex < this.PlayerEquipmentData.Count)
+            if (playerIndex >= 0 && playerIndex < this.PlayerCraftData.Count)
             {
-                this.PlayerEquipmentData[playerIndex].RefreshAllProperties();
+                this.PlayerCraftData[playerIndex].RefreshAllProperties();
             }
         }
 
@@ -136,30 +136,30 @@
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_3", EmulatorType.Dolphin),
             };
 
-            UInt64 equipmentListAddress;
+            UInt64 CraftListAddress;
             
             switch(MainViewModel.GetInstance().SelectedVersion)
             {
                 default:
-                case MainViewModel.VersionJP: equipmentListAddress = equipmentListAddressJP; break;
-                case MainViewModel.VersionEN: equipmentListAddress = equipmentListAddressEN; break;
-                case MainViewModel.VersionPAL: equipmentListAddress = equipmentListAddressPal; break;
+                case MainViewModel.VersionJP: CraftListAddress = CraftListAddressJP; break;
+                case MainViewModel.VersionEN: CraftListAddress = CraftListAddressEN; break;
+                case MainViewModel.VersionPAL: CraftListAddress = CraftListAddressPal; break;
             }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
-                UInt64 slotPointer = gbaCubeMemoryBases[playerIndex] + equipmentListAddress;
+                UInt64 slotPointer = gbaCubeMemoryBases[playerIndex] + CraftListAddress;
 
-                if (this.RawEquipmentData == null)
+                if (this.RawCraftData == null)
                 {
-                    this.RawEquipmentData = new Byte[typeof(EquipmentDataSerializable).StructLayoutAttribute.Size];
+                    this.RawCraftData = new Byte[typeof(CraftDataSerializable).StructLayoutAttribute.Size];
                 }
 
                 // Read the entire actor reference counting table
                 Boolean success;
                 MemoryReader.Instance.ReadBytes(
                     SessionManager.Session.OpenedProcess,
-                    this.RawEquipmentData,
+                    this.RawCraftData,
                     slotPointer,
                     out success);
 
@@ -167,24 +167,24 @@
                 {
                     if (this.CachedPlayerSlotData[playerIndex] == null)
                     {
-                        this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(EquipmentDataSerializable).StructLayoutAttribute.Size];
+                        this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(CraftDataSerializable).StructLayoutAttribute.Size];
                     }
 
-                    if (this.PlayerEquipmentData[playerIndex].EquipmentData == null)
+                    if (this.PlayerCraftData[playerIndex].CraftData == null)
                     {
-                        this.PlayerEquipmentData[playerIndex].EquipmentData = new EquipmentData();
+                        this.PlayerCraftData[playerIndex].CraftData = new CraftData();
                     }
 
-                    EquipmentData.Deserialize(this.PlayerEquipmentData[playerIndex].EquipmentData, this.RawEquipmentData);
+                    CraftData.Deserialize(this.PlayerCraftData[playerIndex].CraftData, this.RawCraftData);
 
                     // Notify changes if new bytes differ from cached
-                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawEquipmentData))
+                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawCraftData))
                     {
-                        this.PlayerEquipmentData[playerIndex].EquipmentData.Refresh(this.RawEquipmentData, playerIndex);
-                        this.PlayerEquipmentData[playerIndex].RefreshAllProperties();
+                        this.PlayerCraftData[playerIndex].CraftData.Refresh(this.RawCraftData, playerIndex);
+                        this.PlayerCraftData[playerIndex].RefreshAllProperties();
                     }
 
-                    this.RawEquipmentData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
+                    this.RawCraftData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
                 }
             }
         }

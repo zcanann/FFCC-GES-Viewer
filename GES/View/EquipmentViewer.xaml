@@ -21,8 +21,6 @@
         <Grid.Resources>
             <converters:UInt64ToAddressConverter x:Key="IntPtrToAddressConverter" />
             <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
-            <converters:ValueToMetricSize x:Key="ValueToMetricSize" />
-            <converters:DataGridIndexConverter x:Key="DataGridIndexConverter" />
             <converters:IntToHexConverter x:Key="IntToHexConverter" />
             <converters:InventorySlotColorConverter x:Key="InventorySlotColorConverter" />
             <converters:ItemRefToIconConverter x:Key="ItemRefToIconConverter" />

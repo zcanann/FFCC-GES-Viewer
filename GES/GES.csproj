@@ -323,6 +323,9 @@
     <Page Update="View\DataTemplateError.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="View\CraftViewer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="View\EquipmentViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

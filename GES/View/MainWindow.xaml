@@ -23,7 +23,6 @@
     DataContext="{Binding MainViewModel, Source={StaticResource ViewModelLocator}}"
     WindowStyle="None">
     <shell:Window.Resources>
-        <converters:ConstraintToIconConverter x:Key="ConstraintToIconConverter" />
         <converters:IconConverter x:Key="IconConverter" />
         <converters:ProcessNameConverter x:Key="ProcessNameConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -31,7 +30,6 @@
             x:Key="BooleanToHiddenConverter"
             False="Hidden"
             True="Visible" />
-        <converters:DataTypeToIconConverter x:Key="DataTypeToIconConverter" />
     </shell:Window.Resources>
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=titlebar}" />
@@ -202,6 +200,11 @@
                             IsCheckable="True"
                             IsChecked="{Binding EquipmentViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
+                        <shell:MenuItem
+                            Header="Craft Viewer"
+                            IsCheckable="True"
+                            IsChecked="{Binding CraftViewerViewModel.IsVisible, Mode=TwoWay}"
+                            Style="{Binding .}" />
                     </shell:MenuItem>
                 </shell:Menu>
             </shell:Grid>
@@ -302,6 +305,12 @@
                                 <view:EquipmentViewer />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.EquipmentViewerViewTemplate>
+                        <!--  Craft Viewer  -->
+                        <view:ViewTemplateSelector.CraftViewerViewTemplate>
+                            <shell:DataTemplate>
+                                <view:CraftViewer />
+                            </shell:DataTemplate>
+                        </view:ViewTemplateSelector.CraftViewerViewTemplate>
                         <!--  Process Selector  -->
                         <view:ViewTemplateSelector.ProcessSelectorViewTemplate>
                             <shell:DataTemplate>

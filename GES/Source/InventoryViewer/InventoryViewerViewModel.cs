@@ -5,6 +5,7 @@
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
+    using GES.Source.CraftViewer;
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
     using GES.Source.Main;
@@ -195,7 +196,7 @@
             UInt64[] slotMappingAddresses;
             UInt64[] slotDataAddresses;
 
-            switch (MainViewModel.GetInstance().SelectedLanguage)
+            switch (MainViewModel.GetInstance().SelectedVersion)
             {
                 default:
                 case MainViewModel.VersionJP: slotMappingAddresses = slotMappingAddressesJP; slotDataAddresses = slotDataAddressesJP; break;
@@ -265,6 +266,7 @@
                             if (nextSlotIndex == slotIndex)
                             {
                                 EquipmentViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
+                                CraftViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
                             }
                         }
                     }

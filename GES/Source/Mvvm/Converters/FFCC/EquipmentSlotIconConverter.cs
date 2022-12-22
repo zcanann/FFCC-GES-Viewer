@@ -8,11 +8,11 @@
 
     public class EquipmentSlotIconConverter : IValueConverter
     {
-        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             EquipmentEntry equipmentEntry = value as EquipmentEntry;
 
-            String paramString = parameter as String;
+            string paramString = parameter as string;
 
             if (equipmentEntry != null && paramString != null)
             {
@@ -95,7 +95,7 @@
         /// <param name="parameter">Optional conversion parameter.</param>
         /// <param name="culture">Globalization info.</param>
         /// <returns>Throws see <see cref="NotImplementedException" />.</returns>
-        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

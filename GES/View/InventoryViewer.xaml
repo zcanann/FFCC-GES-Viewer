@@ -20,8 +20,6 @@
     <Grid Background="{StaticResource GESColorPanel}">
         <Grid.Resources>
             <converters:UInt64ToAddressConverter x:Key="IntPtrToAddressConverter" />
-            <converters:ValueToMetricSize x:Key="ValueToMetricSize" />
-            <converters:DataGridIndexConverter x:Key="DataGridIndexConverter" />
             <converters:IntToHexConverter x:Key="IntToHexConverter" />
             <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
             <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />

@@ -10,7 +10,7 @@
 
     public class EquipmentColorConverter : IValueConverter
     {
-        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             EquipmentEntry equipmentEntry = value as EquipmentEntry;
 
@@ -38,7 +38,7 @@
         /// <param name="parameter">Optional conversion parameter.</param>
         /// <param name="culture">Globalization info.</param>
         /// <returns>Throws see <see cref="NotImplementedException" />.</returns>
-        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
