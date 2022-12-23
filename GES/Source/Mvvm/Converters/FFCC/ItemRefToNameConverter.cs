@@ -26,11 +26,6 @@
         /// <returns>Object with type of BitmapSource. If conversion cannot take place, returns null.</returns>
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            if (parameter != null)
-            {
-                value = parameter;
-            }
-
             EquipmentEntry equipmentEntry = value as EquipmentEntry;
             CraftEntry craftEntry = value as CraftEntry;
 
@@ -39,8 +34,34 @@
                 return null;
             }
 
-            UInt16 inventorySlot = equipmentEntry != null ? equipmentEntry.ItemSlotId : craftEntry.ItemSlotId;
-            Int32 playerId = equipmentEntry != null ? equipmentEntry.Parent.PlayerIndex : craftEntry.Parent.PlayerIndex;
+
+            UInt16 inventorySlot = 0xFFFF;
+            Int32 playerId = -1;
+
+            if (equipmentEntry != null)
+            {
+                inventorySlot = equipmentEntry.ItemSlotId;
+                playerId = equipmentEntry.Parent.PlayerIndex;
+            }
+
+            if (craftEntry != null)
+            {
+                inventorySlot = craftEntry.ItemSlotId;
+                playerId = craftEntry.Parent.PlayerIndex;
+
+                if (parameter is String)
+                {
+                    String paramString = (String)parameter;
+
+                    switch (paramString)
+                    {
+                        case "Req1": return itemToNameConverter.Convert(craftEntry.RequiredItem1, targetType, null, culture);
+                        case "Req2": return itemToNameConverter.Convert(craftEntry.RequiredItem2, targetType, null, culture);
+                        case "Req3": return itemToNameConverter.Convert(craftEntry.RequiredItem3, targetType, null, culture);
+                        default: break;
+                    }
+                }
+            }
 
             if (InventoryViewerViewModel.GetInstance().PlayerToSlotMap.ContainsKey(playerId))
             {

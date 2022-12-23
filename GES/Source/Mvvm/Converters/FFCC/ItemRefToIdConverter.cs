@@ -9,9 +9,9 @@
     using System.Linq;
     using System.Windows.Data;
 
-    public class ItemRefToIconConverter : IValueConverter
+    public class ItemRefToIdConverter : IValueConverter
     {
-        private ItemToIconConverter itemToIconConverter = new ItemToIconConverter();
+        private IntToHexConverter hexConverter = new IntToHexConverter();
 
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
@@ -36,19 +36,6 @@
             {
                 inventorySlot = craftEntry.ItemSlotId;
                 playerId = craftEntry.Parent.PlayerIndex;
-
-                if (parameter is String)
-                {
-                    String paramString = (String) parameter;
-
-                    switch(paramString)
-                    {
-                        case "Req1": return itemToIconConverter.Convert(craftEntry.RequiredItem1, targetType, null, culture);
-                        case "Req2": return itemToIconConverter.Convert(craftEntry.RequiredItem2, targetType, null, culture);
-                        case "Req3": return itemToIconConverter.Convert(craftEntry.RequiredItem3, targetType, null, culture);
-                        default:break;
-                    }
-                }
             }
 
             if (InventoryViewerViewModel.GetInstance().PlayerToSlotMap.ContainsKey(playerId))
@@ -61,14 +48,12 @@
                 {
                     if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Length)
                     {
-                        UInt16 itemId = slotDataView.Slot.rawItems[inventorySlot].ItemId;
-
-                        return itemToIconConverter.Convert(itemId, targetType, parameter, culture);
+                        return hexConverter.Convert(slotDataView.Slot.rawItems[inventorySlot].ItemId, targetType, parameter, culture);
                     }
                 }
             }
 
-            return null;
+            return 0;
         }
 
         /// <summary>

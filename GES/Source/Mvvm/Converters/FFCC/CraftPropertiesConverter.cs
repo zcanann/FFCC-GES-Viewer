@@ -53,14 +53,14 @@
                 }
                 else if (paramString.Equals("Yuke_F", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (CraftEntry.IsYuke && !CraftEntry.IsMale)
+                    if (CraftEntry.IsYukeF)
                     {
                         return Images.Icon_YukeF;
                     }
                 }
                 else if (paramString.Equals("Selkie_M", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (CraftEntry.IsSelkieF)
+                    if (CraftEntry.IsSelkieM)
                     {
                         return Images.Icon_SelkieM;
                     }

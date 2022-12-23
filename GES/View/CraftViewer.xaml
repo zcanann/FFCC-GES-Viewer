@@ -25,6 +25,7 @@
             <converters:InventorySlotColorConverter x:Key="InventorySlotColorConverter" />
             <converters:ItemRefToIconConverter x:Key="ItemRefToIconConverter" />
             <converters:ItemRefToNameConverter x:Key="ItemRefToNameConverter" />
+            <converters:ItemRefToIdConverter x:Key="ItemRefToIdConverter" />
             <converters:CraftColorConverter x:Key="CraftColorConverter" />
             <converters:CraftSlotIconConverter x:Key="CraftSlotIconConverter" />
             <converters:CraftPropertiesConverter x:Key="CraftPropertiesConverter" />
@@ -138,45 +139,66 @@
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         Width="Auto"
-                        Header="Recipe Slot → Item Slot → Recipe"
+                        Header="Recipe Slot → Inv Slot → Item"
                         IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="{Binding Path=SlotId, Converter={StaticResource AlternatingColorConverter}}">
-                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                        <TextBlock
-                                            Margin="8,0,4,0"
+                                    <StackPanel
+                                        Margin="0,0,0,4"
+                                        VerticalAlignment="Center"
+                                        Orientation="Vertical">
+                                        <StackPanel
+                                            HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
-                                            Text="{Binding Path=SlotId}"
-                                            TextAlignment="Right" />
-                                        <TextBlock
-                                            Margin="4,0,4,0"
+                                            Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="8,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=SlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <TextBlock
+                                                Width="20"
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=ItemSlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <TextBlock
+                                                Width="20"
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToIdConverter}, Mode=OneWay}"
+                                                TextAlignment="Right" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Margin="0,4,0,0"
+                                            HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
-                                            Text="→" />
-                                        <TextBlock
-                                            Width="20"
-                                            Margin="4,0,0,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
-                                            Text="{Binding Path=ItemSlotId}"
-                                            TextAlignment="Right" />
-                                        <TextBlock
-                                            Margin="4,0,4,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
-                                            Text="→" />
-                                        <Image
-                                            Width="16"
-                                            Height="16"
-                                            HorizontalAlignment="Left"
-                                            Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
-                                        <TextBlock
-                                            Margin="4,0,0,0"
-                                            Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
-                                            Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
-                                            TextAlignment="Left" />
+                                            Orientation="Horizontal">
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Left"
+                                                Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                        </StackPanel>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -271,39 +293,255 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="{Binding Path=SlotId, Converter={StaticResource AlternatingColorConverter}}">
-                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                        <TextBlock
-                                            Margin="4,0,4,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
-                                            Text="{Binding Path=SlotId}"
-                                            TextAlignment="Right" />
-                                        <TextBlock
-                                            Margin="4,0,4,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
-                                            Text="→" />
-                                        <TextBlock
-                                            Margin="4,0,0,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
-                                            Text="{Binding Path=ItemSlotId}"
-                                            TextAlignment="Right" />
-                                        <TextBlock
-                                            Margin="4,0,4,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
-                                            Text="→" />
-                                        <Image
-                                            Width="16"
-                                            Height="16"
-                                            HorizontalAlignment="Left"
-                                            Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
-                                        <TextBlock
-                                            Margin="4,0,0,0"
-                                            Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
-                                            Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
-                                            TextAlignment="Left" />
+                                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=SlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=ItemSlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Left"
+                                                Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=SlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=ItemSlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Left"
+                                                Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=SlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=ItemSlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Left"
+                                                Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=SlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=ItemSlotId}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                Text="→" />
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Left"
+                                                Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="*"
+                        Header="Required Items"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding Path=SlotId, Converter={StaticResource AlternatingColorConverter}}">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <Border Background="#ffe7b5">
+                                                <Image
+                                                    Width="16"
+                                                    Height="16"
+                                                    HorizontalAlignment="Left"
+                                                    Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, ConverterParameter=Req1, Mode=OneWay}" />
+                                            </Border>
+                                            <TextBlock
+                                                Width="20"
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Path=RequiredItem1, Converter={StaticResource IntToHexConverter}}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Text="→" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, ConverterParameter=Req1, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="4,0,0,0"
+                                                    Foreground="{StaticResource GESColorIconBlue}"
+                                                    Text="x" />
+                                                <TextBlock
+                                                    Margin="0,0,0,0"
+                                                    Foreground="{StaticResource GESColorIconBlue}"
+                                                    Text="{Binding Path=RequiredItem1Count, Mode=OneWay}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <Border Background="#ffe7b5">
+                                                <Image
+                                                    Width="16"
+                                                    Height="16"
+                                                    HorizontalAlignment="Left"
+                                                    Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, ConverterParameter=Req2, Mode=OneWay}" />
+                                            </Border>
+                                            <TextBlock
+                                                Width="20"
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Path=RequiredItem2, Converter={StaticResource IntToHexConverter}}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Text="→" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, ConverterParameter=Req2, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="4,0,0,0"
+                                                    Foreground="{StaticResource GESColorIconBlue}"
+                                                    Text="x" />
+                                                <TextBlock
+                                                    Margin="0,0,0,0"
+                                                    Foreground="{StaticResource GESColorIconBlue}"
+                                                    Text="{Binding Path=RequiredItem2Count, Mode=OneWay}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <Border Background="#ffe7b5">
+                                                <Image
+                                                    Width="16"
+                                                    Height="16"
+                                                    HorizontalAlignment="Left"
+                                                    Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, ConverterParameter=Req3, Mode=OneWay}" />
+                                            </Border>
+                                            <TextBlock
+                                                Width="20"
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Path=RequiredItem3, Converter={StaticResource IntToHexConverter}}"
+                                                TextAlignment="Right" />
+                                            <TextBlock
+                                                Margin="4,0,4,0"
+                                                VerticalAlignment="Center"
+                                                Text="→" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, ConverterParameter=Req3, Mode=OneWay}"
+                                                TextAlignment="Left" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="4,0,0,0"
+                                                    Foreground="{StaticResource GESColorIconBlue}"
+                                                    Text="x" />
+                                                <TextBlock
+                                                    Margin="0,0,0,0"
+                                                    Foreground="{StaticResource GESColorIconBlue}"
+                                                    Text="{Binding Path=RequiredItem3Count, Mode=OneWay}" />
+                                            </StackPanel>
+                                        </StackPanel>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>

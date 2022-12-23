@@ -5,6 +5,11 @@
 
     public class CraftEntry
     {
+        const Int32 IndexClavat = 24;
+        const Int32 IndexLilty = 32;
+        const Int32 IndexYuke = 40;
+        const Int32 IndexSelkie = 48;
+
         public CraftEntry(CraftData parent, Byte slotId, Byte itemSlotId, Byte[] properties)
         {
             this.Parent = parent;
@@ -44,7 +49,7 @@
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(this.Properties, 4)) : (UInt16)0;
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 4) : (UInt16)0;
             }
         }
 
@@ -52,7 +57,7 @@
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(this.Properties, 6)) : (UInt16)0;
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 6) : (UInt16)0;
             }
         }
 
@@ -60,7 +65,7 @@
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(this.Properties, 8)) : (UInt16)0;
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 8) : (UInt16)0;
             }
         }
 
@@ -68,7 +73,7 @@
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(this.Properties, 10)) : (UInt16)0;
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 10) : (UInt16)0;
             }
         }
 
@@ -76,7 +81,7 @@
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(this.Properties, 12)) : (UInt16)0;
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 12) : (UInt16)0;
             }
         }
 
@@ -84,7 +89,7 @@
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(this.Properties, 14)) : (UInt16)0;
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 14) : (UInt16)0;
             }
         }
 
@@ -100,7 +105,7 @@
         {
             get
             {
-                return this.IsClavat && this.IsMale;
+                return this.IsClavat(IndexClavat) && this.IsMale(IndexClavat);
             }
         }
 
@@ -108,7 +113,7 @@
         {
             get
             {
-                return this.IsLilty && this.IsMale;
+                return this.IsLilty(IndexLilty) && this.IsMale(IndexLilty);
             }
         }
 
@@ -116,7 +121,7 @@
         {
             get
             {
-                return this.IsYuke && this.IsMale;
+                return this.IsYuke(IndexYuke) && this.IsMale(IndexYuke);
             }
         }
 
@@ -124,7 +129,7 @@
         {
             get
             {
-                return this.IsSelkie && this.IsMale;
+                return this.IsSelkie(IndexSelkie) && this.IsMale(IndexSelkie);
             }
         }
 
@@ -132,7 +137,7 @@
         {
             get
             {
-                return (this.IsClavat && this.IsFemale) || (this.IsClassless && this.IsFemale);
+                return this.IsClavat(IndexClavat) && this.IsFemale(IndexClavat);
             }
         }
 
@@ -140,7 +145,7 @@
         {
             get
             {
-                return (this.IsLilty && this.IsFemale) || (this.IsClassless && this.IsFemale);
+                return this.IsLilty(IndexLilty) && this.IsFemale(IndexLilty);
             }
         }
 
@@ -148,7 +153,7 @@
         {
             get
             {
-                return (this.IsYuke && this.IsFemale) || (this.IsClassless && this.IsFemale);
+                return this.IsYuke(IndexYuke) && this.IsFemale(IndexYuke);
             }
         }
 
@@ -156,55 +161,40 @@
         {
             get
             {
-                return (this.IsSelkie && this.IsFemale) || (this.IsClassless && this.IsFemale);
+                return this.IsSelkie(IndexSelkie) && this.IsFemale(IndexSelkie);
             }
         }
 
-        public Boolean IsClassless
+        public Boolean IsClassless(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[32] & 0b1111) == 0;
-            }
+            return this.HasProperties && (this.Properties[index] & 0b1111) == 0;
         }
 
-        public Boolean IsClavat
+        public Boolean IsClavat(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[24] & 0b0001) != 0;
-            }
+            return this.HasProperties && (this.Properties[index] & 0b0001) != 0;
         }
 
-        public Boolean IsLilty
+        public Boolean IsLilty(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[32] & 0b0010) != 0;
-            }
+            return this.HasProperties && (this.Properties[index] & 0b0010) != 0;
         }
 
-        public Boolean IsYuke
+        public Boolean IsYuke(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[40] & 0b0100) != 0;
-            }
+            return this.HasProperties && (this.Properties[index] & 0b0100) != 0;
         }
 
-        public Boolean IsSelkie
+        public Boolean IsSelkie(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[48] & 0b1000) != 0;
-            }
+            return this.HasProperties && (this.Properties[index] & 0b1000) != 0;
         }
 
         public Boolean IsClavatWeapon
         {
             get
             {
-                return this.IsWeapon(25);
+                return this.IsWeapon(IndexClavat + 1);
             }
         }
 
@@ -212,7 +202,7 @@
         {
             get
             {
-                return this.IsChest(25);
+                return this.IsChest(IndexClavat + 1);
             }
         }
 
@@ -220,7 +210,7 @@
         {
             get
             {
-                return this.IsTribal(25);
+                return this.IsTribal(IndexClavat + 1);
             }
         }
 
@@ -228,7 +218,7 @@
         {
             get
             {
-                return this.IsAccessory(25);
+                return this.IsAccessory(IndexClavat + 1);
             }
         }
 
@@ -236,7 +226,7 @@
         {
             get
             {
-                return this.IsWeapon(33);
+                return this.IsWeapon(IndexLilty + 1);
             }
         }
 
@@ -244,7 +234,7 @@
         {
             get
             {
-                return this.IsChest(33);
+                return this.IsChest(IndexLilty + 1);
             }
         }
 
@@ -252,7 +242,7 @@
         {
             get
             {
-                return this.IsTribal(33);
+                return this.IsTribal(IndexLilty + 1);
             }
         }
 
@@ -260,7 +250,7 @@
         {
             get
             {
-                return this.IsAccessory(33);
+                return this.IsAccessory(IndexLilty + 1);
             }
         }
 
@@ -268,7 +258,7 @@
         {
             get
             {
-                return this.IsWeapon(41);
+                return this.IsWeapon(IndexYuke + 1);
             }
         }
 
@@ -276,7 +266,7 @@
         {
             get
             {
-                return this.IsChest(41);
+                return this.IsChest(IndexYuke + 1);
             }
         }
 
@@ -284,7 +274,7 @@
         {
             get
             {
-                return this.IsTribal(41);
+                return this.IsTribal(IndexYuke + 1);
             }
         }
 
@@ -292,7 +282,7 @@
         {
             get
             {
-                return this.IsAccessory(41);
+                return this.IsAccessory(IndexYuke + 1);
             }
         }
 
@@ -300,7 +290,7 @@
         {
             get
             {
-                return this.IsWeapon(49);
+                return this.IsWeapon(IndexSelkie + 1);
             }
         }
 
@@ -308,7 +298,7 @@
         {
             get
             {
-                return this.IsChest(49);
+                return this.IsChest(IndexSelkie + 1);
             }
         }
 
@@ -316,7 +306,7 @@
         {
             get
             {
-                return this.IsTribal(49);
+                return this.IsTribal(IndexSelkie + 1);
             }
         }
 
@@ -324,7 +314,7 @@
         {
             get
             {
-                return this.IsAccessory(49);
+                return this.IsAccessory(IndexSelkie + 1);
             }
         }
 
@@ -360,20 +350,20 @@
             return this.HasProperties && (this.Properties[index] & 0b1111) == 0;
         }
 
-        public Boolean IsFemale
+        public Boolean IsMale(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[32] & 0b100000) != 0;
-            }
+            Boolean maleOnly = (this.Properties[index] & 0b010000) != 0;
+            Boolean femaleOnly = (this.Properties[index] & 0b100000) != 0;
+
+            return this.HasProperties && (maleOnly || !femaleOnly);
         }
 
-        public Boolean IsMale
+        public Boolean IsFemale(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && ((this.Properties[32] & 0b010000) != 0 || !this.IsFemale);
-            }
+            Boolean maleOnly = (this.Properties[index] & 0b010000) != 0;
+            Boolean femaleOnly = (this.Properties[index] & 0b100000) != 0;
+
+            return this.HasProperties && (femaleOnly || !maleOnly);
         }
 
         private Boolean HasProperties
