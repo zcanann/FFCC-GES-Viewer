@@ -36,7 +36,7 @@
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToInt32(this.Properties, 0)) : 0;
+                return this.HasProperties ? BitConverter.ToInt32(this.Properties, 0) : 0;
             }
         }
 
@@ -132,7 +132,7 @@
         {
             get
             {
-                return (this.IsClavat && this.IsFemale) || (this.IsClassless && this.IsFemale); // TODO
+                return (this.IsClavat && this.IsFemale) || (this.IsClassless && this.IsFemale);
             }
         }
 
@@ -172,7 +172,7 @@
         {
             get
             {
-                return this.HasProperties && (this.Properties[32] & 0b0001) != 0;
+                return this.HasProperties && (this.Properties[24] & 0b0001) != 0;
             }
         }
 
@@ -188,7 +188,7 @@
         {
             get
             {
-                return this.HasProperties && (this.Properties[32] & 0b0100) != 0;
+                return this.HasProperties && (this.Properties[40] & 0b0100) != 0;
             }
         }
 
@@ -196,52 +196,168 @@
         {
             get
             {
-                return this.HasProperties && (this.Properties[32] & 0b1000) != 0;
+                return this.HasProperties && (this.Properties[48] & 0b1000) != 0;
+            }
+        }
+
+        public Boolean IsClavatWeapon
+        {
+            get
+            {
+                return this.IsWeapon(25);
+            }
+        }
+
+        public Boolean IsClavatChest
+        {
+            get
+            {
+                return this.IsChest(25);
+            }
+        }
+
+        public Boolean IsClavatTribal
+        {
+            get
+            {
+                return this.IsTribal(25);
+            }
+        }
+
+        public Boolean IsClavatAccessory
+        {
+            get
+            {
+                return this.IsAccessory(25);
+            }
+        }
+
+        public Boolean IsLiltyWeapon
+        {
+            get
+            {
+                return this.IsWeapon(33);
+            }
+        }
+
+        public Boolean IsLiltyChest
+        {
+            get
+            {
+                return this.IsChest(33);
+            }
+        }
+
+        public Boolean IsLiltyTribal
+        {
+            get
+            {
+                return this.IsTribal(33);
+            }
+        }
+
+        public Boolean IsLiltyAccessory
+        {
+            get
+            {
+                return this.IsAccessory(33);
+            }
+        }
+
+        public Boolean IsYukeWeapon
+        {
+            get
+            {
+                return this.IsWeapon(41);
+            }
+        }
+
+        public Boolean IsYukeChest
+        {
+            get
+            {
+                return this.IsChest(41);
+            }
+        }
+
+        public Boolean IsYukeTribal
+        {
+            get
+            {
+                return this.IsTribal(41);
+            }
+        }
+
+        public Boolean IsYukeAccessory
+        {
+            get
+            {
+                return this.IsAccessory(41);
+            }
+        }
+
+        public Boolean IsSelkieWeapon
+        {
+            get
+            {
+                return this.IsWeapon(49);
+            }
+        }
+
+        public Boolean IsSelkieChest
+        {
+            get
+            {
+                return this.IsChest(49);
+            }
+        }
+
+        public Boolean IsSelkieTribal
+        {
+            get
+            {
+                return this.IsTribal(49);
+            }
+        }
+
+        public Boolean IsSelkieAccessory
+        {
+            get
+            {
+                return this.IsAccessory(49);
             }
         }
 
         /// <summary>
         /// Highest priority
         /// </summary>
-        public Boolean IsWeapon
+        public Boolean IsWeapon(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[33] & 0b0001) != 0;
-            }
+            return this.HasProperties && (this.Properties[index] & 0b0001) != 0;
         }
 
         /// <summary>
         /// Two flags represent chest. One is higher priority than tribal, but one is less.
         /// </summary>
-        public Boolean IsChest
+        public Boolean IsChest(Int32 index)
         {
-            get
-            {
-                return this.HasProperties
-                    && !this.IsWeapon
-                    && ((this.Properties[33] & 0b0100) != 0 // Higher priority flag (4)
-                        || (((this.Properties[33] & 0b1000) != 0) && (this.Properties[33] & 0b0010) == 0)); // Lower priority flag (8), contingent on no tribal flag (2)
-            }
+            return this.HasProperties
+                && !this.IsWeapon(index)
+                && ((this.Properties[index] & 0b0100) != 0 // Higher priority flag (4)
+                    || (((this.Properties[index] & 0b1000) != 0) && (this.Properties[index] & 0b0010) == 0)); // Lower priority flag (8), contingent on no tribal flag (2)
         }
 
-        public Boolean IsTribal
+        public Boolean IsTribal(Int32 index)
         {
-            get
-            {
-                return this.HasProperties 
-                    && !this.IsWeapon
-                    && !this.IsChest
-                    && (this.Properties[33] & 0b0010) != 0;
-            }
+            return this.HasProperties 
+                && !this.IsWeapon(index)
+                && !this.IsChest(index)
+                && (this.Properties[index] & 0b0010) != 0;
         }
 
-        public Boolean IsAccessory
+        public Boolean IsAccessory(Int32 index)
         {
-            get
-            {
-                return this.HasProperties && (this.Properties[33] & 0b1111) == 0;
-            }
+            return this.HasProperties && (this.Properties[index] & 0b1111) == 0;
         }
 
         public Boolean IsFemale

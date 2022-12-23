@@ -1,6 +1,7 @@
 ﻿namespace GES.Source.Mvvm.Converters
 {
     using GES.Content;
+    using GES.Source.CraftViewer;
     using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
     using System;
@@ -31,26 +32,29 @@
             }
 
             EquipmentEntry equipmentEntry = value as EquipmentEntry;
+            CraftEntry craftEntry = value as CraftEntry;
 
-            if (equipmentEntry != null && equipmentEntry.Parent != null)
+            if ((equipmentEntry == null || equipmentEntry.Parent == null) && (craftEntry == null || craftEntry.Parent == null))
             {
-                Int32 playerId = equipmentEntry.Parent.PlayerIndex;
+                return null;
+            }
 
-                if (InventoryViewerViewModel.GetInstance().PlayerToSlotMap.ContainsKey(playerId))
+            UInt16 inventorySlot = equipmentEntry != null ? equipmentEntry.ItemSlotId : craftEntry.ItemSlotId;
+            Int32 playerId = equipmentEntry != null ? equipmentEntry.Parent.PlayerIndex : craftEntry.Parent.PlayerIndex;
+
+            if (InventoryViewerViewModel.GetInstance().PlayerToSlotMap.ContainsKey(playerId))
+            {
+                Int32 playerSlotId = InventoryViewerViewModel.GetInstance().PlayerToSlotMap[playerId];
+
+                PlayerSlotDataView slotDataView = InventoryViewerViewModel.GetInstance().PlayerSlots.ElementAtOrDefault(playerSlotId);
+
+                if (slotDataView != null && slotDataView.Slot != null)
                 {
-                    UInt16 inventorySlot = equipmentEntry.ItemSlotId;
-                    Int32 playerSlotId = InventoryViewerViewModel.GetInstance().PlayerToSlotMap[playerId];
-
-                    PlayerSlotDataView slotDataView = InventoryViewerViewModel.GetInstance().PlayerSlots.ElementAtOrDefault(playerSlotId);
-
-                    if (slotDataView != null && slotDataView.Slot != null)
+                    if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Length)
                     {
-                        if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Length)
-                        {
-                            UInt16 itemId = slotDataView.Slot.rawItems[inventorySlot].ItemId;
+                        UInt16 itemId = slotDataView.Slot.rawItems[inventorySlot].ItemId;
 
-                            return itemToNameConverter.Convert(itemId, targetType, parameter, culture);
-                        }
+                        return itemToNameConverter.Convert(itemId, targetType, parameter, culture);
                     }
                 }
             }
