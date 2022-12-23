@@ -93,11 +93,35 @@
             }
         }
 
-        public UInt16 CraftedItemIdVisualFake
+        public UInt16 CraftedItemIdVisualFakeClavat
         {
             get
             {
-                return this.HasProperties ? BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(this.Properties, 18)) : (UInt16)0;
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 16) : (UInt16)0;
+            }
+        }
+
+        public UInt16 CraftedItemIdVisualFakeLilty
+        {
+            get
+            {
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 18) : (UInt16)0;
+            }
+        }
+
+        public UInt16 CraftedItemIdVisualFakeYuke
+        {
+            get
+            {
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 20) : (UInt16)0;
+            }
+        }
+
+        public UInt16 CraftedItemIdVisualFakeSelkie
+        {
+            get
+            {
+                return this.HasProperties ? BitConverter.ToUInt16(this.Properties, 22) : (UInt16)0;
             }
         }
 

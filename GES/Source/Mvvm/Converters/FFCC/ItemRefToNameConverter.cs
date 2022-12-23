@@ -58,6 +58,10 @@
                         case "Req1": return itemToNameConverter.Convert(craftEntry.RequiredItem1, targetType, null, culture);
                         case "Req2": return itemToNameConverter.Convert(craftEntry.RequiredItem2, targetType, null, culture);
                         case "Req3": return itemToNameConverter.Convert(craftEntry.RequiredItem3, targetType, null, culture);
+                        case "CraftedClavat": return itemToNameConverter.Convert(craftEntry.CraftedItemIdVisualFakeClavat, targetType, null, culture);
+                        case "CraftedLilty": return itemToNameConverter.Convert(craftEntry.CraftedItemIdVisualFakeLilty, targetType, null, culture);
+                        case "CraftedYuke": return itemToNameConverter.Convert(craftEntry.CraftedItemIdVisualFakeYuke, targetType, null, culture);
+                        case "CraftedSelkie": return itemToNameConverter.Convert(craftEntry.CraftedItemIdVisualFakeSelkie, targetType, null, culture);
                         default: break;
                     }
                 }

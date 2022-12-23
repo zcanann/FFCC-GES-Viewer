@@ -16,30 +16,78 @@
 
             if (CraftEntry != null && paramString != null)
             {
-                if (paramString.Equals("Weapon", StringComparison.OrdinalIgnoreCase))
+                if (paramString.Equals("Clavat", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (CraftEntry.IsClavatWeapon)
+                    {
+                        return Images.Icon_WeaponClavat;
+                    }
+                    else if (CraftEntry.IsClavatChest)
+                    {
+                        return Images.Icon_Chest;
+                    }
+                    else if (CraftEntry.IsClavatTribal)
+                    {
+                        return Images.Icon_TribalClavat;
+                    }
+                    else if (CraftEntry.IsClavatAccessory)
+                    {
+                        return Images.Icon_Accessory;
+                    }
+                }
+                else if (paramString.Equals("Lilty", StringComparison.OrdinalIgnoreCase))
                 {
                     if (CraftEntry.IsLiltyWeapon)
                     {
                         return Images.Icon_WeaponClavat;
                     }
-                }
-                else if (paramString.Equals("Chest", StringComparison.OrdinalIgnoreCase))
-                {
-                    if (CraftEntry.IsLiltyChest)
+                    else if (CraftEntry.IsLiltyChest)
                     {
                         return Images.Icon_Chest;
                     }
-                }
-                else if (paramString.Equals("Tribal", StringComparison.OrdinalIgnoreCase))
-                {
-                    if (CraftEntry.IsLiltyTribal)
+                    else if (CraftEntry.IsLiltyTribal)
                     {
                         return Images.Icon_TribalClavat;
                     }
+                    else if (CraftEntry.IsLiltyAccessory)
+                    {
+                        return Images.Icon_Accessory;
+                    }
                 }
-                else if (paramString.Equals("Accessory", StringComparison.OrdinalIgnoreCase))
+                else if (paramString.Equals("Yuke", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (CraftEntry.IsLiltyAccessory)
+                    if (CraftEntry.IsYukeWeapon)
+                    {
+                        return Images.Icon_WeaponClavat;
+                    }
+                    else if (CraftEntry.IsYukeChest)
+                    {
+                        return Images.Icon_Chest;
+                    }
+                    else if (CraftEntry.IsYukeTribal)
+                    {
+                        return Images.Icon_TribalClavat;
+                    }
+                    else if (CraftEntry.IsYukeAccessory)
+                    {
+                        return Images.Icon_Accessory;
+                    }
+                }
+                else if (paramString.Equals("Selkie", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (CraftEntry.IsSelkieWeapon)
+                    {
+                        return Images.Icon_WeaponClavat;
+                    }
+                    else if (CraftEntry.IsSelkieChest)
+                    {
+                        return Images.Icon_Chest;
+                    }
+                    else if (CraftEntry.IsSelkieTribal)
+                    {
+                        return Images.Icon_TribalClavat;
+                    }
+                    else if (CraftEntry.IsSelkieAccessory)
                     {
                         return Images.Icon_Accessory;
                     }
