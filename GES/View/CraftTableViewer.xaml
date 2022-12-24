@@ -89,7 +89,6 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTemplateColumn
-                    Width="128"
                     CellStyle="{StaticResource NoFocus}"
                     Header="Item Id"
                     IsReadOnly="True">

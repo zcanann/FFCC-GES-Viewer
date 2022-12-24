@@ -77,7 +77,7 @@ namespace GES.Source.CraftTableViewer
                 this.rawItems[index].LiltyCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 2));
                 this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 4));
                 this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 6));
-                this.rawItems[index].Index = (Byte)index;
+                this.rawItems[index].Index = (UInt16)index;
             }
         }
     }
