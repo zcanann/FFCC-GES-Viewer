@@ -54,7 +54,7 @@
 
         private UInt64[] slotDataAddressesPAL = new UInt64[SlotCount]
         {
-            0x220438,
+            0x223350,
             0x220EC0,
             0x221AF0,
             0x222720,

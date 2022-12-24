@@ -26,7 +26,7 @@
 
         private UInt64 CraftListAddressEN = 0x38800;
         private UInt64 CraftListAddressJP = 0x32800;
-        private UInt64 CraftListAddressPal = 0x38800; // TODO
+        private UInt64 CraftListAddressPal = 0x3A800;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="CraftViewerViewModel" /> class from being created.
