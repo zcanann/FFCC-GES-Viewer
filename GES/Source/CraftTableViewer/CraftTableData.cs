@@ -19,10 +19,10 @@ namespace GES.Source.CraftTableViewer
         public UInt16 Index { get; set; }
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x04BA * 48)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x04BA * 72)]
     public class CraftTableDataSerializable
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x04BA * 48)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x04BA * 72)]
         public Byte[] rawCraftTableSlots;
     }
 
@@ -36,6 +36,8 @@ namespace GES.Source.CraftTableViewer
         public CraftTableDataSerializable SerializableData { get; set; }
 
         public RawCraftTableItemEntry[] rawItems;
+
+        const Int32 StructSize = 72;
 
         public static void Deserialize(CraftTableData entry, Byte[] bytes)
         {
@@ -63,20 +65,20 @@ namespace GES.Source.CraftTableViewer
         {
             if (this.rawItems == null)
             {
-                this.rawItems = new RawCraftTableItemEntry[bytes.Length / 48];
+                this.rawItems = new RawCraftTableItemEntry[bytes.Length / StructSize];
             }
 
-            for (Int32 index = 0; index < bytes.Length / 48; index++)
+            for (Int32 index = 0; index < bytes.Length / StructSize; index++)
             {
                 if (this.rawItems[index] == null)
                 {
                     this.rawItems[index] = new RawCraftTableItemEntry();
                 }
 
-                this.rawItems[index].ClavatCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 0));
-                this.rawItems[index].LiltyCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 2));
-                this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 4));
-                this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 6));
+                this.rawItems[index].ClavatCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 0));
+                this.rawItems[index].LiltyCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 2));
+                this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 4));
+                this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 6));
                 this.rawItems[index].Index = (UInt16)index;
             }
         }

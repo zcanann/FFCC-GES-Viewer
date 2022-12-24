@@ -10,11 +10,6 @@
     {
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            if (parameter != null)
-            {
-                value = parameter;
-            }
-
             if (value is UInt16)
             {
                 UInt16 itemId  = (UInt16) value;

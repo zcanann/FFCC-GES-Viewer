@@ -11,8 +11,6 @@
 
     public class ItemRefToIdConverter : IValueConverter
     {
-        private IntToHexConverter hexConverter = new IntToHexConverter();
-
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             EquipmentEntry equipmentEntry = value as EquipmentEntry;
@@ -48,7 +46,7 @@
                 {
                     if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Length)
                     {
-                        return hexConverter.Convert(slotDataView.Slot.rawItems[inventorySlot].ItemId, targetType, parameter, culture);
+                        return slotDataView.Slot.rawItems[inventorySlot].ItemId;
                     }
                 }
             }

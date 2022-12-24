@@ -273,11 +273,13 @@
                                             Margin="4,0,4,0"
                                             Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
                                             Text="→" />
-                                        <Image
-                                            Width="16"
-                                            Height="16"
-                                            HorizontalAlignment="Left"
-                                            Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                        <Border Background="#ffe7b5">
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Left"
+                                                Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                        </Border>
                                         <TextBlock
                                             Margin="4,0,0,0"
                                             Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"

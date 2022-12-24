@@ -25,7 +25,7 @@
         /// </summary>
         private static CraftTableViewerViewModel actorReferenceCountVisualizerInstance = new CraftTableViewerViewModel();
 
-        private UInt64 craftTableAddressEN = 0x954B48;
+        private UInt64 craftTableAddressEN = 0x00954B78;
         private UInt64 craftTableAddressJP = 0x00954B78; // TODO
         private UInt64 craftTableAddressPAL = 0x00954B78; // TODO
 
@@ -148,6 +148,8 @@
                 {
                     this.CraftTable.CraftTableData.Refresh(this.RawCraftDataBytes);
                     this.CraftTable.RefreshAllProperties();
+
+                    CraftViewerViewModel.GetInstance().ExternalRefreshAll();
                 }
 
                 this.RawCraftDataBytes.CopyTo(this.CachedRawCraftDataBytes, 0);

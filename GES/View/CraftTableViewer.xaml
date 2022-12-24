@@ -100,7 +100,7 @@
                                         <Image
                                             Width="16"
                                             Height="16"
-                                            Source="{Binding Path=ClavatCraftedItem, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                            Source="{Binding Path=Index, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                     </Border>
                                     <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
                                     <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
