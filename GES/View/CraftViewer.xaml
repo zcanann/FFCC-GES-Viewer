@@ -54,7 +54,7 @@
             True="Visible" />
     </Control.Resources>
     <Grid Background="{StaticResource GESColorPanel}">
-        <TabControl Background="{StaticResource GESColorPanel}" SelectedIndex="1">
+        <TabControl Background="{StaticResource GESColorPanel}" SelectedIndex="0">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="BorderThickness" Value="0" />
