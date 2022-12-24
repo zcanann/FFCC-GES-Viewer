@@ -17,6 +17,9 @@
     x:ClassModifier="public"
     DataContext="{Binding InventoryViewerViewModel, Source={StaticResource ViewModelLocator}}"
     mc:Ignorable="d">
+    <x:Code>
+        <![CDATA[ public InventoryViewer() { InitializeComponent(); }]]>
+    </x:Code>
     <Grid Background="{StaticResource GESColorPanel}">
         <Grid.Resources>
             <converters:UInt64ToAddressConverter x:Key="IntPtrToAddressConverter" />
