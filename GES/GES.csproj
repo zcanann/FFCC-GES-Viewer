@@ -329,6 +329,9 @@
     <Page Update="View\EquipmentViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Page Update="View\CraftTableViewer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="View\MainWindow.xaml">
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>

@@ -25,14 +25,14 @@
         /// </summary>
         private static CraftTableViewerViewModel actorReferenceCountVisualizerInstance = new CraftTableViewerViewModel();
 
-        private UInt64 craftTableAddressEN = 0x00954B78;
+        private UInt64 craftTableAddressEN = 0x954B48;
         private UInt64 craftTableAddressJP = 0x00954B78; // TODO
         private UInt64 craftTableAddressPAL = 0x00954B78; // TODO
 
         /// <summary>
         /// Prevents a default instance of the <see cref="CraftTableViewerViewModel" /> class from being created.
         /// </summary>
-        private CraftTableViewerViewModel() : base("CraftTable Viewer")
+        private CraftTableViewerViewModel() : base("Craft Table Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 

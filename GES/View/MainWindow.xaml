@@ -205,6 +205,11 @@
                             IsCheckable="True"
                             IsChecked="{Binding CraftViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
+                        <shell:MenuItem
+                            Header="Craft Table Viewer"
+                            IsCheckable="True"
+                            IsChecked="{Binding CraftTableViewerViewModel.IsVisible, Mode=TwoWay}"
+                            Style="{Binding .}" />
                     </shell:MenuItem>
                 </shell:Menu>
             </shell:Grid>
@@ -311,6 +316,12 @@
                                 <view:CraftViewer />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.CraftViewerViewTemplate>
+                        <!--  Craft Table Viewer  -->
+                        <view:ViewTemplateSelector.CraftTableViewerViewTemplate>
+                            <shell:DataTemplate>
+                                <view:CraftTableViewer />
+                            </shell:DataTemplate>
+                        </view:ViewTemplateSelector.CraftTableViewerViewTemplate>
                         <!--  Process Selector  -->
                         <view:ViewTemplateSelector.ProcessSelectorViewTemplate>
                             <shell:DataTemplate>

@@ -16,7 +16,7 @@ namespace GES.Source.CraftTableViewer
 
         public UInt16 SelkieCraftedItem { get; set; }
 
-        public Byte Index { get; set; }
+        public UInt16 Index { get; set; }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x04BA * 48)]
@@ -73,10 +73,10 @@ namespace GES.Source.CraftTableViewer
                     this.rawItems[index] = new RawCraftTableItemEntry();
                 }
 
-                this.rawItems[index].ClavatCraftedItem = BitConverter.ToUInt16(bytes, index * 48 + 0);
-                this.rawItems[index].LiltyCraftedItem = BitConverter.ToUInt16(bytes, index * 48 + 2);
-                this.rawItems[index].YukeCraftedItem = BitConverter.ToUInt16(bytes, index * 48 + 4);
-                this.rawItems[index].SelkieCraftedItem = BitConverter.ToUInt16(bytes, index * 48 + 6);
+                this.rawItems[index].ClavatCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 0));
+                this.rawItems[index].LiltyCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 2));
+                this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 4));
+                this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * 48 + 6));
                 this.rawItems[index].Index = (Byte)index;
             }
         }
