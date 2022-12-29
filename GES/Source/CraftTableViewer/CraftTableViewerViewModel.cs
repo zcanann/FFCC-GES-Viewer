@@ -25,9 +25,9 @@
         /// </summary>
         private static CraftTableViewerViewModel actorReferenceCountVisualizerInstance = new CraftTableViewerViewModel();
 
-        private UInt64 craftTableAddressEN = 0x00954B78;
-        private UInt64 craftTableAddressJP = 0x00979FF8;
-        private UInt64 craftTableAddressPAL = 0x00955BF8;
+        private UInt64 craftTableAddressEN = 0x00954B78 - 72; // TODO: Verify -72
+        private UInt64 craftTableAddressJP = 0x00979FB8;
+        private UInt64 craftTableAddressPAL = 0x00955BF8 - 72; // TODO: Verify -72
 
         /// <summary>
         /// Prevents a default instance of the <see cref="CraftTableViewerViewModel" /> class from being created.

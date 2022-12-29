@@ -84,6 +84,35 @@
                 }
             }
 
+            if (value is Byte)
+            {
+                Byte slotValue = (Byte) value;
+
+                if (slotValue != 255)
+                {
+                    if ((slotValue & 1) != 0)
+                    {
+                        return Images.Icon_WeaponClavat;
+                    }
+                    else if ((slotValue & 4) != 0)
+                    {
+                        return Images.Icon_Chest;
+                    }
+                    else if ((slotValue & 2) != 0)
+                    {
+                        return Images.Icon_TribalClavat;
+                    }
+                    else if (slotValue == 16)
+                    {
+                        return Images.Icon_Accessory;
+                    }
+                    else if ((slotValue & 8) != 0)
+                    {
+                        return Images.Icon_TribalClavat;
+                    }
+                }
+            }
+
             return null;
         }
 

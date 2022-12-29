@@ -25,6 +25,7 @@
             <converters:UInt64ToAddressConverter x:Key="IntPtrToAddressConverter" />
             <converters:IntToHexConverter x:Key="IntToHexConverter" />
             <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
+            <converters:EquipmentSlotIconConverter x:Key="EquipmentSlotIconConverter" />
             <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
             <converters:ItemToNameConverter x:Key="ItemToNameConverter" />
             <converters:ExtendedInventorySlotToColorConverter x:Key="ExtendedInventorySlotToColorConverter" />
@@ -89,8 +90,9 @@
             </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTemplateColumn
+                    Width="Auto"
                     CellStyle="{StaticResource NoFocus}"
-                    Header="Item Id"
+                    Header="Item"
                     IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -106,6 +108,120 @@
                                     <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Fx Id"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=ModelFx, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Model Id"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=ModelId, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="B16"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=B16, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="B17"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=B17, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Slot"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Margin="4,0,0,0" Background="#ffe7b5">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{Binding Path=Slot, Converter={StaticResource EquipmentSlotIconConverter}, Mode=OneWay}" />
+                                </Border>
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Slot, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Str"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Strength, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Def"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Defense, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Mag"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Magic, Mode=OneWay}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Focus"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Focus, Mode=OneWay}" />
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
