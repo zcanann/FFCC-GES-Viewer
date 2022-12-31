@@ -1,31 +1,31 @@
 ﻿
-namespace GES.Source.CraftTableViewer
+namespace GES.Source.ItemCatalogViewer
 {
     using GES.Source.Mvvm.Converters;
     using System;
     using System.ComponentModel;
 
-    public class CraftTableDataView : INotifyPropertyChanged
+    public class ItemCatalogDataView : INotifyPropertyChanged
     {
-        public CraftTableDataView(CraftTableData craftTableData)
+        public ItemCatalogDataView(ItemCatalogData ItemCatalogData)
         {
-            this.CraftTableData = craftTableData;
+            this.ItemCatalogData = ItemCatalogData;
         }
 
-        public CraftTableData CraftTableData { get; set; }
+        public ItemCatalogData ItemCatalogData { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public RawCraftTableItemEntry[] RawItems
+        public RawItemCatalogItemEntry[] RawItems
         {
             get
             {
-                return this.CraftTableData.rawItems;
+                return this.ItemCatalogData.rawItems;
             }
 
             set
             {
-                this.CraftTableData.rawItems = value;
+                this.ItemCatalogData.rawItems = value;
             }
         }
 

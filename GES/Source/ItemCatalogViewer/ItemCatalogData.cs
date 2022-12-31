@@ -1,12 +1,12 @@
 ﻿
-namespace GES.Source.CraftTableViewer
+namespace GES.Source.ItemCatalogViewer
 {
     using GES.Source.EquipmentViewer;
     using System;
     using System.Buffers.Binary;
     using System.Runtime.InteropServices;
 
-    public class RawCraftTableItemEntry
+    public class RawItemCatalogItemEntry
     {
         public UInt16 ClavatCraftedItem { get; set; }
 
@@ -16,9 +16,9 @@ namespace GES.Source.CraftTableViewer
 
         public UInt16 SelkieCraftedItem { get; set; }
 
-        public Byte B16 { get; set; }
+        public UInt16 BaseItemId { get; set; }
 
-        public Byte B17 { get; set; }
+        public Byte Tribe { get; set; }
 
         public Byte ModelFx { get; set; } // 18
 
@@ -40,26 +40,26 @@ namespace GES.Source.CraftTableViewer
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x04BA * 72)]
-    public class CraftTableDataSerializable
+    public class ItemCatalogDataSerializable
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x04BA * 72)]
-        public Byte[] rawCraftTableSlots;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x04B5 * 72)]
+        public Byte[] rawItemCatalogSlots;
     }
 
-    public class CraftTableData
+    public class ItemCatalogData
     {
-        public CraftTableData()
+        public ItemCatalogData()
         {
-            this.SerializableData = new CraftTableDataSerializable();
+            this.SerializableData = new ItemCatalogDataSerializable();
         }
 
-        public CraftTableDataSerializable SerializableData { get; set; }
+        public ItemCatalogDataSerializable SerializableData { get; set; }
 
-        public RawCraftTableItemEntry[] rawItems;
+        public RawItemCatalogItemEntry[] rawItems;
 
         const Int32 StructSize = 72;
 
-        public static void Deserialize(CraftTableData entry, Byte[] bytes)
+        public static void Deserialize(ItemCatalogData entry, Byte[] bytes)
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
 
@@ -69,10 +69,10 @@ namespace GES.Source.CraftTableViewer
                 {
                     if (entry.SerializableData == null)
                     {
-                        entry.SerializableData = new CraftTableDataSerializable();
+                        entry.SerializableData = new ItemCatalogDataSerializable();
                     }
 
-                    Marshal.PtrToStructure<CraftTableDataSerializable>(handle.AddrOfPinnedObject(), entry.SerializableData);
+                    Marshal.PtrToStructure<ItemCatalogDataSerializable>(handle.AddrOfPinnedObject(), entry.SerializableData);
                 }
             }
             finally
@@ -85,21 +85,21 @@ namespace GES.Source.CraftTableViewer
         {
             if (this.rawItems == null)
             {
-                this.rawItems = new RawCraftTableItemEntry[bytes.Length / StructSize];
+                this.rawItems = new RawItemCatalogItemEntry[bytes.Length / StructSize];
             }
 
             for (Int32 index = 0; index < bytes.Length / StructSize; index++)
             {
                 if (this.rawItems[index] == null)
                 {
-                    this.rawItems[index] = new RawCraftTableItemEntry();
+                    this.rawItems[index] = new RawItemCatalogItemEntry();
                 }
 
-                this.rawItems[index].B16 = bytes[index * StructSize + 8];
-                this.rawItems[index].B17 = bytes[index * StructSize + 9];
+                this.rawItems[index].BaseItemId = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 8));
                 this.rawItems[index].ModelFx = bytes[index * StructSize + 10];
                 this.rawItems[index].ModelId = bytes[index * StructSize + 11];
                 this.rawItems[index].Slot = bytes[index * StructSize + 12];
+                this.rawItems[index].Tribe = bytes[index * StructSize + 13];
                 this.rawItems[index].StatBoost = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 14));
                 this.rawItems[index].Focus = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 16));
                 this.rawItems[index].ClavatCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 64));
@@ -108,7 +108,7 @@ namespace GES.Source.CraftTableViewer
                 this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 70));
                 this.rawItems[index].Index = (UInt16)index;
 
-                this.rawItems[index].Strength = this.rawItems[index].B16 == 0 ? this.rawItems[index].StatBoost : (UInt16)0;
+                // this.rawItems[index].Strength = this.rawItems[index].B16 == 0 ? this.rawItems[index].StatBoost : (UInt16)0;
             }
         }
     }

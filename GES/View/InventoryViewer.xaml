@@ -24,6 +24,7 @@
         <Grid.Resources>
             <converters:UInt64ToAddressConverter x:Key="IntPtrToAddressConverter" />
             <converters:IntToHexConverter x:Key="IntToHexConverter" />
+            <converters:IntToBinaryConverter x:Key="IntToBinaryConverter" />
             <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
             <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
 
@@ -116,7 +117,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -227,7 +228,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -338,7 +339,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -449,7 +450,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -560,7 +561,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -671,7 +672,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -782,7 +783,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -893,7 +894,7 @@
                                     <TextBlock
                                         Margin="4,0,4,0"
                                         Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                        Text="{Binding Path=Index, Converter={StaticResource IntToBinaryConverter}, Mode=OneWay}" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

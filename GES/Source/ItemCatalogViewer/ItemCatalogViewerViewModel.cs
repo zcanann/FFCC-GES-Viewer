@@ -1,4 +1,4 @@
-﻿namespace GES.Source.CraftTableViewer
+﻿namespace GES.Source.ItemCatalogViewer
 {
     using GES.Engine.Common;
     using GES.Engine.Common.DataStructures;
@@ -16,23 +16,23 @@
     using System.Windows;
 
     /// <summary>
-    /// View model for the Craft Table Visualizer.
+    /// View model for the Item Catalog Visualizer.
     /// </summary>
-    public class CraftTableViewerViewModel : ToolViewModel
+    public class ItemCatalogViewerViewModel : ToolViewModel
     {
         /// <summary>
         /// Singleton instance of the <see cref="ActorReferenceCountVisualizer" /> class.
         /// </summary>
-        private static CraftTableViewerViewModel actorReferenceCountVisualizerInstance = new CraftTableViewerViewModel();
+        private static ItemCatalogViewerViewModel actorReferenceCountVisualizerInstance = new ItemCatalogViewerViewModel();
 
-        private UInt64 craftTableAddressEN = 0x00954B78 - 72; // TODO: Verify -72
-        private UInt64 craftTableAddressJP = 0x00979FB8;
-        private UInt64 craftTableAddressPAL = 0x00955BF8 - 72; // TODO: Verify -72
+        private UInt64 ItemCatalogAddressEN = 0x00954B78 - 64;
+        private UInt64 ItemCatalogAddressJP = 0x00979FB8;
+        private UInt64 ItemCatalogAddressPAL = 0x00955BF8 - 64;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="CraftTableViewerViewModel" /> class from being created.
+        /// Prevents a default instance of the <see cref="ItemCatalogViewerViewModel" /> class from being created.
         /// </summary>
-        private CraftTableViewerViewModel() : base("Craft Table Viewer")
+        private ItemCatalogViewerViewModel() : base("Item Catalog")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
@@ -46,7 +46,7 @@
             this.CanUpdate = false;
         }
 
-        public CraftTableDataView CraftTable { get; private set; }
+        public ItemCatalogDataView ItemCatalog { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -58,12 +58,12 @@
         private Byte[] RawCraftDataBytes { get; set; }
 
         /// <summary>
-        /// Gets a singleton instance of the <see cref="CraftTableViewerViewModel"/> class.
+        /// Gets a singleton instance of the <see cref="ItemCatalogViewerViewModel"/> class.
         /// </summary>
         /// <returns>A singleton instance of the class.</returns>
-        public static CraftTableViewerViewModel GetInstance()
+        public static ItemCatalogViewerViewModel GetInstance()
         {
-            return CraftTableViewerViewModel.actorReferenceCountVisualizerInstance;
+            return ItemCatalogViewerViewModel.actorReferenceCountVisualizerInstance;
         }
 
         /// <summary>
@@ -104,21 +104,21 @@
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
 
-            UInt64 craftTableAddress;
+            UInt64 ItemCatalogAddress;
 
             switch (MainViewModel.GetInstance().SelectedVersion)
             {
                 default:
-                case MainViewModel.VersionJP: craftTableAddress = craftTableAddressJP; break;
-                case MainViewModel.VersionEN: craftTableAddress = craftTableAddressEN; break;
-                case MainViewModel.VersionPAL: craftTableAddress = craftTableAddressPAL; break;
+                case MainViewModel.VersionJP: ItemCatalogAddress = ItemCatalogAddressJP; break;
+                case MainViewModel.VersionEN: ItemCatalogAddress = ItemCatalogAddressEN; break;
+                case MainViewModel.VersionPAL: ItemCatalogAddress = ItemCatalogAddressPAL; break;
             }
 
-            UInt64 slotPointer = gameCubeMemoryBase + craftTableAddress;
+            UInt64 slotPointer = gameCubeMemoryBase + ItemCatalogAddress;
 
             if (this.RawCraftDataBytes == null)
             {
-                this.RawCraftDataBytes = new Byte[typeof(CraftTableDataSerializable).StructLayoutAttribute.Size];
+                this.RawCraftDataBytes = new Byte[typeof(ItemCatalogDataSerializable).StructLayoutAttribute.Size];
             }
 
             // Read the entire actor reference counting table
@@ -133,21 +133,21 @@
             {
                 if (this.CachedRawCraftDataBytes == null)
                 {
-                    this.CachedRawCraftDataBytes = new Byte[typeof(CraftTableDataSerializable).StructLayoutAttribute.Size];
+                    this.CachedRawCraftDataBytes = new Byte[typeof(ItemCatalogDataSerializable).StructLayoutAttribute.Size];
                 }
 
-                if (this.CraftTable == null)
+                if (this.ItemCatalog == null)
                 {
-                    this.CraftTable = new CraftTableDataView(new CraftTableData());
+                    this.ItemCatalog = new ItemCatalogDataView(new ItemCatalogData());
                 }
 
-                CraftTableData.Deserialize(this.CraftTable.CraftTableData, this.RawCraftDataBytes);
+                ItemCatalogData.Deserialize(this.ItemCatalog.ItemCatalogData, this.RawCraftDataBytes);
 
                 // Notify changes if new bytes differ from cached
                 if (!this.RawCraftDataBytes.SequenceEqual(this.CachedRawCraftDataBytes))
                 {
-                    this.CraftTable.CraftTableData.Refresh(this.RawCraftDataBytes);
-                    this.CraftTable.RefreshAllProperties();
+                    this.ItemCatalog.ItemCatalogData.Refresh(this.RawCraftDataBytes);
+                    this.ItemCatalog.RefreshAllProperties();
 
                     CraftViewerViewModel.GetInstance().ExternalRefreshAll();
                 }

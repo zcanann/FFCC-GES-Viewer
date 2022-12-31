@@ -1,6 +1,6 @@
 ﻿namespace GES.View
 {
-    using GES.Source.CraftTableViewer;
+    using GES.Source.ItemCatalogViewer;
     using GES.Source.CraftViewer;
     using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
@@ -45,7 +45,7 @@
         /// <summary>
         /// The template for the Craft Table Viewer.
         /// </summary>
-        private DataTemplate craftTableViewerViewTemplate;
+        private DataTemplate itemCatalogViewerViewTemplate;
 
         /// <summary>
         /// The template for the Craft Viewer.
@@ -153,17 +153,17 @@
         /// <summary>
         /// Gets or sets the template for the Craft Table Viewer.
         /// </summary>
-        public DataTemplate CraftTableViewerViewTemplate
+        public DataTemplate ItemCatalogViewerViewTemplate
         {
             get
             {
-                return this.craftTableViewerViewTemplate;
+                return this.itemCatalogViewerViewTemplate;
             }
 
             set
             {
-                this.craftTableViewerViewTemplate = value;
-                this.DataTemplates[typeof(CraftTableViewerViewModel)] = value;
+                this.itemCatalogViewerViewTemplate = value;
+                this.DataTemplates[typeof(ItemCatalogViewerViewModel)] = value;
             }
         }
 

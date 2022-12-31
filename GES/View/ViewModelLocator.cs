@@ -2,7 +2,7 @@
 {
     using GES.Source.Controls;
     using GES.Source.CraftViewer;
-    using GES.Source.CraftTableViewer;
+    using GES.Source.ItemCatalogViewer;
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
@@ -116,11 +116,11 @@
         /// <summary>
         /// Gets the Craft Table Viewer view model.
         /// </summary>
-        public CraftTableViewerViewModel CraftTableViewerViewModel
+        public ItemCatalogViewerViewModel ItemCatalogViewerViewModel
         {
             get
             {
-                return CraftTableViewerViewModel.GetInstance();
+                return ItemCatalogViewerViewModel.GetInstance();
             }
         }
 

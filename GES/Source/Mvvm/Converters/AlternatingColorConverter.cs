@@ -50,6 +50,24 @@
                     return AltBrush2;
                 }
             }
+            if (value is Int32)
+            {
+                Int32 slotId = (Int32)value;
+
+                if (slotId % 2 == 0)
+                {
+                    return AltBrush1;
+                }
+                else
+                {
+                    if (parameter as String == "HighContrast")
+                    {
+                        return AltBrush2HighContract;
+                    }
+
+                    return AltBrush2;
+                }
+            }
 
             return System.Windows.Media.Brushes.White;
         }

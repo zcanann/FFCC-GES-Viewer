@@ -1,7 +1,7 @@
 ﻿namespace GES.Source.Mvvm.Converters
 {
     using GES.Content;
-    using GES.Source.CraftTableViewer;
+    using GES.Source.ItemCatalogViewer;
     using GES.Source.CraftViewer;
     using System;
     using System.Globalization;
@@ -20,25 +20,25 @@
                 UInt16 itemId = (UInt16) itemIdObj;
 
                 string paramString = parameter as string;
-                RawCraftTableItemEntry[] craftTable = CraftTableViewerViewModel.GetInstance()?.CraftTable?.RawItems;
+                RawItemCatalogItemEntry[] ItemCatalog = ItemCatalogViewerViewModel.GetInstance()?.ItemCatalog?.RawItems;
 
-                if (paramString != null && craftTable != null && itemId < craftTable.Length)
+                if (paramString != null && ItemCatalog != null && itemId < ItemCatalog.Length)
                 {
                     if (paramString.Equals("Clavat", StringComparison.OrdinalIgnoreCase))
                     {
-                        return craftTable[itemId].ClavatCraftedItem;
+                        return ItemCatalog[itemId].ClavatCraftedItem;
                     }
                     else if (paramString.Equals("Lilty", StringComparison.OrdinalIgnoreCase))
                     {
-                        return craftTable[itemId].LiltyCraftedItem;
+                        return ItemCatalog[itemId].LiltyCraftedItem;
                     }
                     else if (paramString.Equals("Yuke", StringComparison.OrdinalIgnoreCase))
                     {
-                        return craftTable[itemId].YukeCraftedItem;
+                        return ItemCatalog[itemId].YukeCraftedItem;
                     }
                     else if (paramString.Equals("Selkie", StringComparison.OrdinalIgnoreCase))
                     {
-                        return craftTable[itemId].SelkieCraftedItem;
+                        return ItemCatalog[itemId].SelkieCraftedItem;
                     }
                 }
             }

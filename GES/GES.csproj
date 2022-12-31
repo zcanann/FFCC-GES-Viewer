@@ -329,7 +329,7 @@
     <Page Update="View\EquipmentViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-    <Page Update="View\CraftTableViewer.xaml">
+    <Page Update="View\ItemCatalogViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\MainWindow.xaml">
