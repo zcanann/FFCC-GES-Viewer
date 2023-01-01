@@ -13,7 +13,7 @@ namespace GES.Source.InventoryViewer
         public Int32 Index { get; set; }
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 214 + 512 + 65536 * 2)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 214  + 65536 * 2)]
     public class PlayerSlotDataSerializable
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
@@ -70,7 +70,7 @@ namespace GES.Source.InventoryViewer
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 162)]
         public Byte[] unknown6;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536 * 2)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536 * 2 - 512)]
         public Byte[] unknown7;
     }
 

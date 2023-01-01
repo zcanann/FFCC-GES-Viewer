@@ -12,6 +12,10 @@
     {
         public static readonly BitmapImage Icon_Accessory = Images.LoadImage("Items/Icon_Accessory.png");
         public static readonly BitmapImage Icon_Artifact = Images.LoadImage("Items/Icon_Artifact.png");
+        public static readonly BitmapImage Icon_Artifact_Blessing = Images.LoadImage("Items/Icon_ArtifactBlessing.png");
+        public static readonly BitmapImage Icon_Artifact_Pendent = Images.LoadImage("Items/Icon_ArtifactPendant.png");
+        public static readonly BitmapImage Icon_Artifact_Pocket = Images.LoadImage("Items/Icon_ArtifactPocket.png");
+        public static readonly BitmapImage Icon_Artifact_Ring = Images.LoadImage("Items/Icon_ArtifactRing.png");
         public static readonly BitmapImage Icon_Apple = Images.LoadImage("Items/Icon_Apple.png");
         public static readonly BitmapImage Icon_Barrel = Images.LoadImage("Items/Icon_Barrel.png");
         public static readonly BitmapImage Icon_Berries = Images.LoadImage("Items/Icon_Berries.png");

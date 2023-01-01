@@ -59,6 +59,10 @@
     <None Remove="Content\Images\Items\Icon_Accessory.png" />
     <None Remove="Content\Images\Items\Icon_Apple.png" />
     <None Remove="Content\Images\Items\Icon_Artifact.png" />
+    <None Remove="Content\Images\Items\Icon_ArtifactBlessing.png" />
+    <None Remove="Content\Images\Items\Icon_ArtifactPendant.png" />
+    <None Remove="Content\Images\Items\Icon_ArtifactPocket.png" />
+    <None Remove="Content\Images\Items\Icon_ArtifactRing.png" />
     <None Remove="Content\Images\Items\Icon_Barrel.png" />
     <None Remove="Content\Images\Items\Icon_Berries.png" />
     <None Remove="Content\Images\Items\Icon_Bread.png" />
@@ -210,6 +214,10 @@
     <Resource Include="Content\Images\Items\Icon_Accessory.png" />
     <Resource Include="Content\Images\Items\Icon_Apple.png" />
     <Resource Include="Content\Images\Items\Icon_Artifact.png" />
+    <Resource Include="Content\Images\Items\Icon_ArtifactBlessing.png" />
+    <Resource Include="Content\Images\Items\Icon_ArtifactPendant.png" />
+    <Resource Include="Content\Images\Items\Icon_ArtifactPocket.png" />
+    <Resource Include="Content\Images\Items\Icon_ArtifactRing.png" />
     <Resource Include="Content\Images\Items\Icon_Barrel.png" />
     <Resource Include="Content\Images\Items\Icon_Berries.png" />
     <Resource Include="Content\Images\Items\Icon_Bread.png" />
