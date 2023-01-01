@@ -41,7 +41,7 @@
         </Grid.RowDefinitions>
 
         <Grid Background="{StaticResource GESColorPanel}">
-            <TabControl Background="{StaticResource GESColorPanel}" SelectedIndex="0">
+            <TabControl Background="{StaticResource GESColorPanel}" SelectedIndex="{Binding InventoryViewerViewModel.ActiveSlot, Source={StaticResource ViewModelLocator}}">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="BorderThickness" Value="0" />

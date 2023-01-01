@@ -131,6 +131,8 @@
 
         public Dictionary<Int32, Int32> PlayerToSlotMap { get; private set; }
 
+        public Int32 ActiveSlot { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
         /// </summary>
@@ -256,7 +258,8 @@
                     // Notify changes if new bytes differ from cached
                     if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData))
                     {
-                        this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex);
+                        bool shouldRefresh = slotIndex == this.ActiveSlot;
+                        this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex, shouldRefresh);
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
 
                         foreach (var Next in this.PlayerToSlotMap)

@@ -105,16 +105,196 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn
-                    Width="*"
-                    Header="Health"
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Mob Id"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=MonsterId, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="STR"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Strength, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="MAG"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Magic, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="DEF"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Defense, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="HP"
                     IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Margin="4,0,0,0" Text="{Binding Path=Health, Mode=OneWay}" />
                                 <TextBlock Margin="4,0,0,0" Text=" / " />
-                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=MaxHealth, Mode=OneWay}" />
+                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=MaxHealth, Mode=OneWay}" />
                             </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Physical"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Physical, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Fire"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Fire, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Freeze"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Freeze, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Stun"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Stun, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Holy"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Holy, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Gravity"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Gravity, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Slow"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Slow, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="*"
+                    CellStyle="{StaticResource NoFocus}"
+                    Header="Stop"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Stop, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

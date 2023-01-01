@@ -129,7 +129,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public void Refresh(Byte[] bytes, Int32 playerSlotIndex)
+        public void Refresh(Byte[] bytes, Int32 playerSlotIndex, bool shouldRefresh)
         {
             // Pull out the full "out of bounds inventory" range that bleeds into other memory (artifacts, gil, etc)
             Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(214);
@@ -162,7 +162,7 @@ namespace GES.Source.InventoryViewer
                         refresh = true;
                     }
 
-                    if (refresh)
+                    if (refresh && shouldRefresh)
                     {
                         this.rawItems[index].Refresh();
                     }

@@ -21,13 +21,13 @@
     public class MonsterTableViewerViewModel : ToolViewModel
     {
         /// <summary>
-        /// Singleton instance of the <see cref="ActorReferenceCountVisualizer" /> class.
+        /// Singleton instance of the <see cref="MonsterTableViewerViewModel" /> class.
         /// </summary>
-        private static MonsterTableViewerViewModel actorReferenceCountVisualizerInstance = new MonsterTableViewerViewModel();
+        private static MonsterTableViewerViewModel monsterTableViewerInstance = new MonsterTableViewerViewModel();
 
-        private UInt64 MonsterTableAddressEN = 0x00242960; // TODO
+        private UInt64 MonsterTableAddressEN = 0x00226020;
         private UInt64 MonsterTableAddressJP = 0x00242960;
-        private UInt64 MonsterTableAddressPAL = 0x00242960; // TODO
+        private UInt64 MonsterTableAddressPAL = 0x00227060;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="MonsterTableViewerViewModel" /> class from being created.
@@ -63,7 +63,7 @@
         /// <returns>A singleton instance of the class.</returns>
         public static MonsterTableViewerViewModel GetInstance()
         {
-            return MonsterTableViewerViewModel.actorReferenceCountVisualizerInstance;
+            return MonsterTableViewerViewModel.monsterTableViewerInstance;
         }
 
         /// <summary>
