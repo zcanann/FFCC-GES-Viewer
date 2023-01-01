@@ -25,32 +25,33 @@
                 return String.Empty;
             }
 
+            String result = String.Empty;
+
             if (value is Byte)
             {
-                return System.Convert.ToString((Byte)value, 2);
+                result = System.Convert.ToString((Byte)value, 2);
             }
-
-            if (value is Int16)
+            else if (value is Int16)
             {
-                return System.Convert.ToString((Int16)value, 2);
+                result = System.Convert.ToString((Int16)value, 2);
             }
-
-            if (value is UInt16)
+            else if (value is UInt16)
             {
-                return System.Convert.ToString((UInt16)value, 2);
+                result = System.Convert.ToString((UInt16)value, 2);
             }
-
-            if (value is Int32)
+            else if (value is Int32)
             {
-                return System.Convert.ToString((Int32)value, 2);
+                result = System.Convert.ToString((Int32)value, 2);
             }
-
-            if (value is UInt32)
+            else if (value is UInt32)
             {
-                return System.Convert.ToString((UInt32)value, 2);
+                result = System.Convert.ToString((UInt32)value, 2);
             }
 
-            return String.Empty;
+            result = result.PadLeft(result.Length + (result.Length % 4 == 0 ? 0 : (4 - result.Length % 4)), '0');
+            result = System.Text.RegularExpressions.Regex.Replace(result, ".{4}", "$0 ");
+
+            return result;
         }
 
         /// <summary>

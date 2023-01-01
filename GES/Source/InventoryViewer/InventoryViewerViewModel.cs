@@ -11,6 +11,7 @@
     using GES.Source.Main;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
@@ -272,6 +273,45 @@
                     }
 
                     this.RawPlayerSlotData.CopyTo(this.CachedSlotData[slotIndex], 0);
+
+                    this.ReportHackCandidates(slotPointer, gameCubeMemoryBase, slotIndex);
+                }
+            }
+        }
+
+        static HashSet<UInt32> SeenValues = new HashSet<UInt32>();
+
+        private void ReportHackCandidates(UInt64 slotPointer, UInt64 gameCubeMemoryBase, Int32 slotIndex)
+        {
+            String FileName = "CLES.txt";
+
+            if (!File.Exists(FileName))
+            {
+                File.Create(FileName);
+            }
+
+            for (Int32 index = 0; index < this.PlayerSlots[slotIndex].Slot.rawItems.Length; index++)
+            {
+                if ((this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId >= 0x17D
+                    && this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId <= 0x188)
+                    || this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId == 0x0103
+                    || this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId == 0x0125)
+                {
+                    const UInt64 InvOffset = 214;
+
+                    UInt32 address = (UInt32)(0x80000000 + (slotPointer - gameCubeMemoryBase) + InvOffset + (UInt64)(index * 2));
+
+                    if (SeenValues.Contains(address))
+                    {
+                        continue;
+                    }
+
+                    SeenValues.Add(address);
+
+                    using (StreamWriter w = File.AppendText(FileName))
+                    {
+                        w.WriteLine(address.ToString("X"));
+                    }
                 }
             }
         }
