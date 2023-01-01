@@ -142,7 +142,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=BaseItemId, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

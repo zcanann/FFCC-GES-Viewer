@@ -6,6 +6,7 @@
     using System;
     using System.Globalization;
     using System.Windows.Data;
+    using GES.Engine.Common.DataStructures;
 
     public class CraftedItemIdConverter : IValueConverter
     {
@@ -20,9 +21,9 @@
                 UInt16 itemId = (UInt16) itemIdObj;
 
                 string paramString = parameter as string;
-                RawItemCatalogItemEntry[] ItemCatalog = ItemCatalogViewerViewModel.GetInstance()?.ItemCatalog?.RawItems;
+                FullyObservableCollection<RawItemCatalogItemEntry> ItemCatalog = ItemCatalogViewerViewModel.GetInstance()?.ItemCatalog?.RawItems;
 
-                if (paramString != null && ItemCatalog != null && itemId < ItemCatalog.Length)
+                if (paramString != null && ItemCatalog != null && itemId < ItemCatalog.Count)
                 {
                     if (paramString.Equals("Clavat", StringComparison.OrdinalIgnoreCase))
                     {

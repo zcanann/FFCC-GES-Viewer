@@ -290,7 +290,7 @@
                 File.Create(FileName);
             }
 
-            for (Int32 index = 0; index < this.PlayerSlots[slotIndex].Slot.rawItems.Length; index++)
+            for (Int32 index = 0; index < this.PlayerSlots[slotIndex].Slot.rawItems.Count; index++)
             {
                 if ((this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId >= 0x17D
                     && this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId <= 0x188)

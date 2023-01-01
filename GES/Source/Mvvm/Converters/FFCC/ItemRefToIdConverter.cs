@@ -44,7 +44,7 @@
 
                 if (slotDataView != null && slotDataView.Slot != null)
                 {
-                    if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Length)
+                    if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Count)
                     {
                         return slotDataView.Slot.rawItems[inventorySlot].ItemId;
                     }

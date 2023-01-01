@@ -206,7 +206,12 @@
                             IsChecked="{Binding CraftViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                         <shell:MenuItem
-                            Header="Craft Table Viewer"
+                            Header="Monster List Viewer"
+                            IsCheckable="True"
+                            IsChecked="{Binding MonsterTableViewerViewModel.IsVisible, Mode=TwoWay}"
+                            Style="{Binding .}" />
+                        <shell:MenuItem
+                            Header="Item Catalog Viewer"
                             IsCheckable="True"
                             IsChecked="{Binding ItemCatalogViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
@@ -316,7 +321,13 @@
                                 <view:CraftViewer />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.CraftViewerViewTemplate>
-                        <!--  Craft Table Viewer  -->
+                        <!--  Monster Table Viewer  -->
+                        <view:ViewTemplateSelector.MonsterTableViewerViewTemplate>
+                            <shell:DataTemplate>
+                                <view:MonsterTableViewer />
+                            </shell:DataTemplate>
+                        </view:ViewTemplateSelector.MonsterTableViewerViewTemplate>
+                        <!--  Item Catalog Viewer  -->
                         <view:ViewTemplateSelector.ItemCatalogViewerViewTemplate>
                             <shell:DataTemplate>
                                 <view:ItemCatalogViewer />

@@ -11,6 +11,7 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Controls;
+    using GES.Source.MonsterTableViewer;
 
     /// <summary>
     /// Provides the template required to view a pane.
@@ -41,6 +42,11 @@
         /// The template for the Inventory Viewer.
         /// </summary>
         private DataTemplate equipmentViewerViewTemplate;
+
+        /// <summary>
+        /// The template for the Monster Table Viewer.
+        /// </summary>
+        private DataTemplate monsterTableViewerViewTemplate;
 
         /// <summary>
         /// The template for the Craft Table Viewer.
@@ -147,6 +153,23 @@
             {
                 this.equipmentViewerViewTemplate = value;
                 this.DataTemplates[typeof(EquipmentViewerViewModel)] = value;
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets the template for the Monster Table Viewer.
+        /// </summary>
+        public DataTemplate MonsterTableViewerViewTemplate
+        {
+            get
+            {
+                return this.monsterTableViewerViewTemplate;
+            }
+
+            set
+            {
+                this.monsterTableViewerViewTemplate = value;
+                this.DataTemplates[typeof(MonsterTableViewerViewModel)] = value;
             }
         }
 

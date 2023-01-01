@@ -11,6 +11,7 @@
     using GES.Source.PropertyViewer;
     using GES.Source.Tasks;
     using Source.Main;
+    using GES.Source.MonsterTableViewer;
 
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -114,7 +115,18 @@
         }
 
         /// <summary>
-        /// Gets the Craft Table Viewer view model.
+        /// Gets the Monster Table Viewer view model.
+        /// </summary>
+        public MonsterTableViewerViewModel MonsterTableViewerViewModel
+        {
+            get
+            {
+                return MonsterTableViewerViewModel.GetInstance();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Item Catalog Viewer view model.
         /// </summary>
         public ItemCatalogViewerViewModel ItemCatalogViewerViewModel
         {

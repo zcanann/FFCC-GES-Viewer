@@ -1,16 +1,36 @@
 ﻿
 namespace GES.Source.InventoryViewer
 {
+    using GES.Engine.Common.DataStructures;
     using GES.Source.EquipmentViewer;
+    using GES.Source.ItemCatalogViewer;
     using System;
     using System.Buffers.Binary;
+    using System.ComponentModel;
     using System.Runtime.InteropServices;
 
-    public class RawItemEntry
+    public class RawItemEntry : INotifyPropertyChanged
     {
         public UInt16 ItemId { get; set; }
 
         public Int32 Index { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Refresh()
+        {
+            this.RaisePropertyChanged(nameof(this.ItemId));
+            this.RaisePropertyChanged(nameof(this.Index));
+        }
+
+        /// <summary>
+        /// Indicates that a given property in this project item has changed.
+        /// </summary>
+        /// <param name="propertyName">The name of the changed property.</param>
+        protected void RaisePropertyChanged(String propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 214  + 65536 * 2)]
@@ -85,7 +105,7 @@ namespace GES.Source.InventoryViewer
 
         public Int32 PlayerSlotIndex { get; set; }
 
-        public RawItemEntry[] rawItems;
+        public FullyObservableCollection<RawItemEntry> rawItems = new FullyObservableCollection<RawItemEntry>();
 
         public static void Deserialize(PlayerSlotData entry, Byte[] bytes)
         {
@@ -115,20 +135,38 @@ namespace GES.Source.InventoryViewer
             Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(214);
             Span<UInt16> inventoryBytesRaw = MemoryMarshal.Cast<Byte, UInt16>(inventoryBytes);
 
-            if (this.rawItems == null)
-            {
-                this.rawItems = new RawItemEntry[inventoryBytesRaw.Length];
-            }
-
             for (Int32 index = 0; index < inventoryBytesRaw.Length; index++)
             {
-                if (this.rawItems[index] == null)
-                {
-                    this.rawItems[index] = new RawItemEntry();
-                }
+                UInt16 newId = BinaryPrimitives.ReverseEndianness(inventoryBytesRaw[index]);
+                Int32 newIndex = index;
 
-                this.rawItems[index].ItemId = BinaryPrimitives.ReverseEndianness(inventoryBytesRaw[index]);
-                this.rawItems[index].Index = index;
+                if (index >= this.rawItems.Count || this.rawItems[index] == null)
+                {
+                    this.rawItems.Add(new RawItemEntry());
+                    this.rawItems[index].ItemId = newId;
+                    this.rawItems[index].Index = newIndex;
+                }
+                else
+                {
+                    Boolean refresh = false;
+
+                    if (newId != this.rawItems[index].ItemId)
+                    {
+                        this.rawItems[index].ItemId = newId;
+                        refresh = true;
+                    }
+
+                    if (newIndex != this.rawItems[index].Index)
+                    {
+                        this.rawItems[index].Index = newIndex;
+                        refresh = true;
+                    }
+
+                    if (refresh)
+                    {
+                        this.rawItems[index].Refresh();
+                    }
+                }
             }
 
             this.PlayerSlotIndex = playerSlotIndex;

@@ -1,12 +1,15 @@
 ﻿
 namespace GES.Source.ItemCatalogViewer
 {
+    using GES.Engine.Common.DataStructures;
     using GES.Source.EquipmentViewer;
+    using GES.Source.MonsterTableViewer;
     using System;
     using System.Buffers.Binary;
+    using System.ComponentModel;
     using System.Runtime.InteropServices;
 
-    public class RawItemCatalogItemEntry
+    public class RawItemCatalogItemEntry : INotifyPropertyChanged
     {
         public UInt16 ClavatCraftedItem { get; set; }
 
@@ -37,6 +40,37 @@ namespace GES.Source.ItemCatalogViewer
         public UInt16 Strength { get; set; }
 
         public UInt16 Index { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Refresh()
+        {
+            this.RaisePropertyChanged(nameof(this.ClavatCraftedItem));
+            this.RaisePropertyChanged(nameof(this.LiltyCraftedItem));
+            this.RaisePropertyChanged(nameof(this.YukeCraftedItem));
+            this.RaisePropertyChanged(nameof(this.SelkieCraftedItem));
+            this.RaisePropertyChanged(nameof(this.BaseItemId));
+            this.RaisePropertyChanged(nameof(this.Tribe));
+            this.RaisePropertyChanged(nameof(this.ModelFx));
+            this.RaisePropertyChanged(nameof(this.ModelId));
+            this.RaisePropertyChanged(nameof(this.Slot));
+            this.RaisePropertyChanged(nameof(this.StatBoost));
+            this.RaisePropertyChanged(nameof(this.Focus));
+            this.RaisePropertyChanged(nameof(this.Magic));
+            this.RaisePropertyChanged(nameof(this.Tribe));
+            this.RaisePropertyChanged(nameof(this.Defense));
+            this.RaisePropertyChanged(nameof(this.Strength));
+            this.RaisePropertyChanged(nameof(this.Index));
+        }
+
+        /// <summary>
+        /// Indicates that a given property in this project item has changed.
+        /// </summary>
+        /// <param name="propertyName">The name of the changed property.</param>
+        protected void RaisePropertyChanged(String propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x04BA * 72)]
@@ -55,7 +89,7 @@ namespace GES.Source.ItemCatalogViewer
 
         public ItemCatalogDataSerializable SerializableData { get; set; }
 
-        public RawItemCatalogItemEntry[] rawItems;
+        public FullyObservableCollection<RawItemCatalogItemEntry> rawItems = new FullyObservableCollection<RawItemCatalogItemEntry>();
 
         const Int32 StructSize = 72;
 
@@ -83,32 +117,38 @@ namespace GES.Source.ItemCatalogViewer
 
         public void Refresh(Byte[] bytes)
         {
-            if (this.rawItems == null)
-            {
-                this.rawItems = new RawItemCatalogItemEntry[bytes.Length / StructSize];
-            }
-
             for (Int32 index = 0; index < bytes.Length / StructSize; index++)
             {
-                if (this.rawItems[index] == null)
+                if (index >= this.rawItems.Count || this.rawItems[index] == null)
                 {
-                    this.rawItems[index] = new RawItemCatalogItemEntry();
+                    this.rawItems.Add(new RawItemCatalogItemEntry());
                 }
 
-                this.rawItems[index].BaseItemId = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 8));
+                UInt16 baseItemId = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 8));
+                UInt16 statBoost = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 14));
+
+                this.rawItems[index].BaseItemId = baseItemId;
                 this.rawItems[index].ModelFx = bytes[index * StructSize + 10];
                 this.rawItems[index].ModelId = bytes[index * StructSize + 11];
                 this.rawItems[index].Slot = bytes[index * StructSize + 12];
                 this.rawItems[index].Tribe = bytes[index * StructSize + 13];
-                this.rawItems[index].StatBoost = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 14));
+                this.rawItems[index].StatBoost = statBoost;
                 this.rawItems[index].Focus = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 16));
                 this.rawItems[index].ClavatCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 64));
                 this.rawItems[index].LiltyCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 66));
                 this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 68));
                 this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 70));
                 this.rawItems[index].Index = (UInt16)index;
+                this.rawItems[index].Refresh();
 
-                // this.rawItems[index].Strength = this.rawItems[index].B16 == 0 ? this.rawItems[index].StatBoost : (UInt16)0;
+                if (baseItemId == 1)
+                {
+                    this.rawItems[index].Strength = statBoost;
+                }
+                else if (baseItemId == 0x45)
+                {
+                    this.rawItems[index].Defense = statBoost;
+                }
             }
         }
     }

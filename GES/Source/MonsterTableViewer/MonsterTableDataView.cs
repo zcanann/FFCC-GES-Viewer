@@ -1,32 +1,32 @@
 ﻿
-namespace GES.Source.ItemCatalogViewer
+namespace GES.Source.MonsterTableViewer
 {
     using GES.Engine.Common.DataStructures;
     using GES.Source.Mvvm.Converters;
     using System;
     using System.ComponentModel;
 
-    public class ItemCatalogDataView : INotifyPropertyChanged
+    public class MonsterTableDataView : INotifyPropertyChanged
     {
-        public ItemCatalogDataView(ItemCatalogData ItemCatalogData)
+        public MonsterTableDataView(MonsterTableData MonsterTableData)
         {
-            this.ItemCatalogData = ItemCatalogData;
+            this.MonsterTableData = MonsterTableData;
         }
 
-        public ItemCatalogData ItemCatalogData { get; set; }
+        public MonsterTableData MonsterTableData { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FullyObservableCollection<RawItemCatalogItemEntry> RawItems
+        public FullyObservableCollection<RawMonsterTableItemEntry> RawItems
         {
             get
             {
-                return this.ItemCatalogData.rawItems;
+                return this.MonsterTableData.rawMonsters;
             }
 
             set
             {
-                this.ItemCatalogData.rawItems = value;
+                this.MonsterTableData.rawMonsters = value;
             }
         }
 

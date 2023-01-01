@@ -1,6 +1,7 @@
 ﻿
 namespace GES.Source.InventoryViewer
 {
+    using GES.Engine.Common.DataStructures;
     using GES.Source.Mvvm.Converters;
     using System;
     using System.ComponentModel;
@@ -120,7 +121,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public RawItemEntry[] RawItems
+        public FullyObservableCollection<RawItemEntry> RawItems
         {
             get
             {
