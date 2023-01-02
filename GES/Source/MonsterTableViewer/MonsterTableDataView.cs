@@ -17,7 +17,7 @@ namespace GES.Source.MonsterTableViewer
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FullyObservableCollection<RawMonsterTableItemEntry> RawItems
+        public FullyObservableCollection<RawMonsterTableItemEntry> RawMonsters
         {
             get
             {
@@ -32,7 +32,7 @@ namespace GES.Source.MonsterTableViewer
 
         public void RefreshAllProperties()
         {
-            this.RaisePropertyChanged(nameof(this.RawItems));
+            this.RaisePropertyChanged(nameof(this.RawMonsters));
         }
 
         /// <summary>

@@ -148,10 +148,13 @@
                 monsterCountPointer,
                 out success));
 
+            bool forceRefresh = false;
+
             if (newMonsterCount != this.MonsterCount)
             {
                 this.MonsterCount = newMonsterCount;
                 this.RaisePropertyChanged(nameof(this.MonsterCount));
+                forceRefresh = true;
             }
 
             if (!success)
@@ -172,7 +175,7 @@
             MonsterTableData.Deserialize(this.MonsterTable.MonsterTableData, this.RawMonsterTableBytes);
 
             // Notify changes if new bytes differ from cached
-            if (!this.RawMonsterTableBytes.SequenceEqual(this.CachedRawMonsterTableBytes))
+            if (!this.RawMonsterTableBytes.SequenceEqual(this.CachedRawMonsterTableBytes) || forceRefresh)
             {
                 this.MonsterTable.MonsterTableData.Refresh(this.RawMonsterTableBytes);
                 this.MonsterTable.RefreshAllProperties();

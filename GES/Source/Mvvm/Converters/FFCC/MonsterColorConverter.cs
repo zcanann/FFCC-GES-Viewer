@@ -1,26 +1,19 @@
 ﻿namespace GES.Source.Mvvm.Converters
 {
-    using GES.Source.Controls;
-    using GES.Source.CraftViewer;
     using GES.Source.MonsterTableViewer;
     using System;
-    using System.Drawing;
     using System.Globalization;
     using System.Windows.Data;
-    using System.Windows.Media;
 
     public class MonsterColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            RawMonsterTableItemEntry monsterTableEntry = value as RawMonsterTableItemEntry;
+            UInt16 index = (UInt16)value;
 
-            if (monsterTableEntry != null)
+            if (index >= MonsterTableViewerViewModel.GetInstance().MonsterCount)
             {
-                if (monsterTableEntry.Index >= MonsterTableViewerViewModel.GetInstance().MonsterCount)
-                {
-                    return System.Windows.Media.Brushes.Red;
-                }
+                return System.Windows.Media.Brushes.Red;
             }
 
             return System.Windows.Media.Brushes.White;

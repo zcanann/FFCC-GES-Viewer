@@ -62,7 +62,7 @@
             CanUserResizeColumns="true"
             ColumnWidth="*"
             HeadersVisibility="Column"
-            ItemsSource="{Binding Path=MonsterTable.RawItems}"
+            ItemsSource="{Binding Path=MonsterTable.RawMonsters}"
             RowHeaderWidth="0"
             SelectionMode="Extended"
             SelectionUnit="FullRow">
@@ -120,7 +120,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Index, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -138,7 +138,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=MonsterId, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -156,7 +156,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Strength, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -174,7 +174,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Magic, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -192,7 +192,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Defense, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -208,15 +208,15 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="4,0,0,0"
-                                    Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                    Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                     Text="{Binding Path=Health, Mode=OneWay}" />
                                 <TextBlock
                                     Margin="4,0,0,0"
-                                    Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                    Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                     Text=" / " />
                                 <TextBlock
                                     Margin="4,0,4,0"
-                                    Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                    Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                     Text="{Binding Path=MaxHealth, Mode=OneWay}" />
                             </StackPanel>
                         </DataTemplate>
@@ -233,7 +233,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Physical, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -251,7 +251,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Fire, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -269,7 +269,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Freeze, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -287,7 +287,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Stun, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -305,7 +305,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Holy, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -323,7 +323,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Gravity, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -341,7 +341,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Slow, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -359,7 +359,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
                                         Margin="4,0,0,0"
-                                        Foreground="{Binding ., Converter={StaticResource MonsterColorConverter}}"
+                                        Foreground="{Binding Index, Converter={StaticResource MonsterColorConverter}}"
                                         Text="{Binding Path=Stop, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
