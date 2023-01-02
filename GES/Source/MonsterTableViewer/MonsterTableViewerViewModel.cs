@@ -10,6 +10,7 @@
     using GES.Source.EquipmentViewer;
     using GES.Source.Main;
     using System;
+    using System.Buffers.Binary;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -29,6 +30,10 @@
         private UInt64 MonsterTableAddressJP = 0x00242960;
         private UInt64 MonsterTableAddressPAL = 0x00227060;
 
+        private UInt64 MonsterCountAddressEN = 0x002A932E;
+        private UInt64 MonsterCountAddressJP = 0x002C5C6E;
+        private UInt64 MonsterCountAddressPAL = 0x002AA36E;
+
         /// <summary>
         /// Prevents a default instance of the <see cref="MonsterTableViewerViewModel" /> class from being created.
         /// </summary>
@@ -45,6 +50,8 @@
         {
             this.CanUpdate = false;
         }
+
+        public UInt16 MonsterCount { get; private set; }
 
         public MonsterTableDataView MonsterTable { get; private set; }
 
@@ -105,16 +112,18 @@
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
 
             UInt64 monsterTableAddress;
+            UInt64 monsterCountAddress;
 
             switch (MainViewModel.GetInstance().SelectedVersion)
             {
                 default:
-                case MainViewModel.VersionJP: monsterTableAddress = MonsterTableAddressJP; break;
-                case MainViewModel.VersionEN: monsterTableAddress = MonsterTableAddressEN; break;
-                case MainViewModel.VersionPAL: monsterTableAddress = MonsterTableAddressPAL; break;
+                case MainViewModel.VersionJP: monsterTableAddress = MonsterTableAddressJP; monsterCountAddress = MonsterCountAddressJP; break;
+                case MainViewModel.VersionEN: monsterTableAddress = MonsterTableAddressEN; monsterCountAddress = MonsterCountAddressEN; break;
+                case MainViewModel.VersionPAL: monsterTableAddress = MonsterTableAddressPAL; monsterCountAddress = MonsterCountAddressPAL; break;
             }
 
-            UInt64 slotPointer = gameCubeMemoryBase + monsterTableAddress;
+            UInt64 monsterTablePointer = gameCubeMemoryBase + monsterTableAddress;
+            UInt64 monsterCountPointer = gameCubeMemoryBase + monsterCountAddress;
 
             if (this.RawMonsterTableBytes == null)
             {
@@ -126,35 +135,53 @@
             MemoryReader.Instance.ReadBytes(
                 SessionManager.Session.OpenedProcess,
                 this.RawMonsterTableBytes,
-                slotPointer,
+                monsterTablePointer,
                 out success);
 
-            if (success)
+            if (!success)
             {
-                if (this.CachedRawMonsterTableBytes == null)
-                {
-                    this.CachedRawMonsterTableBytes = new Byte[typeof(MonsterTableDataSerializable).StructLayoutAttribute.Size];
-                }
-
-                if (this.MonsterTable == null)
-                {
-                    this.MonsterTable = new MonsterTableDataView(new MonsterTableData());
-                }
-
-                MonsterTableData.Deserialize(this.MonsterTable.MonsterTableData, this.RawMonsterTableBytes);
-
-                // Notify changes if new bytes differ from cached
-                if (!this.RawMonsterTableBytes.SequenceEqual(this.CachedRawMonsterTableBytes))
-                {
-                    this.MonsterTable.MonsterTableData.Refresh(this.RawMonsterTableBytes);
-                    this.MonsterTable.RefreshAllProperties();
-                    this.RaisePropertyChanged(nameof(this.MonsterTable));
-
-                    CraftViewerViewModel.GetInstance().ExternalRefreshAll();
-                }
-
-                this.RawMonsterTableBytes.CopyTo(this.CachedRawMonsterTableBytes, 0);
+                return;
             }
+
+            UInt16 newMonsterCount = BinaryPrimitives.ReverseEndianness(MemoryReader.Instance.Read<UInt16>(
+                SessionManager.Session.OpenedProcess,
+                monsterCountPointer,
+                out success));
+
+            if (newMonsterCount != this.MonsterCount)
+            {
+                this.MonsterCount = newMonsterCount;
+                this.RaisePropertyChanged(nameof(this.MonsterCount));
+            }
+
+            if (!success)
+            {
+                return;
+            }
+
+            if (this.CachedRawMonsterTableBytes == null)
+            {
+                this.CachedRawMonsterTableBytes = new Byte[typeof(MonsterTableDataSerializable).StructLayoutAttribute.Size];
+            }
+
+            if (this.MonsterTable == null)
+            {
+                this.MonsterTable = new MonsterTableDataView(new MonsterTableData());
+            }
+
+            MonsterTableData.Deserialize(this.MonsterTable.MonsterTableData, this.RawMonsterTableBytes);
+
+            // Notify changes if new bytes differ from cached
+            if (!this.RawMonsterTableBytes.SequenceEqual(this.CachedRawMonsterTableBytes))
+            {
+                this.MonsterTable.MonsterTableData.Refresh(this.RawMonsterTableBytes);
+                this.MonsterTable.RefreshAllProperties();
+                this.RaisePropertyChanged(nameof(this.MonsterTable));
+
+                CraftViewerViewModel.GetInstance().ExternalRefreshAll();
+            }
+
+            this.RawMonsterTableBytes.CopyTo(this.CachedRawMonsterTableBytes, 0);
         }
     }
     //// End class

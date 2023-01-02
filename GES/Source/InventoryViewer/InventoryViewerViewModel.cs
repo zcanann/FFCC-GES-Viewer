@@ -55,7 +55,7 @@
 
         private UInt64[] slotDataAddressesPAL = new UInt64[SlotCount]
         {
-            0x223350,
+            0x220290,
             0x220EC0,
             0x221AF0,
             0x222720,
@@ -88,6 +88,10 @@
             0x21EEEB,
             0x21EEEF,
         };
+
+        private Int32 activeSlot;
+
+        private Boolean forceRefresh;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="InventoryViewerViewModel" /> class from being created.
@@ -131,7 +135,19 @@
 
         public Dictionary<Int32, Int32> PlayerToSlotMap { get; private set; }
 
-        public Int32 ActiveSlot { get; set; }
+        public Int32 ActiveSlot
+        {
+            get
+            {
+                return this.activeSlot;
+            }
+
+            set
+            {
+                this.activeSlot = value;
+                this.forceRefresh = true;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -256,7 +272,7 @@
                     PlayerSlotData.Deserialize(this.PlayerSlots[slotIndex].Slot, this.RawPlayerSlotData);
 
                     // Notify changes if new bytes differ from cached
-                    if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData))
+                    if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData) || (this.forceRefresh && slotIndex == this.ActiveSlot))
                     {
                         bool shouldRefresh = slotIndex == this.ActiveSlot;
                         this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex, shouldRefresh);
@@ -276,10 +292,11 @@
                     }
 
                     this.RawPlayerSlotData.CopyTo(this.CachedSlotData[slotIndex], 0);
-
-                    this.ReportHackCandidates(slotPointer, gameCubeMemoryBase, slotIndex);
+                    // this.ReportHackCandidates(slotPointer, gameCubeMemoryBase, slotIndex);
                 }
             }
+
+            this.forceRefresh = false;
         }
 
         static HashSet<UInt32> SeenValues = new HashSet<UInt32>();
