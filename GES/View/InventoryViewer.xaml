@@ -279,6 +279,23 @@
                                                                 Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=15}" />
                                                         </StackPanel>
                                                     </Border>
+                                                    <Menu VerticalAlignment="Center" Background="Transparent">
+                                                        <MenuItem
+                                                            Height="16"
+                                                            Command="{Binding InventoryViewerViewModel.CopyArtifactListCommand, Source={StaticResource ViewModelLocator}}"
+                                                            CommandParameter="{Binding Index}"
+                                                            ToolTip="Copy to clipboard"
+                                                            WindowChrome.IsHitTestVisibleInChrome="True">
+                                                            <MenuItem.Header>
+                                                                <Image
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    Margin="-4"
+                                                                    VerticalAlignment="Center"
+                                                                    Source="{x:Static content:Images.Edit}" />
+                                                            </MenuItem.Header>
+                                                        </MenuItem>
+                                                    </Menu>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
