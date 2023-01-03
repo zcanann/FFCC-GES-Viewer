@@ -103,6 +103,7 @@
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
             this.CopyArtifactListCommand = new RelayCommand<Object>((obj) => this.CopyArtifactList(obj));
+            this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
             this.DisplayPlayerToSlotMap = new Dictionary<Int32, Int32>();
@@ -126,6 +127,8 @@
         }
 
         public ICommand CopyArtifactListCommand { get; private set; }
+
+        public ICommand CopyAddressCommand { get; private set; }
 
         private void OnAppExit(object sender, ExitEventArgs e)
         {
@@ -248,7 +251,8 @@
 
             for (Int32 slotIndex = 0; slotIndex < SlotCount; slotIndex++)
             {
-                UInt64 slotPointer = gameCubeMemoryBase + slotDataAddresses[slotIndex];
+                UInt32 slotPointerBase = 0x80000000 + (UInt32)slotDataAddresses[slotIndex];
+                UInt64 rawSlotPointerBase = gameCubeMemoryBase + slotDataAddresses[slotIndex];
 
                 if (this.RawPlayerSlotData == null)
                 {
@@ -260,7 +264,7 @@
                 MemoryReader.Instance.ReadBytes(
                     SessionManager.Session.OpenedProcess,
                     this.RawPlayerSlotData,
-                    slotPointer,
+                    rawSlotPointerBase,
                     out success);
 
                 if (success)
@@ -281,7 +285,8 @@
                     if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData) || (this.forceRefresh && slotIndex == this.ActiveSlot))
                     {
                         bool shouldRefresh = slotIndex == this.ActiveSlot;
-                        this.PlayerSlots[slotIndex].Slot.Refresh(this.RawPlayerSlotData, slotIndex, shouldRefresh);
+
+                        this.PlayerSlots[slotIndex].Slot.Refresh(rawSlotPointerBase, slotPointerBase, this.RawPlayerSlotData, slotIndex, shouldRefresh);
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
 
                         foreach (var Next in this.PlayerToSlotMap)
@@ -388,6 +393,16 @@
             }
 
             Clipboard.SetText(clipboardResult);
+        }
+
+        private void CopyAddress(Object itemObj)
+        {
+            if (itemObj is RawItemEntry)
+            {
+                RawItemEntry rawItem = (RawItemEntry)itemObj;
+
+                Clipboard.SetText(rawItem.Address.ToString("X"));
+            }
         }
 
         private List<String> GetArtifactNames(Int32 index, Boolean allowSetE)
