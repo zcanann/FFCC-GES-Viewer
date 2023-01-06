@@ -1,7 +1,5 @@
 ﻿namespace GES.View.Editors
 {
-    using GES.Engine.Common;
-    using GES.Source.Editors.InventoryItemEditor;
     using System;
     using System.ComponentModel;
     using System.Windows;
@@ -17,19 +15,6 @@
         public InventoryItemEditor()
         {
             this.InitializeComponent();
-
-            this.InventoryItemEditorViewModel.ItemId = 1;
-        }
-
-        /// <summary>
-        /// Gets the view model associated with this view.
-        /// </summary>
-        public InventoryItemEditorViewModel InventoryItemEditorViewModel
-        {
-            get
-            {
-                return this.DataContext as InventoryItemEditorViewModel;
-            }
         }
 
         /// <summary>
@@ -55,13 +40,24 @@
             }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             // Automatically calls OnDeactivated(), closing the window
             this.DialogResult = false;
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Automatically calls OnDeactivated(), closing the window
+            this.DialogResult = true;
+        }
+
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void DataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // Automatically calls OnDeactivated(), closing the window
             this.DialogResult = true;

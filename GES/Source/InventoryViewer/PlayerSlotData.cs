@@ -107,6 +107,8 @@ namespace GES.Source.InventoryViewer
             this.SerializableData = new PlayerSlotDataSerializable();
         }
 
+        public const Int32 InventoryOffset = 214;
+
         public PlayerSlotDataSerializable SerializableData { get; set; }
 
         public Int32 PlayerSlotIndex { get; set; }
@@ -138,7 +140,7 @@ namespace GES.Source.InventoryViewer
         public void Refresh(UInt64 rawAddressBase, UInt32 addressBase, Byte[] bytes, Int32 playerSlotIndex, bool shouldRefresh)
         {
             // Pull out the full "out of bounds inventory" range that bleeds into other memory (artifacts, gil, etc)
-            Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(214);
+            Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(InventoryOffset);
             Span<UInt16> inventoryBytesRaw = MemoryMarshal.Cast<Byte, UInt16>(inventoryBytes);
 
             for (Int32 index = 0; index < inventoryBytesRaw.Length; index++)
@@ -151,8 +153,8 @@ namespace GES.Source.InventoryViewer
                     this.rawItems.Add(new RawItemEntry());
                     this.rawItems[index].ItemId = newId;
                     this.rawItems[index].Index = newIndex;
-                    this.rawItems[index].Address = addressBase + (UInt32)newIndex;
-                    this.rawItems[index].RawAddress = rawAddressBase + (UInt64)newIndex;
+                    this.rawItems[index].Address = addressBase + (UInt32)newIndex * 2;
+                    this.rawItems[index].RawAddress = rawAddressBase + (UInt64)newIndex * 2;
                 }
                 else
                 {

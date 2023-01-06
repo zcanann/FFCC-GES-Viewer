@@ -19,6 +19,8 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
+    using WpfHexaEditor.Core.MethodExtention;
+    using System.Buffers.Binary;
 
     /// <summary>
     /// View model for the Heap Visualizer.
@@ -106,6 +108,7 @@
 
             this.CopyArtifactListCommand = new RelayCommand<Object>((obj) => this.CopyArtifactList(obj));
             this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
+            this.CopyRawAddressCommand = new RelayCommand<Object>((obj) => this.CopyRawAddress(obj));
             this.EditItemCommand = new RelayCommand<Object>((obj) => this.EditItem(obj));
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
@@ -132,6 +135,8 @@
         public ICommand CopyArtifactListCommand { get; private set; }
 
         public ICommand CopyAddressCommand { get; private set; }
+
+        public ICommand CopyRawAddressCommand { get; private set; }
 
         public ICommand EditItemCommand { get; private set; }
 
@@ -293,7 +298,7 @@
                     {
                         bool shouldRefresh = slotIndex == this.ActiveSlot;
 
-                        this.PlayerSlots[slotIndex].Slot.Refresh(rawSlotPointerBase, slotPointerBase, this.RawPlayerSlotData, slotIndex, shouldRefresh);
+                        this.PlayerSlots[slotIndex].Slot.Refresh(rawSlotPointerBase + PlayerSlotData.InventoryOffset, slotPointerBase + PlayerSlotData.InventoryOffset, this.RawPlayerSlotData, slotIndex, shouldRefresh);
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
 
                         foreach (var Next in this.PlayerToSlotMap)
@@ -412,13 +417,29 @@
             }
         }
 
+        private void CopyRawAddress(Object itemObj)
+        {
+            if (itemObj is RawItemEntry)
+            {
+                RawItemEntry rawItem = (RawItemEntry)itemObj;
+
+                Clipboard.SetText(rawItem.RawAddress.ToString("X"));
+            }
+        }
+
         private void EditItem(Object itemObj)
         {
             if (itemObj is RawItemEntry)
             {
+                RawItemEntry itemEntry = itemObj as RawItemEntry;
                 Window mainWindow = Application.Current.MainWindow;
+                InventoryItemEditorViewModel.GetInstance().Show(owner: mainWindow, itemEntry);
+                UInt16 selectedItem = InventoryItemEditorViewModel.GetInstance().SelectedItem;
 
-                InventoryItemEditorViewModel.GetInstance().Show(owner: mainWindow, itemObj as RawItemEntry);
+                MemoryWriter.Instance.Write<UInt16>(
+                    SessionManager.Session.OpenedProcess,
+                    itemEntry.RawAddress,
+                    BinaryPrimitives.ReverseEndianness(selectedItem));
             }
         }
 

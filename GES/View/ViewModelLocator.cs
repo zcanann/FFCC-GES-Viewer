@@ -166,7 +166,7 @@
         {
             get
             {
-                return new InventoryItemEditorViewModel();
+                return InventoryItemEditorViewModel.GetInstance();
             }
         }
     }

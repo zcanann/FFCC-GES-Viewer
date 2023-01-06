@@ -15,6 +15,8 @@
     /// </summary>
     public class InventoryItemEditorViewModel : ViewModelBase
     {
+        private UInt16 selectedItem;
+
         /// <summary>
         /// Singleton instance of the <see cref="InventoryItemEditorViewModel" /> class.
         /// </summary>
@@ -27,18 +29,24 @@
         /// </summary>
         public InventoryItemEditorViewModel()
         {
-            this.UpdateItemIdCommand = new RelayCommand<UInt16>((itemId) => Task.Run(() => this.UpdateItemId(itemId)), (offset) => true);
         }
-
-        /// <summary>
-        /// Gets a command to update the active data type for the item being edited.
-        /// </summary>
-        public ICommand UpdateItemIdCommand { get; private set; }
 
         /// <summary>
         /// Gets or sets the selected data type.
         /// </summary>
-        public UInt16 ItemId { get; set; }
+        public UInt16 SelectedItem
+        {
+            get
+            {
+                return this.selectedItem;
+            }
+
+            set
+            {
+                this.selectedItem = value;
+                this.RaisePropertyChanged(nameof(this.SelectedItem));
+            }
+        }
 
         /// <summary>
         /// Gets a singleton instance of the <see cref="InventoryItemEditorViewModel" /> class.
@@ -60,21 +68,11 @@
 
             SystemSounds.Asterisk.Play();
 
-            this.ItemId = itemEntry.ItemId;
+            this.SelectedItem = itemEntry.ItemId;
             itemEditor.Topmost = true;
 
             // Explicit compare against true since this is nullable
             return itemEditor.ShowDialog() == true;
-        }
-
-        /// <summary>
-        /// Updates the active item id.
-        /// </summary>
-        /// <param name="itemId">The new item id.</param>
-        private void UpdateItemId(UInt16 itemId)
-        {
-            this.ItemId = itemId;
-            this.RaisePropertyChanged(nameof(this.ItemId));
         }
     }
     //// End class
