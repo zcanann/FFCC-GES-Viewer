@@ -12,6 +12,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using GES.Source.MonsterTableViewer;
+    using GES.Source.Editors.InventoryItemEditor;
 
     /// <summary>
     /// Provides the template required to view a pane.
@@ -57,6 +58,11 @@
         /// The template for the Craft Viewer.
         /// </summary>
         private DataTemplate craftViewerViewTemplate;
+
+        /// <summary>
+        /// The template for the Inventory Item Editor Viewer.
+        /// </summary>
+        private DataTemplate inventoryItemEditorViewTemplate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewTemplateSelector" /> class.
@@ -204,6 +210,23 @@
             {
                 this.craftViewerViewTemplate = value;
                 this.DataTemplates[typeof(CraftViewerViewModel)] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the template for the Inventory Item Editor Viewer.
+        /// </summary>
+        public DataTemplate InventoryItemEditorViewTemplate
+        {
+            get
+            {
+                return this.inventoryItemEditorViewTemplate;
+            }
+
+            set
+            {
+                this.inventoryItemEditorViewTemplate = value;
+                this.DataTemplates[typeof(InventoryItemEditorViewModel)] = value;
             }
         }
 

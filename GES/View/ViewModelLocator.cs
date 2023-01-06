@@ -12,6 +12,7 @@
     using GES.Source.Tasks;
     using Source.Main;
     using GES.Source.MonsterTableViewer;
+    using GES.Source.Editors.InventoryItemEditor;
 
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -155,6 +156,17 @@
             get
             {
                 return new HexDecBoxViewModel();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Inventory Item Editor view model.
+        /// </summary>
+        public InventoryItemEditorViewModel InventoryItemEditorViewModel
+        {
+            get
+            {
+                return new InventoryItemEditorViewModel();
             }
         }
     }

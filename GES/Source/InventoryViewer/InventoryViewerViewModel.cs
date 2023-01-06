@@ -10,6 +10,8 @@
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
     using GES.Source.Main;
+    using GES.View;
+    using GES.Source.Editors.InventoryItemEditor;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -104,6 +106,7 @@
 
             this.CopyArtifactListCommand = new RelayCommand<Object>((obj) => this.CopyArtifactList(obj));
             this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
+            this.EditItemCommand = new RelayCommand<Object>((obj) => this.EditItem(obj));
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
             this.DisplayPlayerToSlotMap = new Dictionary<Int32, Int32>();
@@ -129,6 +132,10 @@
         public ICommand CopyArtifactListCommand { get; private set; }
 
         public ICommand CopyAddressCommand { get; private set; }
+
+        public ICommand EditItemCommand { get; private set; }
+
+        public UInt16 SelectedItem { get;  set; }
 
         private void OnAppExit(object sender, ExitEventArgs e)
         {
@@ -402,6 +409,16 @@
                 RawItemEntry rawItem = (RawItemEntry)itemObj;
 
                 Clipboard.SetText(rawItem.Address.ToString("X"));
+            }
+        }
+
+        private void EditItem(Object itemObj)
+        {
+            if (itemObj is RawItemEntry)
+            {
+                Window mainWindow = Application.Current.MainWindow;
+
+                InventoryItemEditorViewModel.GetInstance().Show(owner: mainWindow, itemObj as RawItemEntry);
             }
         }
 

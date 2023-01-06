@@ -159,7 +159,28 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="28"
+                                                            Margin="4,0,4,0"
+                                                            Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.EditItemCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Edit item"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Edit}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -183,13 +204,34 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Copy to clipboard"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Script}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -304,11 +346,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -437,7 +493,10 @@
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Margin="4,0,0,0" Width="56" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                                                         <Menu VerticalAlignment="Center" Background="Transparent">
                                                             <MenuItem
                                                                 Height="16"
@@ -450,7 +509,7 @@
                                                                         Width="16"
                                                                         Height="16"
                                                                         Margin="-4"
-                                                                        Source="{x:Static content:Images.Edit}" />
+                                                                        Source="{x:Static content:Images.Script}" />
                                                                 </MenuItem.Header>
                                                             </MenuItem>
                                                         </Menu>
@@ -460,7 +519,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -575,11 +634,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -707,13 +780,34 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Copy to clipboard"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Script}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -828,11 +922,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -960,13 +1068,34 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Copy to clipboard"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Script}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -1081,11 +1210,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -1213,13 +1356,34 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Copy to clipboard"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Script}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -1334,11 +1498,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -1466,13 +1644,34 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Copy to clipboard"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Script}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -1587,11 +1786,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -1719,13 +1932,34 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Copy to clipboard"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Script}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -1840,11 +2074,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -1972,13 +2220,34 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock Margin="4,0,4,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Width="56"
+                                                            Margin="4,0,0,0"
+                                                            Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                                        <Menu VerticalAlignment="Center" Background="Transparent">
+                                                            <MenuItem
+                                                                Height="16"
+                                                                Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                                CommandParameter="{Binding .}"
+                                                                ToolTip="Copy to clipboard"
+                                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                                <MenuItem.Header>
+                                                                    <Image
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Margin="-4"
+                                                                        Source="{x:Static content:Images.Script}" />
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
-                                        Width="*"
+                                        Width="Auto"
                                         Header="Artifact Glitch Pattern"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -2093,11 +2362,25 @@
                                                                     Height="16"
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
-                                                                    Source="{x:Static content:Images.Edit}" />
+                                                                    Source="{x:Static content:Images.Script}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn
+                                        Width="*"
+                                        Header="Raw Address"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                                    </StackPanel>
+                                                </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
