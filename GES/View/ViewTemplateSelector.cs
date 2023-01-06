@@ -13,6 +13,7 @@
     using System.Windows.Controls;
     using GES.Source.MonsterTableViewer;
     using GES.Source.Editors.InventoryItemEditor;
+    using GES.Source.Editors.ApplyArtifactsEditor;
 
     /// <summary>
     /// Provides the template required to view a pane.
@@ -63,6 +64,11 @@
         /// The template for the Inventory Item Editor Viewer.
         /// </summary>
         private DataTemplate inventoryItemEditorViewTemplate;
+
+        /// <summary>
+        /// The template for the Apply Artifacts Editor Viewer.
+        /// </summary>
+        private DataTemplate applyArtifactsEditorViewTemplate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewTemplateSelector" /> class.
@@ -227,6 +233,23 @@
             {
                 this.inventoryItemEditorViewTemplate = value;
                 this.DataTemplates[typeof(InventoryItemEditorViewModel)] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the template for the Apply Artifacts Editor Viewer.
+        /// </summary>
+        public DataTemplate ApplyArtifactsEditorViewTemplate
+        {
+            get
+            {
+                return this.applyArtifactsEditorViewTemplate;
+            }
+
+            set
+            {
+                this.applyArtifactsEditorViewTemplate = value;
+                this.DataTemplates[typeof(ApplyArtifactsEditorViewModel)] = value;
             }
         }
 

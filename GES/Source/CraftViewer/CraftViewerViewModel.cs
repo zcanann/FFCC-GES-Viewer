@@ -31,7 +31,7 @@
         /// <summary>
         /// Prevents a default instance of the <see cref="CraftViewerViewModel" /> class from being created.
         /// </summary>
-        private CraftViewerViewModel() : base("Craft List Viewer")
+        private CraftViewerViewModel() : base("GBA Craft List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 

@@ -13,6 +13,7 @@
     using Source.Main;
     using GES.Source.MonsterTableViewer;
     using GES.Source.Editors.InventoryItemEditor;
+    using GES.Source.Editors.ApplyArtifactsEditor;
 
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -167,6 +168,17 @@
             get
             {
                 return InventoryItemEditorViewModel.GetInstance();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Apply Artifacts Editor view model.
+        /// </summary>
+        public ApplyArtifactsEditorViewModel ApplyArtifactsEditorViewModel
+        {
+            get
+            {
+                return ApplyArtifactsEditorViewModel.GetInstance();
             }
         }
     }

@@ -21,6 +21,7 @@
     using System.Windows.Input;
     using WpfHexaEditor.Core.MethodExtention;
     using System.Buffers.Binary;
+    using GES.Source.Editors.ApplyArtifactsEditor;
 
     /// <summary>
     /// View model for the Heap Visualizer.
@@ -110,6 +111,7 @@
             this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
             this.CopyRawAddressCommand = new RelayCommand<Object>((obj) => this.CopyRawAddress(obj));
             this.EditItemCommand = new RelayCommand<Object>((obj) => this.EditItem(obj));
+            this.ApplyArtifactsCommand = new RelayCommand<Object>((obj) => this.ApplyArtifacts(obj));
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
             this.DisplayPlayerToSlotMap = new Dictionary<Int32, Int32>();
@@ -139,6 +141,8 @@
         public ICommand CopyRawAddressCommand { get; private set; }
 
         public ICommand EditItemCommand { get; private set; }
+
+        public ICommand ApplyArtifactsCommand { get; private set; }
 
         public UInt16 SelectedItem { get;  set; }
 
@@ -298,7 +302,7 @@
                     {
                         bool shouldRefresh = slotIndex == this.ActiveSlot;
 
-                        this.PlayerSlots[slotIndex].Slot.Refresh(rawSlotPointerBase + PlayerSlotData.InventoryOffset, slotPointerBase + PlayerSlotData.InventoryOffset, this.RawPlayerSlotData, slotIndex, shouldRefresh);
+                        this.PlayerSlots[slotIndex].Slot.Refresh(rawSlotPointerBase, slotPointerBase, this.RawPlayerSlotData, slotIndex, shouldRefresh);
                         this.PlayerSlots[slotIndex].RefreshAllProperties();
 
                         foreach (var Next in this.PlayerToSlotMap)
@@ -443,10 +447,21 @@
             }
         }
 
+        private void ApplyArtifacts(Object itemObj)
+        {
+            if (itemObj is RawItemEntry)
+            {
+                RawItemEntry itemEntry = itemObj as RawItemEntry;
+                Window mainWindow = Application.Current.MainWindow;
+                ApplyArtifactsEditorViewModel.GetInstance().Show(owner: mainWindow, itemEntry);
+            }
+        }
+
         private List<String> GetArtifactNames(Int32 index, Boolean allowSetE)
         {
             List<String> artifactNames = new List<String>();
 
+            // TODO: Just add the Ids, and use ItemToNameConverter to fetch the correct names. Should be able to kill most of this code.
             if (MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageEN)
             {
                 switch (index)

@@ -1,0 +1,191 @@
+﻿<shell:Window
+    x:Class="GES.View.Editors.ApplyArtifactsEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:GES.Source.Mvvm.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    x:Name="GESApplyArtifactsEditor"
+    Title="Item Editor"
+    Width="288"
+    Height="340"
+    d:DesignHeight="340"
+    d:DesignWidth="288"
+    BorderBrush="{StaticResource GESColorWhite}"
+    BorderThickness="2"
+    DataContext="{Binding ApplyArtifactsEditorViewModel, Source={StaticResource ViewModelLocator}}"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=titlebar}" />
+    </shell:WindowChrome.WindowChrome>
+    <shell:Window.Resources>
+        <converters:UInt64ToAddressConverter x:Key="IntPtrToAddressConverter" />
+        <converters:IntToHexConverter x:Key="IntToHexConverter" />
+        <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
+        <converters:EquipmentSlotIconConverter x:Key="EquipmentSlotIconConverter" />
+        <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
+        <converters:ItemToNameConverter x:Key="ItemToNameConverter" />
+        <converters:ExtendedInventorySlotToColorConverter x:Key="ExtendedInventorySlotToColorConverter" />
+        <converters:BooleanToVisibilityConverter
+            x:Key="BooleanToHiddenConverter"
+            False="Hidden"
+            True="Visible" />
+    </shell:Window.Resources>
+    <Grid Background="{StaticResource GESColorFrame}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <shell:Grid Grid.Row="0">
+            <StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        Click="EquipArtifactSet1Button_Click"
+                        IsCancel="True">
+                        <shell:TextBlock Text="Equip Artifact Set 1" />
+                    </shell:Button>
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        shell:Grid.Column="1"
+                        Click="EquipCommandListSlot1Button_Click"
+                        IsDefault="True">
+                        <StackPanel>
+                            <shell:TextBlock HorizontalAlignment="Center" Text="Equip to Command" />
+                            <shell:TextBlock HorizontalAlignment="Center" Text="List Slot 1" />
+                        </StackPanel>
+                    </shell:Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        Click="EquipArtifactSet2Button_Click"
+                        IsCancel="True">
+                        <shell:TextBlock Text="Equip Artifact Set 2" />
+                    </shell:Button>
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        shell:Grid.Column="1"
+                        Click="EquipCommandListSlot2Button_Click"
+                        IsDefault="True">
+                        <StackPanel>
+                            <shell:TextBlock HorizontalAlignment="Center" Text="Equip to Command" />
+                            <shell:TextBlock HorizontalAlignment="Center" Text="List Slot 2" />
+                        </StackPanel>
+                    </shell:Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        Click="EquipArtifactSet3Button_Click"
+                        IsCancel="True">
+                        <shell:TextBlock Text="Equip Artifact Set 3" />
+                    </shell:Button>
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        shell:Grid.Column="1"
+                        Click="EquipCommandListSlot3Button_Click"
+                        IsDefault="True">
+                        <StackPanel>
+                            <shell:TextBlock HorizontalAlignment="Center" Text="Equip to Command" />
+                            <shell:TextBlock HorizontalAlignment="Center" Text="List Slot 3" />
+                        </StackPanel>
+                    </shell:Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        Click="EquipArtifactSet4Button_Click"
+                        IsCancel="True">
+                        <shell:TextBlock Text="Equip Artifact Set 4" />
+                    </shell:Button>
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        shell:Grid.Column="1"
+                        Click="EquipCommandListSlot4Button_Click"
+                        IsDefault="True">
+                        <StackPanel>
+                            <shell:TextBlock HorizontalAlignment="Center" Text="Equip to Command" />
+                            <shell:TextBlock HorizontalAlignment="Center" Text="List Slot 4" />
+                        </StackPanel>
+                    </shell:Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        Click="EquipArtifactSet5Button_Click"
+                        IsCancel="True">
+                        <shell:TextBlock Text="Equip Artifact Set 5" />
+                    </shell:Button>
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        shell:Grid.Column="1"
+                        Click="EquipCommandListSlot5Button_Click"
+                        IsDefault="True">
+                        <StackPanel>
+                            <shell:TextBlock HorizontalAlignment="Center" Text="Equip to Command" />
+                            <shell:TextBlock HorizontalAlignment="Center" Text="List Slot 5" />
+                        </StackPanel>
+                    </shell:Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <shell:Button
+                        Width="112"
+                        Height="24"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        shell:Grid.Column="1"
+                        Click="CancelButton_Click"
+                        IsDefault="True">
+                        <shell:TextBlock Text="Cancel" />
+                    </shell:Button>
+                    <shell:Button
+                        Width="112"
+                        Height="40"
+                        Margin="8"
+                        HorizontalAlignment="Right"
+                        shell:Grid.Column="1"
+                        Click="EquipCommandListSlot6Button_Click"
+                        IsDefault="True">
+                        <StackPanel>
+                            <shell:TextBlock HorizontalAlignment="Center" Text="Equip to Command" />
+                            <shell:TextBlock HorizontalAlignment="Center" Text="List Slot 6" />
+                        </StackPanel>
+                    </shell:Button>
+                </StackPanel>
+            </StackPanel>
+        </shell:Grid>
+    </Grid>
+</shell:Window>

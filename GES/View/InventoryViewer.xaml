@@ -232,7 +232,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -347,6 +347,21 @@
                                                                     Margin="-4"
                                                                     VerticalAlignment="Center"
                                                                     Source="{x:Static content:Images.Script}" />
+                                                            </MenuItem.Header>
+                                                        </MenuItem>
+                                                        <MenuItem
+                                                            Height="16"
+                                                            Command="{Binding InventoryViewerViewModel.ApplyArtifactsCommand, Source={StaticResource ViewModelLocator}}"
+                                                            CommandParameter="{Binding .}"
+                                                            ToolTip="Apply Artifacts"
+                                                            WindowChrome.IsHitTestVisibleInChrome="True">
+                                                            <MenuItem.Header>
+                                                                <Image
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    Margin="-4"
+                                                                    VerticalAlignment="Center"
+                                                                    Source="{x:Static content:Images.Edit}" />
                                                             </MenuItem.Header>
                                                         </MenuItem>
                                                     </Menu>
@@ -557,7 +572,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -882,7 +897,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -1207,7 +1222,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -1532,7 +1547,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -1857,7 +1872,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -2182,7 +2197,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -2507,7 +2522,7 @@
                                     </DataGridTemplateColumn>
                                     <DataGridTemplateColumn
                                         Width="Auto"
-                                        Header="Artifact Glitch Pattern"
+                                        Header="Artifact Glitch Pattern (CLES)"
                                         IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

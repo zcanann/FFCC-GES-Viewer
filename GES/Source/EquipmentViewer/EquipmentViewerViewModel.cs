@@ -31,7 +31,7 @@
         /// <summary>
         /// Prevents a default instance of the <see cref="HeapVisualizerViewModel" /> class from being created.
         /// </summary>
-        private EquipmentViewerViewModel() : base("Equipment List Viewer")
+        private EquipmentViewerViewModel() : base("GBA Equipment List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 

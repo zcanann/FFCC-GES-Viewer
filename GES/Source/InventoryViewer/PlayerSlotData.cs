@@ -2,8 +2,6 @@
 namespace GES.Source.InventoryViewer
 {
     using GES.Engine.Common.DataStructures;
-    using GES.Source.EquipmentViewer;
-    using GES.Source.ItemCatalogViewer;
     using System;
     using System.Buffers.Binary;
     using System.ComponentModel;
@@ -19,6 +17,8 @@ namespace GES.Source.InventoryViewer
 
         public UInt64 RawAddress { get; set; }
 
+        public PlayerSlotData Parent { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Refresh()
@@ -27,6 +27,7 @@ namespace GES.Source.InventoryViewer
             this.RaisePropertyChanged(nameof(this.Index));
             this.RaisePropertyChanged(nameof(this.Address));
             this.RaisePropertyChanged(nameof(this.RawAddress));
+            this.RaisePropertyChanged(nameof(this.Parent));
         }
 
         /// <summary>
@@ -107,9 +108,21 @@ namespace GES.Source.InventoryViewer
             this.SerializableData = new PlayerSlotDataSerializable();
         }
 
+        public const Int32 HealthOffset = 61;
+
         public const Int32 InventoryOffset = 214;
 
+        public const Int32 ArtifactsOffset = 342;
+
+        public const Int32 GilOffset = 544;
+
+        public const Int32 CommandListOffset = 552;
+
         public PlayerSlotDataSerializable SerializableData { get; set; }
+
+        public UInt32 Address { get; set; }
+
+        public UInt64 RawAddress { get; set; }
 
         public Int32 PlayerSlotIndex { get; set; }
 
@@ -137,10 +150,13 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public void Refresh(UInt64 rawAddressBase, UInt32 addressBase, Byte[] bytes, Int32 playerSlotIndex, bool shouldRefresh)
+        public void Refresh(UInt64 rawSlotPointerBase, UInt32 slotPointerBase, Byte[] bytes, Int32 playerSlotIndex, bool shouldRefresh)
         {
+            this.Address = slotPointerBase;
+            this.RawAddress = rawSlotPointerBase;
+
             // Pull out the full "out of bounds inventory" range that bleeds into other memory (artifacts, gil, etc)
-            Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(InventoryOffset);
+            Span<Byte> inventoryBytes = new Span<Byte>(bytes).Slice(PlayerSlotData.InventoryOffset);
             Span<UInt16> inventoryBytesRaw = MemoryMarshal.Cast<Byte, UInt16>(inventoryBytes);
 
             for (Int32 index = 0; index < inventoryBytesRaw.Length; index++)
@@ -153,8 +169,9 @@ namespace GES.Source.InventoryViewer
                     this.rawItems.Add(new RawItemEntry());
                     this.rawItems[index].ItemId = newId;
                     this.rawItems[index].Index = newIndex;
-                    this.rawItems[index].Address = addressBase + (UInt32)newIndex * 2;
-                    this.rawItems[index].RawAddress = rawAddressBase + (UInt64)newIndex * 2;
+                    this.rawItems[index].Address = slotPointerBase + PlayerSlotData.InventoryOffset + (UInt32)newIndex * 2;
+                    this.rawItems[index].RawAddress = rawSlotPointerBase + PlayerSlotData.InventoryOffset + (UInt64)newIndex * 2;
+                    this.rawItems[index].Parent = this;
                 }
                 else
                 {
@@ -169,7 +186,7 @@ namespace GES.Source.InventoryViewer
                     if (newIndex != this.rawItems[index].Index)
                     {
                         this.rawItems[index].Index = newIndex;
-                        this.rawItems[index].Address = addressBase + (UInt32)newIndex;
+                        this.rawItems[index].Address = slotPointerBase + InventoryOffset + (UInt32)newIndex;
                         refresh = true;
                     }
 
