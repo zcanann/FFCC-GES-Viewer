@@ -1,5 +1,6 @@
 ﻿namespace GES.Source.CraftViewer
 {
+    using GES.Engine.Common.DataStructures;
     using System;
     using System.ComponentModel;
 
@@ -44,12 +45,12 @@
         {
             get
             {
-                return CraftData.CraftSlotList;
+                return CraftData.craftSlotList;
             }
 
             set
             {
-                CraftData.CraftSlotList = value;
+                CraftData.craftSlotList = value;
             }
         }
 

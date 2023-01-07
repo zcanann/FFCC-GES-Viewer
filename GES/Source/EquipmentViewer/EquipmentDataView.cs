@@ -1,5 +1,6 @@
 ﻿namespace GES.Source.EquipmentViewer
 {
+    using GES.Engine.Common.DataStructures;
     using System;
     using System.ComponentModel;
 

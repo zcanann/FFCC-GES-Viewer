@@ -1,22 +1,24 @@
 ﻿namespace GES.Source.CraftViewer
 {
+    using GES.Source.Mvvm.Converters;
     using System;
-    using System.Buffers.Binary;
+    using System.ComponentModel;
+    using System.Windows.Media.Imaging;
 
-    public class CraftEntry
+    public class CraftEntry : INotifyPropertyChanged
     {
         const Int32 IndexClavat = 24;
         const Int32 IndexLilty = 32;
         const Int32 IndexYuke = 40;
         const Int32 IndexSelkie = 48;
 
-        public CraftEntry(CraftData parent, Byte slotId, Byte itemSlotId, Byte[] properties)
+        private Byte[] properties;
+
+        public CraftEntry()
         {
-            this.Parent = parent;
-            this.SlotId = slotId;
-            this.ItemSlotId = itemSlotId; // BinaryPrimitives.ReverseEndianness(slotId);
-            this.Properties = properties;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public CraftData Parent { get; set; }
 
@@ -35,7 +37,17 @@
         // Byte ?: Gender(32 = female, 16 = male). Female flag requries no tribe flag set (?)
         // Byte 32: Tribe(1 = Clavat, 2 = Lilty, 4 = Yuke 8 = Selkie)
         // Byte 32: Slot(1 = weapon , 2 = tribal, 4 = armor, 0-1 = accessory) EXACT MATCH
-        public Byte[] Properties { get; set; }
+        public Byte[] Properties
+        {
+            get
+            {
+                return properties;
+            }
+            set
+            {
+                properties = value;
+            }
+        }
 
         public Int32 CraftPrice
         {
@@ -342,6 +354,49 @@
             }
         }
 
+        public void Refresh()
+        {
+            this.RaisePropertyChanged(nameof(this.Parent));
+            this.RaisePropertyChanged(nameof(this.SlotId));
+            this.RaisePropertyChanged(nameof(this.ItemSlotId));
+            this.RaisePropertyChanged(nameof(this.Properties));
+            this.RaisePropertyChanged(nameof(this.CraftPrice));
+            this.RaisePropertyChanged(nameof(this.RequiredItem1));
+            this.RaisePropertyChanged(nameof(this.RequiredItem2));
+            this.RaisePropertyChanged(nameof(this.RequiredItem3));
+            this.RaisePropertyChanged(nameof(this.RequiredItem1Count));
+            this.RaisePropertyChanged(nameof(this.RequiredItem2Count));
+            this.RaisePropertyChanged(nameof(this.RequiredItem3Count));
+            this.RaisePropertyChanged(nameof(this.CraftedItemIdVisualFakeClavat));
+            this.RaisePropertyChanged(nameof(this.CraftedItemIdVisualFakeLilty));
+            this.RaisePropertyChanged(nameof(this.CraftedItemIdVisualFakeYuke));
+            this.RaisePropertyChanged(nameof(this.CraftedItemIdVisualFakeSelkie));
+            this.RaisePropertyChanged(nameof(this.IsClavatM));
+            this.RaisePropertyChanged(nameof(this.IsLiltyM));
+            this.RaisePropertyChanged(nameof(this.IsYukeM));
+            this.RaisePropertyChanged(nameof(this.IsSelkieM));
+            this.RaisePropertyChanged(nameof(this.IsClavatF));
+            this.RaisePropertyChanged(nameof(this.IsLiltyF));
+            this.RaisePropertyChanged(nameof(this.IsYukeF));
+            this.RaisePropertyChanged(nameof(this.IsSelkieF));
+            this.RaisePropertyChanged(nameof(this.IsClavatWeapon));
+            this.RaisePropertyChanged(nameof(this.IsClavatChest));
+            this.RaisePropertyChanged(nameof(this.IsClavatTribal));
+            this.RaisePropertyChanged(nameof(this.IsClavatAccessory));
+            this.RaisePropertyChanged(nameof(this.IsLiltyWeapon));
+            this.RaisePropertyChanged(nameof(this.IsLiltyChest));
+            this.RaisePropertyChanged(nameof(this.IsLiltyTribal));
+            this.RaisePropertyChanged(nameof(this.IsLiltyAccessory));
+            this.RaisePropertyChanged(nameof(this.IsYukeWeapon));
+            this.RaisePropertyChanged(nameof(this.IsYukeChest));
+            this.RaisePropertyChanged(nameof(this.IsYukeTribal));
+            this.RaisePropertyChanged(nameof(this.IsYukeAccessory));
+            this.RaisePropertyChanged(nameof(this.IsSelkieWeapon));
+            this.RaisePropertyChanged(nameof(this.IsSelkieChest));
+            this.RaisePropertyChanged(nameof(this.IsSelkieTribal));
+            this.RaisePropertyChanged(nameof(this.IsSelkieAccessory));
+        }
+
         /// <summary>
         /// Highest priority
         /// </summary>
@@ -396,6 +451,15 @@
             {
                 return this.Properties != null && this.Properties.Length >= 56;
             }
+        }
+
+        /// <summary>
+        /// Indicates that a given property in this project item has changed.
+        /// </summary>
+        /// <param name="propertyName">The name of the changed property.</param>
+        protected void RaisePropertyChanged(String propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
     //// End class

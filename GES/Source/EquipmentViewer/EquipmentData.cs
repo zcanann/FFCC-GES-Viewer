@@ -60,14 +60,25 @@ namespace GES.Source.EquipmentViewer
             Int32 remainder = (this.SerializableData.itemCount + 1) % 4;
             Int32 propertiesStart = this.SerializableData.itemCount + (remainder == 0 ? 0 : 4 - remainder);
 
-            this.equipmentSlotList = new EquipmentEntry[256];
+            // if (this.equipmentSlotList == null)
+            {
+                this.equipmentSlotList = new EquipmentEntry[256];
+            }
 
             for (Int32 index = 0; index < 256; index++)
             {
                 Byte[] itemProperties = new Byte[8];
                 Array.Copy(this.SerializableData.equipmentListData, propertiesStart + index * 8, itemProperties, 0, 8);
 
-                this.equipmentSlotList[index] = new EquipmentEntry(this, (Byte)index, this.SerializableData.equipmentListData[index], itemProperties);
+                if (this.equipmentSlotList[index] == null)
+                {
+                    this.equipmentSlotList[index] = new EquipmentEntry();
+                }
+
+                this.equipmentSlotList[index].Parent = this;
+                this.equipmentSlotList[index].SlotId = (Byte)index;
+                this.equipmentSlotList[index].ItemSlotId = this.SerializableData.equipmentListData[index];
+                this.equipmentSlotList[index].Properties = itemProperties;
             }
 
             this.JISText = System.Text.Encoding.GetEncoding("shift-jis").GetString(bytes);

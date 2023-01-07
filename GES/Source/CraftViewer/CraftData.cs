@@ -1,6 +1,8 @@
 ﻿
 namespace GES.Source.CraftViewer
 {
+    using GES.Engine.Common.DataStructures;
+    using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
     using System;
     using System.Collections;
@@ -27,7 +29,7 @@ namespace GES.Source.CraftViewer
 
         public Int32 PlayerIndex { get; set; }
 
-        public CraftEntry[] CraftSlotList;
+        public CraftEntry[] craftSlotList;
 
         public String JISText { get; set; }
 
@@ -60,14 +62,26 @@ namespace GES.Source.CraftViewer
             Int32 remainder = (this.SerializableData.itemCount + 1) % 4;
             Int32 propertiesStart = this.SerializableData.itemCount + (remainder == 0 ? 0 : 4 - remainder);
 
-            this.CraftSlotList = new CraftEntry[256];
+            // if (this.craftSlotList == null)
+            {
+                this.craftSlotList = new CraftEntry[256];
+            }
 
             for (Int32 index = 0; index < 256; index++)
             {
                 Byte[] recipeProperties = new Byte[56];
                 Array.Copy(this.SerializableData.craftListRawData, propertiesStart + index * 56, recipeProperties, 0, 56);
 
-                this.CraftSlotList[index] = new CraftEntry(this, (Byte)index, this.SerializableData.craftListRawData[index], recipeProperties);
+                if (this.craftSlotList[index] == null)
+                {
+                    this.craftSlotList[index] = new CraftEntry();
+                }
+
+                this.craftSlotList[index].Parent = this;
+                this.craftSlotList[index].ItemSlotId = this.SerializableData.craftListRawData[index];
+                this.craftSlotList[index].Properties = recipeProperties;
+                this.craftSlotList[index].SlotId = (Byte)index;
+                this.craftSlotList[index].Refresh();
             }
 
             this.JISText = System.Text.Encoding.GetEncoding("shift-jis").GetString(bytes);

@@ -1,15 +1,12 @@
 ﻿namespace GES.Source.EquipmentViewer
 {
     using System;
+    using System.ComponentModel;
 
-    public class EquipmentEntry
+    public class EquipmentEntry : INotifyPropertyChanged
     {
-        public EquipmentEntry(EquipmentData parent, Byte slotId, Byte itemSlotId, Byte[] properties)
+        public EquipmentEntry()
         {
-            this.Parent = parent;
-            this.SlotId = slotId;
-            this.ItemSlotId = itemSlotId; // BinaryPrimitives.ReverseEndianness(slotId);
-            this.Properties = properties;
         }
 
         public EquipmentData Parent { get; set; }
@@ -179,6 +176,35 @@
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Refresh()
+        {
+            this.RaisePropertyChanged(nameof(this.Parent));
+            this.RaisePropertyChanged(nameof(this.SlotId));
+            this.RaisePropertyChanged(nameof(this.ItemSlotId));
+            this.RaisePropertyChanged(nameof(this.Properties));
+            this.RaisePropertyChanged(nameof(this.IsClavatM));
+            this.RaisePropertyChanged(nameof(this.IsLiltyM));
+            this.RaisePropertyChanged(nameof(this.IsYukeM));
+            this.RaisePropertyChanged(nameof(this.IsSelkieM));
+            this.RaisePropertyChanged(nameof(this.IsClavatF));
+            this.RaisePropertyChanged(nameof(this.IsLiltyF));
+            this.RaisePropertyChanged(nameof(this.IsYukeF));
+            this.RaisePropertyChanged(nameof(this.IsSelkieF));
+            this.RaisePropertyChanged(nameof(this.IsClassless));
+            this.RaisePropertyChanged(nameof(this.IsClavat));
+            this.RaisePropertyChanged(nameof(this.IsLilty));
+            this.RaisePropertyChanged(nameof(this.IsYuke));
+            this.RaisePropertyChanged(nameof(this.IsSelkie));
+            this.RaisePropertyChanged(nameof(this.IsWeapon));
+            this.RaisePropertyChanged(nameof(this.IsChest));
+            this.RaisePropertyChanged(nameof(this.IsTribal));
+            this.RaisePropertyChanged(nameof(this.IsAccessory));
+            this.RaisePropertyChanged(nameof(this.IsFemaleOnly));
+            this.RaisePropertyChanged(nameof(this.IsMaleOnly));
+        }
+
         private Boolean HasProperties1
         {
             get
@@ -193,6 +219,15 @@
             {
                 return this.Properties != null && this.Properties.Length >= 2;
             }
+        }
+
+        /// <summary>
+        /// Indicates that a given property in this project item has changed.
+        /// </summary>
+        /// <param name="propertyName">The name of the changed property.</param>
+        protected void RaisePropertyChanged(String propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
     //// End class

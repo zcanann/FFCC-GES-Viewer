@@ -110,12 +110,11 @@
             });
         }
 
+        private Boolean ForceRefresh { get; set; }
+
         public void ExternalRefreshAll()
         {
-            foreach(CraftDataView CraftDataView in this.PlayerCraftData)
-            {
-                CraftDataView.RefreshAllProperties();
-            }
+            this.ForceRefresh = true;
         }
 
         public void ExternalRefresh(Int32 playerIndex)
@@ -123,6 +122,7 @@
             if (playerIndex >= 0 && playerIndex < this.PlayerCraftData.Count)
             {
                 this.PlayerCraftData[playerIndex].RefreshAllProperties();
+                this.ForceRefresh = true;
             }
         }
 
@@ -178,7 +178,7 @@
                     CraftData.Deserialize(this.PlayerCraftData[playerIndex].CraftData, this.RawCraftData);
 
                     // Notify changes if new bytes differ from cached
-                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawCraftData))
+                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawCraftData) || this.ForceRefresh)
                     {
                         this.PlayerCraftData[playerIndex].CraftData.Refresh(this.RawCraftData, playerIndex);
                         this.PlayerCraftData[playerIndex].RefreshAllProperties();
@@ -187,6 +187,8 @@
                     this.RawCraftData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
                 }
             }
+
+            this.ForceRefresh = false;
         }
     }
     //// End class
