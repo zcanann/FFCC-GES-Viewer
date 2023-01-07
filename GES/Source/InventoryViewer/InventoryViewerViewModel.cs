@@ -8,20 +8,18 @@
     using GES.Source;
     using GES.Source.CraftViewer;
     using GES.Source.Docking;
+    using GES.Source.Editors.ApplyArtifactsEditor;
+    using GES.Source.Editors.InventoryItemEditor;
     using GES.Source.EquipmentViewer;
     using GES.Source.Main;
-    using GES.View;
-    using GES.Source.Editors.InventoryItemEditor;
     using System;
+    using System.Buffers.Binary;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
-    using WpfHexaEditor.Core.MethodExtention;
-    using System.Buffers.Binary;
-    using GES.Source.Editors.ApplyArtifactsEditor;
 
     /// <summary>
     /// View model for the Heap Visualizer.
@@ -29,9 +27,9 @@
     public class InventoryViewerViewModel : ToolViewModel
     {
         /// <summary>
-        /// Singleton instance of the <see cref="ActorReferenceCountVisualizer" /> class.
+        /// Singleton instance of the <see cref="InventoryViewerViewModel" /> class.
         /// </summary>
-        private static InventoryViewerViewModel actorReferenceCountVisualizerInstance = new InventoryViewerViewModel();
+        private static InventoryViewerViewModel inventoryViewerInstance = new InventoryViewerViewModel();
 
         private const Int32 PlayerCount = 4;
         private const Int32 SlotCount = 8;
@@ -188,7 +186,7 @@
         /// <returns>A singleton instance of the class.</returns>
         public static InventoryViewerViewModel GetInstance()
         {
-            return InventoryViewerViewModel.actorReferenceCountVisualizerInstance;
+            return InventoryViewerViewModel.inventoryViewerInstance;
         }
 
         public void ExternalRefreshAll()

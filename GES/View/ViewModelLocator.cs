@@ -106,6 +106,17 @@
         }
 
         /// <summary>
+        /// Gets the Slot Data Viewer view model.
+        /// </summary>
+        public SlotDataViewerViewModel SlotDataViewerViewModel
+        {
+            get
+            {
+                return SlotDataViewerViewModel.GetInstance();
+            }
+        }
+
+        /// <summary>
         /// Gets the Equipment Viewer view model.
         /// </summary>
         public EquipmentViewerViewModel EquipmentViewerViewModel

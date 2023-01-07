@@ -21,6 +21,7 @@
 
     <SolidColorBrush x:Key="GESColorFrame" Color="#333333" />
     <SolidColorBrush x:Key="GESColorPanel" Color="#202020" />
+    <SolidColorBrush x:Key="GESColorPanelAlt" Color="#272727" />
     <SolidColorBrush x:Key="GESColorInput" Color="#444444" />
     <SolidColorBrush x:Key="GESColorBorder" Color="#666666" />
 

@@ -1,6 +1,7 @@
 ﻿namespace GES.Source.Mvvm.Converters
 {
     using GES.Content;
+    using GES.Engine.Common;
     using GES.Source.CraftViewer;
     using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
@@ -15,14 +16,25 @@
         {
             EquipmentEntry equipmentEntry = value as EquipmentEntry;
             CraftEntry craftEntry = value as CraftEntry;
+            RawEquipmentEntry rawEquipmentEntry = value as RawEquipmentEntry;
 
-            if ((equipmentEntry == null || equipmentEntry.Parent == null) && (craftEntry == null || craftEntry.Parent == null))
+            if ((equipmentEntry == null || equipmentEntry.Parent == null)
+                && (rawEquipmentEntry == null || rawEquipmentEntry.Parent == null)
+                && (craftEntry == null || craftEntry.Parent == null)
+                && value is not UInt16
+                && value is not Int32)
             {
                 return null;
             }
 
-            UInt16 inventorySlot = 0xFFFF;
-            Int32 playerId = -1;
+            UInt16 inventorySlot = (value is UInt16)
+                ? (UInt16)value
+                : ((value is Int32)
+                    ? (UInt16)(Int32)value
+                    : (UInt16)0xFFFF);
+            Int32 playerId = SyntaxChecker.CanParseValue(ScannableType.Int32, parameter?.ToString())
+                ? (Int32)Conversions.ParsePrimitiveStringAsPrimitive(ScannableType.Int32, parameter?.ToString())
+                : -1;
 
             if (equipmentEntry != null)
             {
@@ -36,18 +48,23 @@
                 playerId = craftEntry.Parent.PlayerIndex;
             }
 
-            if (InventoryViewerViewModel.GetInstance().PlayerToSlotMap.ContainsKey(playerId))
+            Int32 playerSlotId = InventoryViewerViewModel.GetInstance().PlayerToSlotMap.ContainsKey(playerId)
+                   ? InventoryViewerViewModel.GetInstance().PlayerToSlotMap[playerId]
+                   : -1;
+
+            if (rawEquipmentEntry != null)
             {
-                Int32 playerSlotId = InventoryViewerViewModel.GetInstance().PlayerToSlotMap[playerId];
+                inventorySlot = rawEquipmentEntry.InventorySlotId;
+                playerSlotId = rawEquipmentEntry.Parent.PlayerSlotIndex;
+            }
 
-                PlayerSlotDataView slotDataView = InventoryViewerViewModel.GetInstance().PlayerSlots.ElementAtOrDefault(playerSlotId);
+            PlayerSlotDataView slotDataView = InventoryViewerViewModel.GetInstance().PlayerSlots.ElementAtOrDefault(playerSlotId);
 
-                if (slotDataView != null && slotDataView.Slot != null)
+            if (slotDataView != null && slotDataView.Slot != null)
+            {
+                if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Count)
                 {
-                    if (slotDataView.Slot.rawItems != null && inventorySlot >= 0 && inventorySlot < slotDataView.Slot.rawItems.Count)
-                    {
-                        return slotDataView.Slot.rawItems[inventorySlot].ItemId;
-                    }
+                    return slotDataView.Slot.rawItems[inventorySlot].ItemId;
                 }
             }
 

@@ -43,7 +43,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public Int16 EquipmentWeapon
+        public UInt16 EquipmentWeapon
         {
             get
             {
@@ -56,7 +56,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public Int16 EquipmentArmor
+        public UInt16 EquipmentArmor
         {
             get
             {
@@ -69,7 +69,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public Int16 EquipmentTribal
+        public UInt16 EquipmentTribal
         {
             get
             {
@@ -82,7 +82,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public Int16 EquipmentAccessory
+        public UInt16 EquipmentAccessory
         {
             get
             {
@@ -95,7 +95,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public Int16[] Items
+        public UInt16[] Items
         {
             get
             {
@@ -108,7 +108,7 @@ namespace GES.Source.InventoryViewer
             }
         }
 
-        public Int16[] Artifacts
+        public UInt16[] Artifacts
         {
             get
             {
@@ -134,6 +134,19 @@ namespace GES.Source.InventoryViewer
             }
         }
 
+        public RawEquipmentEntry[] RawEquipment
+        {
+            get
+            {
+                return this.Slot.rawEquipment;
+            }
+
+            set
+            {
+                this.Slot.rawEquipment = value;
+            }
+        }
+
         public void RefreshAllProperties()
         {
             this.RaisePropertyChanged(nameof(this.PlayerSlotIndex));
@@ -145,6 +158,7 @@ namespace GES.Source.InventoryViewer
             this.RaisePropertyChanged(nameof(this.Items));
             this.RaisePropertyChanged(nameof(this.Artifacts));
             this.RaisePropertyChanged(nameof(this.RawItems));
+            this.RaisePropertyChanged(nameof(this.RawEquipment));
         }
 
         /// <summary>

@@ -196,6 +196,11 @@
                             IsChecked="{Binding InventoryViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                         <shell:MenuItem
+                            Header="Slot Data Viewer"
+                            IsCheckable="True"
+                            IsChecked="{Binding SlotDataViewerViewModel.IsVisible, Mode=TwoWay}"
+                            Style="{Binding .}" />
+                        <shell:MenuItem
                             Header="Equipment Viewer"
                             IsCheckable="True"
                             IsChecked="{Binding EquipmentViewerViewModel.IsVisible, Mode=TwoWay}"
@@ -309,6 +314,12 @@
                                 <view:InventoryViewer />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.InventoryViewerViewTemplate>
+                        <!--  Slot Data Viewer  -->
+                        <view:ViewTemplateSelector.SlotDataViewerViewTemplate>
+                            <shell:DataTemplate>
+                                <view:SlotDataViewer />
+                            </shell:DataTemplate>
+                        </view:ViewTemplateSelector.SlotDataViewerViewTemplate>
                         <!--  Equipment Viewer  -->
                         <view:ViewTemplateSelector.EquipmentViewerViewTemplate>
                             <shell:DataTemplate>

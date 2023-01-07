@@ -41,6 +41,11 @@
         private DataTemplate inventoryViewerViewTemplate;
 
         /// <summary>
+        /// The template for the Slot Data Viewer.
+        /// </summary>
+        private DataTemplate slotDataViewerViewTemplate;
+
+        /// <summary>
         /// The template for the Inventory Viewer.
         /// </summary>
         private DataTemplate equipmentViewerViewTemplate;
@@ -151,6 +156,23 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the template for the Slot Data Viewer.
+        /// </summary>
+        public DataTemplate SlotDataViewerViewTemplate
+        {
+            get
+            {
+                return this.slotDataViewerViewTemplate;
+            }
+
+            set
+            {
+                this.slotDataViewerViewTemplate = value;
+                this.DataTemplates[typeof(SlotDataViewerViewModel)] = value;
+            }
+        }
+        
         /// <summary>
         /// Gets or sets the template for the Equipment Viewer.
         /// </summary>
