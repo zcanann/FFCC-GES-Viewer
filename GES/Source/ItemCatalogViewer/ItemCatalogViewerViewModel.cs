@@ -22,9 +22,9 @@
         /// </summary>
         private static ItemCatalogViewerViewModel actorReferenceCountVisualizerInstance = new ItemCatalogViewerViewModel();
 
-        private UInt64 ItemCatalogAddressEN = 0x00954B38;
-        private UInt64 ItemCatalogAddressJP = 0x00979FB8;
-        private UInt64 ItemCatalogAddressPAL = 0x00955BB8;
+        private UInt64 ItemCatalogAddressEN = 0x00954B40;
+        private UInt64 ItemCatalogAddressJP = 0x00979FC0;
+        private UInt64 ItemCatalogAddressPAL = 0x00955BC0;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="ItemCatalogViewerViewModel" /> class from being created.

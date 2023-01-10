@@ -227,8 +227,8 @@
     <Resource Include="Content\Images\Items\Icon_Corn.png" />
     <Resource Include="Content\Images\Items\Icon_Fish.png" />
     <Resource Include="Content\Images\Items\Icon_Flour.png" />
-    <Resource Include="Content\Images\Items\Icon_MagiciteAttack.png" />
     <Resource Include="Content\Images\Items\Icon_MagiciteBuff.png" />
+    <Resource Include="Content\Images\Items\Icon_MagiciteAttack.png" />
     <Resource Include="Content\Images\Items\Icon_Meat.png" />
     <Resource Include="Content\Images\Items\Icon_Metal.png" />
     <Resource Include="Content\Images\Items\Icon_PhoenixDown.png" />

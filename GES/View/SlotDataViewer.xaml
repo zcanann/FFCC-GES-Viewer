@@ -188,10 +188,6 @@
                                     <DataTemplate>
                                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    Width="62"
-                                                    Margin="4,0,4,0"
-                                                    Text="{Binding Path=InventorySlotId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                                                 <Menu
                                                     HorizontalAlignment="Right"
                                                     VerticalAlignment="Center"
@@ -211,6 +207,7 @@
                                                         </MenuItem.Header>
                                                     </MenuItem>
                                                 </Menu>
+                                                <TextBlock Margin="4,0,4,0" Text="{Binding Path=InventorySlotId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                                             </StackPanel>
                                         </Border>
                                     </DataTemplate>

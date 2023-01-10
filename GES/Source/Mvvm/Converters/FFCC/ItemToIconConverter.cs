@@ -88,11 +88,11 @@
                 {
                     return Images.Icon_Pouch;
                 }
-                else if (itemId >= 0x0105 && itemId <= 0x0106)
+                else if (itemId >= 0x0105 && itemId <= 0x0107)
                 {
                     return Images.Icon_MagiciteBuff;
                 }
-                else if (itemId >= 0x0107 && itemId <= 0x0124)
+                else if (itemId >= 0x0108 && itemId <= 0x0124)
                 {
                     return Images.Icon_Pouch;
                 }

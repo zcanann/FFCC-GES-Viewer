@@ -540,7 +540,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -561,7 +561,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1064,7 +1064,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1085,7 +1085,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1588,7 +1588,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1609,7 +1609,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -2112,7 +2112,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -2133,7 +2133,7 @@
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
