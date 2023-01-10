@@ -537,14 +537,10 @@
                             Orientation="Horizontal">
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -557,18 +553,15 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" (GBA WM RAM)" />
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" | Raw Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -581,6 +574,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                         </StackPanel>
                         <TextBox
@@ -1067,14 +1061,10 @@
                             Orientation="Horizontal">
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1087,18 +1077,15 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" (GBA WM RAM)" />
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" | Raw Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1111,6 +1098,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                         </StackPanel>
                         <TextBox
@@ -1597,14 +1585,10 @@
                             Orientation="Horizontal">
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1617,18 +1601,15 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" (GBA WM RAM)" />
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" | Raw Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -1641,6 +1622,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                         </StackPanel>
                         <TextBox
@@ -2127,14 +2109,10 @@
                             Orientation="Horizontal">
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -2147,18 +2125,15 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" (GBA WM RAM)" />
                             <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" | Raw Address: " />
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    Foreground="{StaticResource GESColorWhite}"
-                                    Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
-                                        Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        Command="{Binding EquipmentViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                         CommandParameter="{Binding .}"
                                         ToolTip="Copy to clipboard"
                                         WindowChrome.IsHitTestVisibleInChrome="True">
@@ -2171,6 +2146,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                             </StackPanel>
                         </StackPanel>
                         <TextBox

@@ -41,6 +41,10 @@ namespace GES.Source.ItemCatalogViewer
 
         public UInt16 Index { get; set; }
 
+        public UInt64 Address { get; set; }
+
+        public UInt64 RawAddress { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Refresh()
@@ -61,6 +65,8 @@ namespace GES.Source.ItemCatalogViewer
             this.RaisePropertyChanged(nameof(this.Defense));
             this.RaisePropertyChanged(nameof(this.Strength));
             this.RaisePropertyChanged(nameof(this.Index));
+            this.RaisePropertyChanged(nameof(this.Address));
+            this.RaisePropertyChanged(nameof(this.RawAddress));
         }
 
         /// <summary>
@@ -89,6 +95,10 @@ namespace GES.Source.ItemCatalogViewer
 
         public ItemCatalogDataSerializable SerializableData { get; set; }
 
+        public UInt64 Address { get; set; }
+
+        public UInt64 RawAddress { get; set; }
+
         public FullyObservableCollection<RawItemCatalogItemEntry> rawItems = new FullyObservableCollection<RawItemCatalogItemEntry>();
 
         const Int32 StructSize = 72;
@@ -115,7 +125,7 @@ namespace GES.Source.ItemCatalogViewer
             }
         }
 
-        public void Refresh(Byte[] bytes)
+        public void Refresh(UInt64 address, UInt64 rawAddress, Byte[] bytes)
         {
             for (Int32 index = 0; index < bytes.Length / StructSize; index++)
             {
@@ -139,6 +149,8 @@ namespace GES.Source.ItemCatalogViewer
                 this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 68));
                 this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 70));
                 this.rawItems[index].Index = (UInt16)index;
+                this.rawItems[index].Address = address + (UInt64)(index * StructSize);
+                this.rawItems[index].RawAddress = rawAddress + (UInt64)(index * StructSize);
                 this.rawItems[index].Refresh();
 
                 if (baseItemId == 1)
@@ -150,6 +162,9 @@ namespace GES.Source.ItemCatalogViewer
                     this.rawItems[index].Defense = statBoost;
                 }
             }
+
+            this.Address = address;
+            this.RawAddress = rawAddress;
         }
     }
     //// End class

@@ -224,10 +224,6 @@
                                     <DataTemplate>
                                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    Width="56"
-                                                    Margin="4,0,0,0"
-                                                    Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                                     <MenuItem
                                                         Height="16"
@@ -244,6 +240,7 @@
                                                         </MenuItem.Header>
                                                     </MenuItem>
                                                 </Menu>
+                                                <TextBlock Margin="0,0,8,0" Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
                                             </StackPanel>
                                         </Border>
                                     </DataTemplate>
@@ -257,7 +254,6 @@
                                     <DataTemplate>
                                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                                     <MenuItem
                                                         Height="16"
@@ -274,6 +270,7 @@
                                                         </MenuItem.Header>
                                                     </MenuItem>
                                                 </Menu>
+                                                <TextBlock Margin="0,0,8,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
                                             </StackPanel>
                                         </Border>
                                     </DataTemplate>

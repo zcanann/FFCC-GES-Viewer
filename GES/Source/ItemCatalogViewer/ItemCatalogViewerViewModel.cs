@@ -143,7 +143,7 @@
                 // Notify changes if new bytes differ from cached
                 if (!this.RawCraftDataBytes.SequenceEqual(this.CachedRawCraftDataBytes))
                 {
-                    this.ItemCatalog.ItemCatalogData.Refresh(this.RawCraftDataBytes);
+                    this.ItemCatalog.ItemCatalogData.Refresh(0x80000000 + ItemCatalogAddress, slotPointer, this.RawCraftDataBytes);
                     this.ItemCatalog.RefreshAllProperties();
 
                     CraftViewerViewModel.GetInstance().ExternalRefreshAll();

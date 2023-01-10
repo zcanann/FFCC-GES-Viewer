@@ -40,10 +40,9 @@
             Background="Transparent"
             CanUserAddRows="False"
             CanUserResizeColumns="true"
-            ColumnWidth="*"
             HeadersVisibility="Column"
+            HorizontalScrollBarVisibility="Visible"
             ItemsSource="{Binding Path=ItemCatalog.RawItems}"
-            RowHeaderWidth="0"
             SelectionMode="Extended"
             SelectionUnit="FullRow">
             <DataGrid.Resources>
@@ -126,48 +125,6 @@
                                             Source="{Binding Path=Slot, Converter={StaticResource EquipmentSlotIconConverter}, Mode=OneWay}" />
                                     </Border>
                                     <TextBlock Margin="4,0,0,0" Text="{Binding Path=Slot, Mode=OneWay}" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn
-                    Width="Auto"
-                    Header="Fx Id"
-                    IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=ModelFx, Mode=OneWay}" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn
-                    Width="Auto"
-                    Header="Model Id"
-                    IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=ModelId, Mode=OneWay}" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn
-                    Width="Auto"
-                    Header="Base Id"
-                    IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=BaseItemId, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -304,10 +261,7 @@
                                             Height="16"
                                             Source="{Binding Path=YukeCraftedItem, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                     </Border>
-                                    <TextBlock
-                                        Width="48"
-                                        Margin="4,0,0,0"
-                                        Text="{Binding Path=YukeCraftedItem, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=YukeCraftedItem, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
                                     <TextBlock Margin="4,0,0,0" Text="{Binding Path=YukeCraftedItem, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
@@ -327,6 +281,114 @@
                                     </Border>
                                     <TextBlock Margin="4,0,0,0" Text="{Binding Path=SelkieCraftedItem, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
                                     <TextBlock Margin="4,0,0,0" Text="{Binding Path=SelkieCraftedItem, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Address"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Menu VerticalAlignment="Center" Background="Transparent">
+                                        <MenuItem
+                                            Height="16"
+                                            Command="{Binding CraftViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                            CommandParameter="{Binding .}"
+                                            ToolTip="Copy to clipboard"
+                                            WindowChrome.IsHitTestVisibleInChrome="True">
+                                            <MenuItem.Header>
+                                                <Image
+                                                    Width="16"
+                                                    Height="16"
+                                                    Margin="-4"
+                                                    Source="{x:Static content:Images.Script}" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                    </Menu>
+                                    <TextBlock
+                                        Margin="0,0,8,0"
+                                        Foreground="{StaticResource GESColorWhite}"
+                                        Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Raw Address"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Menu VerticalAlignment="Center" Background="Transparent">
+                                        <MenuItem
+                                            Height="16"
+                                            Command="{Binding CraftViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                            CommandParameter="{Binding .}"
+                                            ToolTip="Copy to clipboard"
+                                            WindowChrome.IsHitTestVisibleInChrome="True">
+                                            <MenuItem.Header>
+                                                <Image
+                                                    Width="16"
+                                                    Height="16"
+                                                    Margin="-4"
+                                                    Source="{x:Static content:Images.Script}" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                    </Menu>
+                                    <TextBlock
+                                        Margin="0,0,8,0"
+                                        Foreground="{StaticResource GESColorWhite}"
+                                        Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Fx Id"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=ModelFx, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Model Id"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=ModelId, Mode=OneWay}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="Auto"
+                    Header="Base Id"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=BaseItemId, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
