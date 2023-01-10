@@ -1,9 +1,7 @@
 ﻿namespace GES.Source.CraftViewer
 {
-    using GES.Source.Mvvm.Converters;
     using System;
     using System.ComponentModel;
-    using System.Windows.Media.Imaging;
 
     public class CraftEntry : INotifyPropertyChanged
     {

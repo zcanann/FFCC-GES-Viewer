@@ -1,16 +1,19 @@
 ﻿namespace GES.Source.EquipmentViewer
 {
+    using GalaSoft.MvvmLight.Command;
     using GES.Engine.Common;
     using GES.Engine.Common.DataStructures;
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.Docking;
+    using GES.Source.InventoryViewer;
     using GES.Source.Main;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
 
     /// <summary>
     /// View model for the Heap Visualizer.
@@ -31,10 +34,12 @@
         /// <summary>
         /// Prevents a default instance of the <see cref="HeapVisualizerViewModel" /> class from being created.
         /// </summary>
-        private EquipmentViewerViewModel() : base("GBA Equipment List Viewer")
+        private EquipmentViewerViewModel() : base("[GES] Equipment List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
+            this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
+            this.CopyRawAddressCommand = new RelayCommand<Object>((obj) => this.CopyRawAddress(obj));
             this.PlayerEquipmentData = new FullyObservableCollection<EquipmentDataView>();
             this.CachedPlayerSlotData = new Byte[PlayerCount][];
 
@@ -52,6 +57,10 @@
         {
             this.CanUpdate = false;
         }
+
+        public ICommand CopyAddressCommand { get; private set; }
+
+        public ICommand CopyRawAddressCommand { get; private set; }
 
         /// <summary>
         /// Gets the list of actor reference count slots.
@@ -128,7 +137,7 @@
 
         private unsafe void UpdateActorSlots()
         {
-            UInt64[] gbaCubeMemoryBases = new UInt64[PlayerCount]
+            UInt64[] gbaMemoryBases = new UInt64[PlayerCount]
             {
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_0", EmulatorType.Dolphin),
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_1", EmulatorType.Dolphin),
@@ -148,7 +157,7 @@
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
-                UInt64 slotPointer = gbaCubeMemoryBases[playerIndex] + equipmentListAddress;
+                UInt64 slotPointer = gbaMemoryBases[playerIndex] + equipmentListAddress;
 
                 if (this.RawEquipmentData == null)
                 {
@@ -180,12 +189,32 @@
                     // Notify changes if new bytes differ from cached
                     if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawEquipmentData))
                     {
-                        this.PlayerEquipmentData[playerIndex].EquipmentData.Refresh(this.RawEquipmentData, playerIndex);
+                        this.PlayerEquipmentData[playerIndex].EquipmentData.Refresh(equipmentListAddress, slotPointer, this.RawEquipmentData, playerIndex);
                         this.PlayerEquipmentData[playerIndex].RefreshAllProperties();
                     }
 
                     this.RawEquipmentData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
                 }
+            }
+        }
+
+        private void CopyAddress(Object itemObj)
+        {
+            if (itemObj is EquipmentDataView)
+            {
+                EquipmentDataView rawItem = (EquipmentDataView)itemObj;
+
+                Clipboard.SetText(rawItem.Address.ToString("X"));
+            }
+        }
+
+        private void CopyRawAddress(Object itemObj)
+        {
+            if (itemObj is EquipmentDataView)
+            {
+                EquipmentDataView rawItem = (EquipmentDataView)itemObj;
+
+                Clipboard.SetText(rawItem.RawAddress.ToString("X"));
             }
         }
     }

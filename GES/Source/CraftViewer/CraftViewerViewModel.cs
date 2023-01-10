@@ -1,16 +1,19 @@
 ﻿namespace GES.Source.CraftViewer
 {
+    using GalaSoft.MvvmLight.Command;
     using GES.Engine.Common;
     using GES.Engine.Common.DataStructures;
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.Docking;
+    using GES.Source.EquipmentViewer;
     using GES.Source.Main;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
 
     /// <summary>
     /// View model for the Craft Visualizer.
@@ -31,10 +34,12 @@
         /// <summary>
         /// Prevents a default instance of the <see cref="CraftViewerViewModel" /> class from being created.
         /// </summary>
-        private CraftViewerViewModel() : base("GBA Craft List Viewer")
+        private CraftViewerViewModel() : base("[CLES/WM] Craft List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
+            this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
+            this.CopyRawAddressCommand = new RelayCommand<Object>((obj) => this.CopyRawAddress(obj));
             this.PlayerCraftData = new FullyObservableCollection<CraftDataView>();
             this.CachedPlayerSlotData = new Byte[PlayerCount][];
 
@@ -52,6 +57,10 @@
         {
             this.CanUpdate = false;
         }
+
+        public ICommand CopyAddressCommand { get; private set; }
+
+        public ICommand CopyRawAddressCommand { get; private set; }
 
         /// <summary>
         /// Gets the list of actor reference count slots.
@@ -128,7 +137,7 @@
 
         private unsafe void UpdateActorSlots()
         {
-            UInt64[] gbaCubeMemoryBases = new UInt64[PlayerCount]
+            UInt64[] gbaMemoryBases = new UInt64[PlayerCount]
             {
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_0", EmulatorType.Dolphin),
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_1", EmulatorType.Dolphin),
@@ -136,19 +145,19 @@
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_3", EmulatorType.Dolphin),
             };
 
-            UInt64 CraftListAddress;
+            UInt64 craftListAddress;
             
             switch(MainViewModel.GetInstance().SelectedVersion)
             {
                 default:
-                case MainViewModel.VersionJP: CraftListAddress = CraftListAddressJP; break;
-                case MainViewModel.VersionEN: CraftListAddress = CraftListAddressEN; break;
-                case MainViewModel.VersionPAL: CraftListAddress = CraftListAddressPal; break;
+                case MainViewModel.VersionJP: craftListAddress = CraftListAddressJP; break;
+                case MainViewModel.VersionEN: craftListAddress = CraftListAddressEN; break;
+                case MainViewModel.VersionPAL: craftListAddress = CraftListAddressPal; break;
             }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
-                UInt64 slotPointer = gbaCubeMemoryBases[playerIndex] + CraftListAddress;
+                UInt64 slotPointer = gbaMemoryBases[playerIndex] + craftListAddress;
 
                 if (this.RawCraftData == null)
                 {
@@ -180,7 +189,7 @@
                     // Notify changes if new bytes differ from cached
                     if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawCraftData) || this.ForceRefresh)
                     {
-                        this.PlayerCraftData[playerIndex].CraftData.Refresh(this.RawCraftData, playerIndex);
+                        this.PlayerCraftData[playerIndex].CraftData.Refresh(craftListAddress, slotPointer, this.RawCraftData, playerIndex);
                         this.PlayerCraftData[playerIndex].RefreshAllProperties();
                     }
 
@@ -189,6 +198,26 @@
             }
 
             this.ForceRefresh = false;
+        }
+
+        private void CopyAddress(Object itemObj)
+        {
+            if (itemObj is CraftDataView)
+            {
+                CraftDataView rawItem = (CraftDataView)itemObj;
+
+                Clipboard.SetText(rawItem.Address.ToString("X"));
+            }
+        }
+
+        private void CopyRawAddress(Object itemObj)
+        {
+            if (itemObj is CraftDataView)
+            {
+                CraftDataView rawItem = (CraftDataView)itemObj;
+
+                Clipboard.SetText(rawItem.RawAddress.ToString("X"));
+            }
         }
     }
     //// End class

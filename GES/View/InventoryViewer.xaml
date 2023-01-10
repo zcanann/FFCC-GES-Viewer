@@ -2,15 +2,10 @@
     x:Class="GES.View.InventoryViewer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="clr-namespace:GES.View.Controls"
-    xmlns:behaviors="clr-namespace:GES.Source.Mvvm.AttachedBehaviors"
     xmlns:content="clr-namespace:GES.Content"
     xmlns:converters="clr-namespace:GES.Source.Mvvm.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:hexEditor="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
-    xmlns:intr="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:src="clr-namespace:GES.View;assembly=GES"
     x:Name="GESInventoryViewer"
     d:DesignHeight="512"
     d:DesignWidth="1024"
@@ -131,10 +126,21 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                                    <TextBlock
-                                                        Margin="4,0,4,0"
-                                                        Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
-                                                        Text="{Binding Path=Index, Mode=OneWay}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Margin="4,0,4,0"
+                                                            Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                                            Text="{Binding Path=Index, Mode=OneWay}" />
+                                                        <TextBlock
+                                                            Margin="4,0,0,0"
+                                                            Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                                            Text="(0x" />
+                                                        <TextBlock Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}" Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                                        <TextBlock
+                                                            Margin="0,0,4,0"
+                                                            Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                                            Text=")" />
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

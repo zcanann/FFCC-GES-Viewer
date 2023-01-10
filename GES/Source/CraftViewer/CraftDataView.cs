@@ -1,6 +1,5 @@
 ﻿namespace GES.Source.CraftViewer
 {
-    using GES.Engine.Common.DataStructures;
     using System;
     using System.ComponentModel;
 
@@ -67,12 +66,54 @@
             }
         }
 
+        public String BytesText
+        {
+            get
+            {
+                return CraftData.BytesText;
+            }
+
+            set
+            {
+                CraftData.BytesText = value;
+            }
+        }
+
+        public UInt64 Address
+        {
+            get
+            {
+                return CraftData.Address;
+            }
+
+            set
+            {
+                CraftData.Address = value;
+            }
+        }
+
+        public UInt64 RawAddress
+        {
+            get
+            {
+                return CraftData.RawAddress;
+            }
+
+            set
+            {
+                CraftData.RawAddress = value;
+            }
+        }
+
         public void RefreshAllProperties()
         {
             RaisePropertyChanged(nameof(PlayerIndex));
             RaisePropertyChanged(nameof(ItemCount));
             RaisePropertyChanged(nameof(CraftSlotList));
             RaisePropertyChanged(nameof(JISText));
+            RaisePropertyChanged(nameof(BytesText));
+            RaisePropertyChanged(nameof(Address));
+            RaisePropertyChanged(nameof(RawAddress));
         }
 
         /// <summary>

@@ -1,16 +1,13 @@
 ﻿namespace GES.Source.ItemCatalogViewer
 {
     using GES.Engine.Common;
-    using GES.Engine.Common.DataStructures;
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.CraftViewer;
     using GES.Source.Docking;
-    using GES.Source.EquipmentViewer;
     using GES.Source.Main;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
@@ -25,9 +22,9 @@
         /// </summary>
         private static ItemCatalogViewerViewModel actorReferenceCountVisualizerInstance = new ItemCatalogViewerViewModel();
 
-        private UInt64 ItemCatalogAddressEN = 0x00954B78 - 64;
+        private UInt64 ItemCatalogAddressEN = 0x00954B38;
         private UInt64 ItemCatalogAddressJP = 0x00979FB8;
-        private UInt64 ItemCatalogAddressPAL = 0x00955BF8 - 64;
+        private UInt64 ItemCatalogAddressPAL = 0x00955BB8;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="ItemCatalogViewerViewModel" /> class from being created.

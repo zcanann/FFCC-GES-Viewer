@@ -31,6 +31,12 @@ namespace GES.Source.EquipmentViewer
 
         public String JISText { get; set; }
 
+        public String BytesText { get; set; }
+
+        public UInt64 Address { get; set; }
+
+        public UInt64 RawAddress { get; set; }
+
         public static void Deserialize(EquipmentData entry, Byte[] bytes)
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
@@ -53,7 +59,7 @@ namespace GES.Source.EquipmentViewer
             }
         }
 
-        public void Refresh(Byte[] bytes, Int32 playerSlotIndex)
+        public void Refresh(UInt64 address, UInt64 rawAddress, Byte[] bytes, Int32 playerSlotIndex)
         {
             this.PlayerIndex = playerSlotIndex;
 
@@ -81,6 +87,9 @@ namespace GES.Source.EquipmentViewer
                 this.equipmentSlotList[index].Properties = itemProperties;
             }
 
+            this.Address = address;
+            this.RawAddress = rawAddress;
+            this.BytesText = BitConverter.ToString(bytes).Replace("-", " ");
             this.JISText = System.Text.Encoding.GetEncoding("shift-jis").GetString(bytes);
         }
     }

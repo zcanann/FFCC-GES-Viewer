@@ -229,7 +229,8 @@ namespace GES.Source.InventoryViewer
                     if (newIndex != this.rawEquipment[index].Index)
                     {
                         this.rawEquipment[index].Index = newIndex;
-                        this.rawEquipment[index].Address = slotPointerBase + InventoryOffset + (UInt32)newIndex;
+                        this.rawEquipment[index].Address = slotPointerBase + PlayerSlotData.EquipmentOffset + (UInt32)newIndex * 2;
+                        this.rawEquipment[index].RawAddress = rawSlotPointerBase + PlayerSlotData.EquipmentOffset + (UInt64)newIndex * 2;
                         refresh = true;
                     }
 
@@ -271,7 +272,8 @@ namespace GES.Source.InventoryViewer
                     if (newIndex != this.rawItems[index].Index)
                     {
                         this.rawItems[index].Index = newIndex;
-                        this.rawItems[index].Address = slotPointerBase + InventoryOffset + (UInt32)newIndex;
+                        this.rawItems[index].Address = slotPointerBase + PlayerSlotData.InventoryOffset + (UInt32)newIndex * 2;
+                        this.rawItems[index].RawAddress = rawSlotPointerBase + PlayerSlotData.InventoryOffset + (UInt64)newIndex * 2;
                         refresh = true;
                     }
 

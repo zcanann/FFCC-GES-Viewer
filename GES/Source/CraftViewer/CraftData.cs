@@ -33,6 +33,12 @@ namespace GES.Source.CraftViewer
 
         public String JISText { get; set; }
 
+        public String BytesText { get; set; }
+
+        public UInt64 Address { get; set; }
+
+        public UInt64 RawAddress { get; set; }
+
         public static void Deserialize(CraftData entry, Byte[] bytes)
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
@@ -55,7 +61,7 @@ namespace GES.Source.CraftViewer
             }
         }
 
-        public void Refresh(Byte[] bytes, Int32 playerSlotIndex)
+        public void Refresh(UInt64 address, UInt64 rawAddress, Byte[] bytes, Int32 playerSlotIndex)
         {
             this.PlayerIndex = playerSlotIndex;
 
@@ -84,6 +90,9 @@ namespace GES.Source.CraftViewer
                 this.craftSlotList[index].Refresh();
             }
 
+            this.Address = address;
+            this.RawAddress = rawAddress;
+            this.BytesText = BitConverter.ToString(bytes).Replace("-", " ");
             this.JISText = System.Text.Encoding.GetEncoding("shift-jis").GetString(bytes);
         }
     }

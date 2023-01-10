@@ -67,12 +67,54 @@
             }
         }
 
+        public String BytesText
+        {
+            get
+            {
+                return EquipmentData.BytesText;
+            }
+
+            set
+            {
+                EquipmentData.BytesText = value;
+            }
+        }
+
+        public UInt64 Address
+        {
+            get
+            {
+                return EquipmentData.Address;
+            }
+
+            set
+            {
+                EquipmentData.Address = value;
+            }
+        }
+
+        public UInt64 RawAddress
+        {
+            get
+            {
+                return EquipmentData.RawAddress;
+            }
+
+            set
+            {
+                EquipmentData.RawAddress = value;
+            }
+        }
+
         public void RefreshAllProperties()
         {
             RaisePropertyChanged(nameof(PlayerIndex));
             RaisePropertyChanged(nameof(ItemCount));
             RaisePropertyChanged(nameof(EquipmentSlotList));
             RaisePropertyChanged(nameof(JISText));
+            RaisePropertyChanged(nameof(BytesText));
+            RaisePropertyChanged(nameof(Address));
+            RaisePropertyChanged(nameof(RawAddress));
         }
 
         /// <summary>
