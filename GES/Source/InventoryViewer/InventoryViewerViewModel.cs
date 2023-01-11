@@ -230,6 +230,8 @@
             });
         }
 
+        private UInt64 CachedRawSlotPointerBase = 0;
+
         private unsafe void UpdateActorSlots()
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
@@ -270,6 +272,12 @@
                 if (this.RawPlayerSlotData == null)
                 {
                     this.RawPlayerSlotData = new Byte[typeof(PlayerSlotDataSerializable).StructLayoutAttribute.Size];
+                }
+
+                if (slotIndex == 0 && this.CachedRawSlotPointerBase != rawSlotPointerBase)
+                {
+                    this.ForceRefresh = true;
+                    this.CachedRawSlotPointerBase = rawSlotPointerBase;
                 }
 
                 // Read the entire actor reference counting table
