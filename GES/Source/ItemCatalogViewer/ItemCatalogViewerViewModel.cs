@@ -11,6 +11,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using static GES.Source.Main.MainViewModel;
 
     /// <summary>
     /// View model for the Item Catalog Visualizer.
@@ -100,15 +101,14 @@
         private unsafe void UpdateActorSlots()
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
-
             UInt64 ItemCatalogAddress;
 
-            switch (MainViewModel.GetInstance().SelectedVersion)
+            switch (MainViewModel.GetInstance().DetectedVersion)
             {
-                default:
-                case MainViewModel.VersionJP: ItemCatalogAddress = ItemCatalogAddressJP; break;
-                case MainViewModel.VersionEN: ItemCatalogAddress = ItemCatalogAddressEN; break;
-                case MainViewModel.VersionPAL: ItemCatalogAddress = ItemCatalogAddressPAL; break;
+                default: return;
+                case EDetectedVersion.JP: ItemCatalogAddress = ItemCatalogAddressJP; break;
+                case EDetectedVersion.EN: ItemCatalogAddress = ItemCatalogAddressEN; break;
+                case EDetectedVersion.PAL: ItemCatalogAddress = ItemCatalogAddressPAL; break;
             }
 
             UInt64 slotPointer = gameCubeMemoryBase + ItemCatalogAddress;

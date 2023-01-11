@@ -15,6 +15,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using static GES.Source.Main.MainViewModel;
 
     /// <summary>
     /// View model for the Monster Table Visualizer.
@@ -114,12 +115,12 @@
             UInt64 monsterTableAddress;
             UInt64 monsterCountAddress;
 
-            switch (MainViewModel.GetInstance().SelectedVersion)
+            switch (MainViewModel.GetInstance().DetectedVersion)
             {
-                default:
-                case MainViewModel.VersionJP: monsterTableAddress = MonsterTableAddressJP; monsterCountAddress = MonsterCountAddressJP; break;
-                case MainViewModel.VersionEN: monsterTableAddress = MonsterTableAddressEN; monsterCountAddress = MonsterCountAddressEN; break;
-                case MainViewModel.VersionPAL: monsterTableAddress = MonsterTableAddressPAL; monsterCountAddress = MonsterCountAddressPAL; break;
+                default: return;
+                case EDetectedVersion.JP: monsterTableAddress = MonsterTableAddressJP; monsterCountAddress = MonsterCountAddressJP; break;
+                case EDetectedVersion.EN: monsterTableAddress = MonsterTableAddressEN; monsterCountAddress = MonsterCountAddressEN; break;
+                case EDetectedVersion.PAL: monsterTableAddress = MonsterTableAddressPAL; monsterCountAddress = MonsterCountAddressPAL; break;
             }
 
             UInt64 monsterTablePointer = gameCubeMemoryBase + monsterTableAddress;

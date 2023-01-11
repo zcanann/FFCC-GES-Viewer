@@ -1,23 +1,34 @@
 ﻿namespace GES.Source.Main
 {
+    using GES.Engine.Common;
     using GES.Engine.Common.Logging;
+    using GES.Engine.Memory;
     using GES.Source.Docking;
     using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
     using GES.Source.Output;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Text;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows;
+    using static GES.Source.Main.MainViewModel;
 
     /// <summary>
     /// Main view model.
     /// </summary>
     public class MainViewModel : WindowHostViewModel
     {
-        public const String VersionJP = "JP (日本語)";
-        public const String VersionEN = "EN (英語)";
-        public const String VersionPAL = "PAL (欧州)";
+        public enum EDetectedVersion
+        {
+            None,
+            JP,
+            EN,
+            PAL,
+        };
 
         public const String LanguageEN = "English (英語)";
         public const String LanguageJPN = "日本語 (Japanese)";
@@ -41,42 +52,29 @@
             Logger.Subscribe(OutputViewModel.GetInstance());
             Logger.Log(LogLevel.Info, "FFCC GES Tools started");
 
-            this.VersionList = new List<String>
-            {
-                VersionJP,
-                VersionEN,
-                VersionPAL,
-            };
             this.LanguageList = new List<String>
             {
                 LanguageEN,
                 LanguageJPN,
             };
-            this.SelectedVersion = VersionList[VersionList.Contains(GESSettings.SelectedVersion) ? VersionList.IndexOf(GESSettings.SelectedVersion) : 0];
+
             this.SelectedLanguage = LanguageList[LanguageList.Contains(GESSettings.SelectedLanguage) ? LanguageList.IndexOf(GESSettings.SelectedLanguage) : 0];
-            this.RaisePropertyChanged(nameof(this.VersionList));
             this.RaisePropertyChanged(nameof(this.LanguageList));
-            this.RaisePropertyChanged(nameof(this.SelectedVersion));
             this.RaisePropertyChanged(nameof(this.SelectedLanguage));
+
+            Application.Current.Exit += this.OnAppExit;
+
+            this.RunUpdateLoop();
         }
 
-        public List<String> VersionList { get; set; }
+        private void OnAppExit(object sender, ExitEventArgs e)
+        {
+            this.CanUpdate = false;
+        }
+
         public List<String> LanguageList { get; set; }
 
-        public String SelectedVersion
-        {
-            get
-            {
-                return this.selectedVersion;
-            }
-
-            set
-            {
-                this.selectedVersion = value;
-                GESSettings.SelectedVersion = value;
-                this.RaisePropertyChanged(nameof(this.SelectedVersion));
-            }
-        }
+        public EDetectedVersion DetectedVersion { get; private set; }
 
         public String SelectedLanguage
         {
@@ -90,12 +88,13 @@
                 this.selectedLanguage = value;
                 GESSettings.SelectedLanguage = value;
                 this.RaisePropertyChanged(nameof(this.SelectedLanguage));
-
-                // Doesn't quite work.
-                // EquipmentViewerViewModel.GetInstance().ExternalRefreshAll();
-                // InventoryViewerViewModel.GetInstance().ExternalRefreshAll();
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the update loop can run.
+        /// </summary>
+        private bool CanUpdate { get; set; }
 
 
         /// <summary>
@@ -119,6 +118,39 @@
                 return "Layout.xml";
             }
         }
+        /// <summary>
+        /// Begin the update loop for visualizing the heap.
+        /// </summary>
+        private void RunUpdateLoop()
+        {
+            this.CanUpdate = true;
+
+            Task.Run(async () =>
+            {
+                while (this.CanUpdate)
+                {
+                    // if (this.IsVisible)
+                    {
+                        try
+                        {
+                            if (SessionManager.Session.OpenedProcess != null)
+                            {
+                                Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    this.DetectVersion();
+                                });
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(LogLevel.Error, "Error updating the Heap Visualizer", ex);
+                        }
+                    }
+
+                    await Task.Delay(2500);
+                }
+            });
+        }
 
         /// <summary>
         /// Gets the singleton instance of the <see cref="MainViewModel" /> class.
@@ -136,6 +168,60 @@
         protected override void Close(Window window)
         {
             base.Close(window);
+        }
+
+        private Byte[] GameCode = new Byte[6];
+
+        private void DetectVersion()
+        {
+            UInt64 gameCodeAddress = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
+
+            Boolean success;
+            MemoryReader.Instance.ReadBytes(
+                SessionManager.Session.OpenedProcess,
+                this.GameCode,
+                gameCodeAddress,
+                out success);
+
+            if (success)
+            {
+                const String GcVersionEn = "GCCE01";
+                const String GcVersionJp = "GCCJGC";
+                const String GcVersionPal = "GCCP01";
+
+                String gbaGcVersion = Encoding.ASCII.GetString(this.GameCode);
+
+                EDetectedVersion detectedVersion = EDetectedVersion.None;
+
+                if (gbaGcVersion == GcVersionEn)
+                {
+                    detectedVersion = EDetectedVersion.EN;
+                }
+                else if (gbaGcVersion == GcVersionJp)
+                {
+                    detectedVersion = EDetectedVersion.JP;
+                }
+                else if (gbaGcVersion == GcVersionPal)
+                {
+                    detectedVersion = EDetectedVersion.PAL;
+                }
+
+                if (this.DetectedVersion != detectedVersion)
+                {
+                    this.DetectedVersion = detectedVersion;
+                    this.RefreshAllViews();
+                }
+            }
+            else
+            {
+                this.DetectedVersion = EDetectedVersion.None;
+            }
+        }
+
+        private void RefreshAllViews()
+        {
+            EquipmentViewerViewModel.GetInstance().ExternalRefreshAll();
+            InventoryViewerViewModel.GetInstance().ExternalRefreshAll();
         }
     }
     //// End class

@@ -281,13 +281,6 @@
                     Height="24"
                     Margin="32,0,0,0"
                     Background="{StaticResource GESColorFrame}"
-                    ItemsSource="{Binding MainViewModel.VersionList, Source={StaticResource ViewModelLocator}}"
-                    SelectedItem="{Binding MainViewModel.SelectedVersion, Source={StaticResource ViewModelLocator}, Mode=TwoWay}" />
-                <shell:ComboBox
-                    Width="196"
-                    Height="24"
-                    Margin="32,0,0,0"
-                    Background="{StaticResource GESColorFrame}"
                     ItemsSource="{Binding MainViewModel.LanguageList, Source={StaticResource ViewModelLocator}}"
                     SelectedItem="{Binding MainViewModel.SelectedLanguage, Source={StaticResource ViewModelLocator}, Mode=TwoWay}" />
             </shell:WrapPanel>

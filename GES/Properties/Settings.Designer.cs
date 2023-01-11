@@ -34,17 +34,5 @@ namespace GES.Properties {
                 this["SelectedLanguage"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SelectedVersion {
-            get {
-                return ((string)(this["SelectedVersion"]));
-            }
-            set {
-                this["SelectedVersion"] = value;
-            }
-        }
     }
 }

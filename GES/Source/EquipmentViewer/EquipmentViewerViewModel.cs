@@ -14,6 +14,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
+    using static GES.Source.Main.MainViewModel;
 
     /// <summary>
     /// View model for the Heap Visualizer.
@@ -72,7 +73,7 @@
         private Byte[] RawEquipmentData { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
+        /// Gets or sets a value indicating whether the update loop can run.
         /// </summary>
         private bool CanUpdate { get; set; }
 
@@ -104,7 +105,7 @@
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    UpdateActorSlots();
+                                    UpdateEquipmentView();
                                 });
                             }
                         }
@@ -121,10 +122,7 @@
 
         public void ExternalRefreshAll()
         {
-            foreach(EquipmentDataView equipmentDataView in this.PlayerEquipmentData)
-            {
-                equipmentDataView.RefreshAllProperties();
-            }
+            this.ForceRefresh = true;
         }
 
         public void ExternalRefresh(Int32 playerIndex)
@@ -135,7 +133,9 @@
             }
         }
 
-        private unsafe void UpdateActorSlots()
+        private Boolean ForceRefresh { get; set; }
+
+        private unsafe void UpdateEquipmentView()
         {
             UInt64[] gbaMemoryBases = new UInt64[PlayerCount]
             {
@@ -146,13 +146,13 @@
             };
 
             UInt64 equipmentListAddress;
-            
-            switch(MainViewModel.GetInstance().SelectedVersion)
+
+            switch (MainViewModel.GetInstance().DetectedVersion)
             {
-                default:
-                case MainViewModel.VersionJP: equipmentListAddress = equipmentListAddressJP; break;
-                case MainViewModel.VersionEN: equipmentListAddress = equipmentListAddressEN; break;
-                case MainViewModel.VersionPAL: equipmentListAddress = equipmentListAddressPal; break;
+                default: return;
+                case EDetectedVersion.JP: equipmentListAddress = equipmentListAddressJP; break;
+                case EDetectedVersion.EN: equipmentListAddress = equipmentListAddressEN; break;
+                case EDetectedVersion.PAL: equipmentListAddress = equipmentListAddressPal; break;
             }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
@@ -187,10 +187,11 @@
                     EquipmentData.Deserialize(this.PlayerEquipmentData[playerIndex].EquipmentData, this.RawEquipmentData);
 
                     // Notify changes if new bytes differ from cached
-                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawEquipmentData))
+                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawEquipmentData) || this.ForceRefresh)
                     {
                         this.PlayerEquipmentData[playerIndex].EquipmentData.Refresh(equipmentListAddress, slotPointer, this.RawEquipmentData, playerIndex);
                         this.PlayerEquipmentData[playerIndex].RefreshAllProperties();
+                        this.ForceRefresh = false;
                     }
 
                     this.RawEquipmentData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);

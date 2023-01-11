@@ -229,10 +229,11 @@ namespace GES.Source.InventoryViewer
                     if (newIndex != this.rawEquipment[index].Index)
                     {
                         this.rawEquipment[index].Index = newIndex;
-                        this.rawEquipment[index].Address = slotPointerBase + PlayerSlotData.EquipmentOffset + (UInt32)newIndex * 2;
-                        this.rawEquipment[index].RawAddress = rawSlotPointerBase + PlayerSlotData.EquipmentOffset + (UInt64)newIndex * 2;
                         refresh = true;
                     }
+
+                    this.rawEquipment[index].Address = slotPointerBase + PlayerSlotData.EquipmentOffset + (UInt32)newIndex * 2;
+                    this.rawEquipment[index].RawAddress = rawSlotPointerBase + PlayerSlotData.EquipmentOffset + (UInt64)newIndex * 2;
 
                     if (refresh && shouldRefresh)
                     {

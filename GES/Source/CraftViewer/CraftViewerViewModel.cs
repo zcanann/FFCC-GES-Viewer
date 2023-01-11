@@ -14,6 +14,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
+    using static GES.Source.Main.MainViewModel;
 
     /// <summary>
     /// View model for the Craft Visualizer.
@@ -72,7 +73,7 @@
         private Byte[] RawCraftData { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
+        /// Gets or sets a value indicating whether the update loop can run.
         /// </summary>
         private bool CanUpdate { get; set; }
 
@@ -147,12 +148,12 @@
 
             UInt64 craftListAddress;
             
-            switch(MainViewModel.GetInstance().SelectedVersion)
+            switch(MainViewModel.GetInstance().DetectedVersion)
             {
-                default:
-                case MainViewModel.VersionJP: craftListAddress = CraftListAddressJP; break;
-                case MainViewModel.VersionEN: craftListAddress = CraftListAddressEN; break;
-                case MainViewModel.VersionPAL: craftListAddress = CraftListAddressPal; break;
+                default: return;
+                case EDetectedVersion.JP: craftListAddress = CraftListAddressJP; break;
+                case EDetectedVersion.EN: craftListAddress = CraftListAddressEN; break;
+                case EDetectedVersion.PAL: craftListAddress = CraftListAddressPal; break;
             }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)

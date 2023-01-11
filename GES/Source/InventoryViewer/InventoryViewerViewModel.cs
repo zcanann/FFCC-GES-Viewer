@@ -12,6 +12,7 @@
     using GES.Source.Editors.InventoryItemEditor;
     using GES.Source.EquipmentViewer;
     using GES.Source.Main;
+    using GES.Source.Mvvm.Converters;
     using System;
     using System.Buffers.Binary;
     using System.Collections.Generic;
@@ -20,6 +21,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
+    using static GES.Source.Main.MainViewModel;
 
     /// <summary>
     /// View model for the Heap Visualizer.
@@ -96,8 +98,6 @@
 
         private Int32 activeSlot;
 
-        private Boolean forceRefresh;
-
         /// <summary>
         /// Prevents a default instance of the <see cref="InventoryViewerViewModel" /> class from being created.
         /// </summary>
@@ -168,7 +168,7 @@
             set
             {
                 this.activeSlot = value;
-                this.forceRefresh = true;
+                this.ForceRefresh = true;
             }
         }
 
@@ -191,11 +191,10 @@
 
         public void ExternalRefreshAll()
         {
-            foreach (PlayerSlotDataView playerSlotDataView in this.PlayerSlots)
-            {
-                playerSlotDataView.RefreshAllProperties();
-            }
+            this.ForceRefresh = true;
         }
+
+        private Boolean ForceRefresh { get; set; }
 
         /// <summary>
         /// Begin the update loop for visualizing the heap.
@@ -238,12 +237,12 @@
             UInt64[] slotMappingAddresses;
             UInt64[] slotDataAddresses;
 
-            switch (MainViewModel.GetInstance().SelectedVersion)
+            switch (MainViewModel.GetInstance().DetectedVersion)
             {
-                default:
-                case MainViewModel.VersionJP: slotMappingAddresses = slotMappingAddressesJP; slotDataAddresses = slotDataAddressesJP; break;
-                case MainViewModel.VersionEN: slotMappingAddresses = slotMappingAddressesEN; slotDataAddresses = slotDataAddressesEN; break;
-                case MainViewModel.VersionPAL: slotMappingAddresses = slotMappingAddressesPAL; slotDataAddresses = slotDataAddressesPAL; break;
+                default: return;
+                case EDetectedVersion.JP: slotMappingAddresses = slotMappingAddressesJP; slotDataAddresses = slotDataAddressesJP; break;
+                case EDetectedVersion.EN: slotMappingAddresses = slotMappingAddressesEN; slotDataAddresses = slotDataAddressesEN; break;
+                case EDetectedVersion.PAL: slotMappingAddresses = slotMappingAddressesPAL; slotDataAddresses = slotDataAddressesPAL; break;
             }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
@@ -296,7 +295,7 @@
                     PlayerSlotData.Deserialize(this.PlayerSlots[slotIndex].Slot, this.RawPlayerSlotData);
 
                     // Notify changes if new bytes differ from cached
-                    if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData) || (this.forceRefresh && slotIndex == this.ActiveSlot))
+                    if (!this.CachedSlotData[slotIndex].SequenceEqual(this.RawPlayerSlotData) || (this.ForceRefresh && slotIndex == this.ActiveSlot))
                     {
                         bool shouldRefresh = slotIndex == this.ActiveSlot;
 
@@ -321,7 +320,7 @@
                 }
             }
 
-            this.forceRefresh = false;
+            this.ForceRefresh = false;
         }
 
         static HashSet<UInt32> SeenValues = new HashSet<UInt32>();
@@ -455,191 +454,19 @@
             }
         }
 
+        private static readonly ItemToNameConverter ItemToNameConverter = new ItemToNameConverter();
+
         private List<String> GetArtifactNames(Int32 index, Boolean allowSetE)
         {
             List<String> artifactNames = new List<String>();
 
-            // TODO: Just add the Ids, and use ItemToNameConverter to fetch the correct names. Should be able to kill most of this code.
-            if (MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageEN)
+            const UInt16 BaseId = (UInt16)0x9F;
+
+            for (Int32 groupIndex = 0; groupIndex < (allowSetE ? 5 : 4); groupIndex++)
             {
-                switch (index)
-                {
-                    case 0:
-                        artifactNames.AddRange(new String[]{ "Shuriken", "Onion Sword", "Galatyn", "Drill"});
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Fire Ring");
-                        }
-                        break;
-                    case 1:
-                        artifactNames.AddRange(new String[] { "Maneater", "Power Wristbands", "Ultima Tome", "Buckler" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Blizzard Ring");
-                        }
-                        break;
-                    case 2:
-                        artifactNames.AddRange(new String[] { "Double Axe", "Green Beret", "Silver Bracer", "Silver Spectacles" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Thunder Ring");
-                        }
-                        break;
-                    case 3:
-                        artifactNames.AddRange(new String[] { "Ashura", "Fang Charm", "Cat's Bell", "Sparkling Bracer" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Cure Ring");
-                        }
-                        break;
-                    case 4:
-                        artifactNames.AddRange(new String[] { "Kaiser Knuckles", "Twisted Headband", "Faerie Ring", "Black Hood" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Life Ring");
-                        }
-                        break;
-                    case 5:
-                        artifactNames.AddRange(new String[] { "Flametongue", "Heavy Armband", "Winged Cap", "Arai Helm" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Earth Pendant");
-                        }
-                        break;
-                    case 6:
-                        artifactNames.AddRange(new String[] { "Ice Brand", "Giant's Glove", "Candy Ring", "Elven Mantle" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Moon Pendant");
-                        }
-                        break;
-                    case 7:
-                        artifactNames.AddRange(new String[] { "Loaded Dice", "Dragon's Whisker", "Kris", "Wonder Bangle" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Star Pendant");
-                        }
-                        break;
-                    case 8:
-                        artifactNames.AddRange(new String[] { "Ogrekiller", "Mage Masher", "Red Slippers", "Protection Ring" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Sun Pendant");
-                        }
-                        break;
-                    case 9:
-                        artifactNames.AddRange(new String[] { "Engetsurin", "Rune Staff", "Dark Matter", "Aegis" });
-                        break;
-                    case 10:
-                        artifactNames.AddRange(new String[] { "Sasuke Blade", "Book of Light", "Gold Hairpin", "Rat's Tail" });
-                        break;
-                    case 11:
-                        artifactNames.AddRange(new String[] { "Mjollnir", "Sage's Staff", "Taotie Morif", "Teddy Bear" });
-                        break;
-                    case 12:
-                        artifactNames.AddRange(new String[] { "Masquerade", "Wonder Wand", "Ribbon", "Moogle Pocket" });
-                        break;
-                    case 13:
-                        artifactNames.AddRange(new String[] { "Murasame", "Rune Bell", "Main Gauche", "Chocobo Pocket" });
-                        break;
-                    case 14:
-                        artifactNames.AddRange(new String[] { "Masamune", "Mage's Staff", "Chicken Knife", "Gobbie Pocket" });
-                        break;
-                    case 15:
-                        artifactNames.AddRange(new String[] { "Gekkabijin", "Noah's Lute", "Save the Queen", "Ultimate Pocket" });
-                        break;
-                }
-            }
-            else
-            {
-                // TODO: Japanese localizations
-                switch (index)
-                {
-                    case 0:
-                        artifactNames.AddRange(new String[] { "Shuriken", "Onion Sword", "Galatyn", "Drill" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Fire Ring");
-                        }
-                        break;
-                    case 1:
-                        artifactNames.AddRange(new String[] { "Maneater", "Power Wristbands", "Ultima Tome", "Buckler" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Blizzard Ring");
-                        }
-                        break;
-                    case 2:
-                        artifactNames.AddRange(new String[] { "Double Axe", "Green Beret", "Silver Bracer", "Silver Spectacles" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Thunder Ring");
-                        }
-                        break;
-                    case 3:
-                        artifactNames.AddRange(new String[] { "Ashura", "Fang Charm", "Cat's Bell", "Sparkling Bracer" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Cure Ring");
-                        }
-                        break;
-                    case 4:
-                        artifactNames.AddRange(new String[] { "Kaiser Knuckles", "Twisted Headband", "Faerie Ring", "Black Hood" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Life Ring");
-                        }
-                        break;
-                    case 5:
-                        artifactNames.AddRange(new String[] { "Flametongue", "Heavy Armband", "Winged Cap", "Arai Helm" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Earth Pendant");
-                        }
-                        break;
-                    case 6:
-                        artifactNames.AddRange(new String[] { "Ice Brand", "Giant's Glove", "Candy Ring", "Elven Mantle" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Moon Pendant");
-                        }
-                        break;
-                    case 7:
-                        artifactNames.AddRange(new String[] { "Loaded Dice", "Dragon's Whisker", "Kris", "Wonder Bangle" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Star Pendant");
-                        }
-                        break;
-                    case 8:
-                        artifactNames.AddRange(new String[] { "Ogrekiller", "Mage Masher", "Red Slippers", "Protection Ring" });
-                        if (allowSetE)
-                        {
-                            artifactNames.Add("Sun Pendant");
-                        }
-                        break;
-                    case 9:
-                        artifactNames.AddRange(new String[] { "Engetsurin", "Rune Staff", "Dark Matter", "Aegis" });
-                        break;
-                    case 10:
-                        artifactNames.AddRange(new String[] { "Sasuke Blade", "Book of Light", "Gold Hairpin", "Rat's Tail" });
-                        break;
-                    case 11:
-                        artifactNames.AddRange(new String[] { "Mjollnir", "Sage's Staff", "Taotie Morif", "Teddy Bear" });
-                        break;
-                    case 12:
-                        artifactNames.AddRange(new String[] { "Masquerade", "Wonder Wand", "Ribbon", "Moogle Pocket" });
-                        break;
-                    case 13:
-                        artifactNames.AddRange(new String[] { "Murasame", "Rune Bell", "Main Gauche", "Chocobo Pocket" });
-                        break;
-                    case 14:
-                        artifactNames.AddRange(new String[] { "Masamune", "Mage's Staff", "Chicken Knife", "Gobbie Pocket" });
-                        break;
-                    case 15:
-                        artifactNames.AddRange(new String[] { "Gekkabijin", "Noah's Lute", "Save the Queen", "Ultimate Pocket" });
-                        break;
-                }
+                UInt16 artifactId = (UInt16)(BaseId + (UInt16)(groupIndex * 16 + index));
+
+                artifactNames.Add(ItemToNameConverter.Convert(artifactId, null, null, null)?.ToString());
             }
 
             return artifactNames;
