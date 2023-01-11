@@ -34,5 +34,17 @@ namespace GES.Properties {
                 this["SelectedLanguage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutomaticUpdates {
+            get {
+                return ((bool)(this["AutomaticUpdates"]));
+            }
+            set {
+                this["AutomaticUpdates"] = value;
+            }
+        }
     }
 }

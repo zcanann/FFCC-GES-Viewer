@@ -7,6 +7,7 @@
     using GES.Source.EquipmentViewer;
     using GES.Source.InventoryViewer;
     using GES.Source.Output;
+    using GES.Source.Updater;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -33,7 +34,6 @@
         public const String LanguageEN = "English (英語)";
         public const String LanguageJPN = "日本語 (Japanese)";
 
-        private String selectedVersion;
         private String selectedLanguage;
 
         /// <summary>
@@ -51,6 +51,8 @@
             // Attach the logger view model to the engine's output
             Logger.Subscribe(OutputViewModel.GetInstance());
             Logger.Log(LogLevel.Info, "FFCC GES Tools started");
+
+            ApplicationUpdater.UpdateApp();
 
             this.LanguageList = new List<String>
             {

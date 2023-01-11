@@ -4,6 +4,19 @@
     
     public static class GESSettings
     {
+        public static Boolean AutomaticUpdates
+        {
+            get
+            {
+                return Properties.Settings.Default.AutomaticUpdates;
+            }
+
+            set
+            {
+                Properties.Settings.Default.AutomaticUpdates = value;
+            }
+        }
+
         public static String SelectedLanguage
         {
             get
