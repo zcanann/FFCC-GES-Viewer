@@ -36,7 +36,7 @@
         private const Int32 PlayerCount = 4;
         private const Int32 SlotCount = 8;
 
-        private UInt64[] slotDataAddressesJP = new UInt64[SlotCount]
+        private UInt32[] slotDataAddressesJP = new UInt32[SlotCount]
         {
             0x23BB90,
             0x23C7C0,
@@ -48,7 +48,7 @@
             0x2410E0,
         };
 
-        private UInt64[] slotDataAddressesEN = new UInt64[SlotCount]
+        private UInt32[] slotDataAddressesEN = new UInt32[SlotCount]
         {
             0x21F250,
             0x21FE80,
@@ -60,7 +60,7 @@
             0x2247A0,
         };
 
-        private UInt64[] slotDataAddressesPAL = new UInt64[SlotCount]
+        private UInt32[] slotDataAddressesPAL = new UInt32[SlotCount]
         {
             0x220290,
             0x220EC0,
@@ -72,7 +72,7 @@
             0x2257E0,
         };
 
-        private UInt64[] slotMappingAddressesJP = new UInt64[PlayerCount]
+        private UInt32[] slotMappingAddressesJP = new UInt32[PlayerCount]
         {
             0x23A7E3,
             0x23A7E7,
@@ -80,7 +80,7 @@
             0x23A7EF,
         };
 
-        private UInt64[] slotMappingAddressesEN = new UInt64[PlayerCount]
+        private UInt32[] slotMappingAddressesEN = new UInt32[PlayerCount]
         {
             0x21DEA3,
             0x21DEA7,
@@ -88,7 +88,7 @@
             0x21DEAF,
         };
 
-        private UInt64[] slotMappingAddressesPAL = new UInt64[PlayerCount]
+        private UInt32[] slotMappingAddressesPAL = new UInt32[PlayerCount]
         {
             0x21EEE3,
             0x21EEE7,
@@ -262,24 +262,44 @@
 
         private UInt64 CachedRawSlotPointerBase = 0;
 
+        public UInt32[] GetSlotMappingAddresses()
+        {
+            switch (MainViewModel.GetInstance().DetectedVersion)
+            {
+                default:
+                case EDetectedVersion.None: return null;
+                case EDetectedVersion.JP: return slotMappingAddressesJP;
+                case EDetectedVersion.EN: return slotMappingAddressesEN;
+                case EDetectedVersion.PAL: return slotMappingAddressesPAL;
+            }
+        }
+
+        public UInt32[] GetSlotDataAddresses()
+        {
+            switch (MainViewModel.GetInstance().DetectedVersion)
+            {
+                default:
+                case EDetectedVersion.None: return null;
+                case EDetectedVersion.JP: return slotDataAddressesJP;
+                case EDetectedVersion.EN: return slotDataAddressesEN;
+                case EDetectedVersion.PAL: return slotDataAddressesPAL;
+            }
+        }
+
         private unsafe void UpdateActorSlots()
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
+            UInt32[] slotMappingAddresses = this.GetSlotMappingAddresses();
+            UInt32[] slotDataAddresses = this.GetSlotDataAddresses();
 
-            UInt64[] slotMappingAddresses;
-            UInt64[] slotDataAddresses;
-
-            switch (MainViewModel.GetInstance().DetectedVersion)
+            if (MainViewModel.GetInstance().DetectedVersion == EDetectedVersion.None || slotMappingAddresses == null || slotDataAddresses == null)
             {
-                default: return;
-                case EDetectedVersion.JP: slotMappingAddresses = slotMappingAddressesJP; slotDataAddresses = slotDataAddressesJP; break;
-                case EDetectedVersion.EN: slotMappingAddresses = slotMappingAddressesEN; slotDataAddresses = slotDataAddressesEN; break;
-                case EDetectedVersion.PAL: slotMappingAddresses = slotMappingAddressesPAL; slotDataAddresses = slotDataAddressesPAL; break;
+                return;
             }
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
-                UInt64 slotPointer = gameCubeMemoryBase + slotMappingAddresses[playerIndex];
+                UInt64 slotPointer = gameCubeMemoryBase + (UInt64)slotMappingAddresses[playerIndex];
                 Boolean success;
                 Byte result = MemoryReader.Instance.Read<Byte>(
                     SessionManager.Session.OpenedProcess,
@@ -297,7 +317,7 @@
             for (Int32 slotIndex = 0; slotIndex < SlotCount; slotIndex++)
             {
                 UInt32 slotPointerBase = 0x80000000 + (UInt32)slotDataAddresses[slotIndex];
-                UInt64 rawSlotPointerBase = gameCubeMemoryBase + slotDataAddresses[slotIndex];
+                UInt64 rawSlotPointerBase = gameCubeMemoryBase + (UInt64)slotDataAddresses[slotIndex];
 
                 if (this.RawPlayerSlotData == null)
                 {
@@ -379,9 +399,7 @@
                     || this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId == 0x0103
                     || this.PlayerSlots[slotIndex].Slot.rawItems[index].ItemId == 0x0125)
                 {
-                    const UInt64 InvOffset = 214;
-
-                    UInt32 address = (UInt32)(0x80000000 + (slotPointer - gameCubeMemoryBase) + InvOffset + (UInt64)(index * 2));
+                    UInt32 address = (UInt32)(0x80000000 + (slotPointer - gameCubeMemoryBase) + PlayerSlotData.InventoryOffset + (UInt64)(index * 2));
 
                     if (SeenValues.Contains(address))
                     {
