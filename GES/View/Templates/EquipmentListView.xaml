@@ -20,13 +20,22 @@
         <converters:EquipmentColorConverter x:Key="EquipmentColorConverter" />
         <converters:EquipmentSlotIconConverter x:Key="EquipmentSlotIconConverter" />
         <converters:EquipmentPropertiesConverter x:Key="EquipmentPropertiesConverter" />
+        <converters:PlayerIndexToSlotConverter x:Key="PlayerIndexToSlotConverter" />
         <converters:BooleanToVisibilityConverter
             x:Key="BooleanToHiddenConverter"
             False="Hidden"
             True="Visible" />
     </UserControl.Resources>
     <x:Code>
-        <![CDATA[ public EquipmentListView() { InitializeComponent(); }]]>
+        <![CDATA[
+        public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(Int32), typeof(EquipmentListView));
+        public EquipmentListView() { InitializeComponent(); }
+        public Int32 Index
+        {
+            get { return (Int32)GetValue(IndexProperty); }
+            set { SetValue(IndexProperty, value); }
+        }
+        ]]>
     </x:Code>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -43,7 +52,7 @@
                 Margin="4,0,0,0"
                 Orientation="Horizontal">
                 <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Slot " />
-                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding InventoryViewerViewModel.DisplayPlayerToSlotMap[0], Source={StaticResource ViewModelLocator}}" />
+                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Index, Converter={StaticResource PlayerIndexToSlotConverter}, Source={StaticResource ViewModelLocator}}" />
                 <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" | Equip List Size: " />
                 <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=ItemCount}" />
             </StackPanel>

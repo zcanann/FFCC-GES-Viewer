@@ -46,16 +46,16 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Background="Transparent" Header="Player 1">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[0]}" />
+                <templates:CraftView DataContext="{Binding PlayerCraftData[0]}" Index="0" />
             </TabItem>
             <TabItem Background="Transparent" Header="Player 2">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[1]}" />
+                <templates:CraftView DataContext="{Binding PlayerCraftData[1]}" Index="1" />
             </TabItem>
             <TabItem Background="Transparent" Header="Player 3">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[2]}" />
+                <templates:CraftView DataContext="{Binding PlayerCraftData[2]}" Index="2" />
             </TabItem>
             <TabItem Background="Transparent" Header="Player 4">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[3]}" />
+                <templates:CraftView DataContext="{Binding PlayerCraftData[3]}" Index="3" />
             </TabItem>
         </TabControl>
     </Grid>

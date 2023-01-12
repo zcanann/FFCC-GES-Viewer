@@ -44,16 +44,16 @@
             </Style>
         </TabControl.Resources>
         <TabItem Background="Transparent" Header="Player 1">
-            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[0]}" />
+            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[0]}" Index="0" />
         </TabItem>
         <TabItem Background="Transparent" Header="Player 2">
-            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[1]}" />
+            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[1]}" Index="1" />
         </TabItem>
         <TabItem Background="Transparent" Header="Player 3">
-            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[2]}" />
+            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[2]}" Index="2" />
         </TabItem>
         <TabItem Background="Transparent" Header="Player 4">
-            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[4]}" />
+            <templates:EquipmentListView DataContext="{Binding PlayerEquipmentData[4]}" Index="3" />
         </TabItem>
     </TabControl>
 </UserControl>

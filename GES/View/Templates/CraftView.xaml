@@ -44,7 +44,15 @@
             True="Visible" />
     </UserControl.Resources>
     <x:Code>
-        <![CDATA[ public CraftView() { InitializeComponent(); }]]>
+        <![CDATA[
+        public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(Int32), typeof(CraftView));
+        public CraftView() { InitializeComponent(); }
+        public Int32 Index
+        {
+            get { return (Int32)GetValue(IndexProperty); }
+            set { SetValue(IndexProperty, value); }
+        }
+        ]]>
     </x:Code>
     <Grid>
         <Grid.ColumnDefinitions>
