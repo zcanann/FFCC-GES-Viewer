@@ -4,7 +4,7 @@
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source.Docking;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using GES.Source.InventoryViewer;
     using GES.Source.Output;
     using GES.Source.Updater;
@@ -222,7 +222,7 @@
 
         private void RefreshAllViews()
         {
-            EquipmentViewerViewModel.GetInstance().ExternalRefreshAll();
+            EquipmentListViewerViewModel.GetInstance().ExternalRefreshAll();
             InventoryViewerViewModel.GetInstance().ExternalRefreshAll();
         }
     }

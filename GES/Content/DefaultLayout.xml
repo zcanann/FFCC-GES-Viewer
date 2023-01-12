@@ -4,7 +4,7 @@
     <LayoutAnchorablePaneGroup Orientation="Vertical" DockWidth="0.7971082378443319*" DockHeight="0.9383453431467*">
       <LayoutAnchorablePane Id="bb71dcd2-1626-4824-96f1-9a2e1ffe7866" DockWidth="1.23994787788533*" DockHeight="1.3508684345866215*" FloatingWidth="1270" FloatingHeight="726" FloatingLeft="108" FloatingTop="361">
         <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Inventory Viewer" ContentId="InventoryViewerViewModel" LastActivationTimeStamp="12/30/2022 00:00:34" />
-        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Equipment List Viewer" IsSelected="True" ContentId="EquipmentViewerViewModel" LastActivationTimeStamp="12/30/2022 15:29:40" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Equipment List Viewer" IsSelected="True" ContentId="EquipmentListViewerViewModel" LastActivationTimeStamp="12/30/2022 15:29:40" />
         <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Craft List Viewer" ContentId="CraftViewerViewModel" LastActivationTimeStamp="12/30/2022 14:06:14" />
         <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Item Catalog" ContentId="ItemCatalogViewerViewModel" LastActivationTimeStamp="12/30/2022 14:06:02" />
       </LayoutAnchorablePane>

@@ -1,4 +1,4 @@
-﻿namespace GES.Source.EquipmentViewer
+﻿namespace GES.Source.EquipmentListViewer
 {
     using System;
     using System.ComponentModel;

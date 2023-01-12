@@ -18,6 +18,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="View\Templates\InventoryView.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="App.xaml" />
     <None Remove="AppIcon.ico" />
     <None Remove="Content\CSharp.xshd" />
@@ -157,8 +161,8 @@
 
   <ItemGroup>
     <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.70.3" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.70.3" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.71.1" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.71.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
@@ -334,7 +338,7 @@
     <Page Update="View\CraftViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-    <Page Update="View\EquipmentViewer.xaml">
+    <Page Update="View\EquipmentListViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\SlotDataViewer.xaml">
@@ -404,7 +408,7 @@
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
+	
   <ItemGroup>
     <None Update="Properties\Settings.settings">
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

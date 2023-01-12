@@ -2,7 +2,7 @@
 {
     using GES.Source.ItemCatalogViewer;
     using GES.Source.CraftViewer;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using GES.Source.InventoryViewer;
     using GES.Source.Output;
     using GES.Source.ProcessSelector;
@@ -46,9 +46,9 @@
         private DataTemplate slotDataViewerViewTemplate;
 
         /// <summary>
-        /// The template for the Inventory Viewer.
+        /// The template for the Equipment List Viewer.
         /// </summary>
-        private DataTemplate equipmentViewerViewTemplate;
+        private DataTemplate equipmentListViewerViewTemplate;
 
         /// <summary>
         /// The template for the Monster Table Viewer.
@@ -176,17 +176,17 @@
         /// <summary>
         /// Gets or sets the template for the Equipment Viewer.
         /// </summary>
-        public DataTemplate EquipmentViewerViewTemplate
+        public DataTemplate EquipmentListViewerViewTemplate
         {
             get
             {
-                return this.equipmentViewerViewTemplate;
+                return this.equipmentListViewerViewTemplate;
             }
 
             set
             {
-                this.equipmentViewerViewTemplate = value;
-                this.DataTemplates[typeof(EquipmentViewerViewModel)] = value;
+                this.equipmentListViewerViewTemplate = value;
+                this.DataTemplates[typeof(EquipmentListViewerViewModel)] = value;
             }
         }
         

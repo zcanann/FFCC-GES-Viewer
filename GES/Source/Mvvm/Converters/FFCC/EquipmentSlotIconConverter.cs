@@ -1,7 +1,7 @@
 ﻿namespace GES.Source.Mvvm.Converters
 {
     using GES.Content;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using System;
     using System.Globalization;
     using System.Windows.Data;

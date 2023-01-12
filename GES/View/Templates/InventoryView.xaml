@@ -1,0 +1,375 @@
+﻿<UserControl
+    x:Class="GES.View.Templates.InventoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:content="clr-namespace:GES.Content"
+    xmlns:converters="clr-namespace:GES.Source.Mvvm.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GES.View.Templates"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:UInt64ToAddressConverter x:Key="IntPtrToAddressConverter" />
+        <converters:IntToHexConverter x:Key="IntToHexConverter" />
+        <converters:IntToBinaryConverter x:Key="IntToBinaryConverter" />
+        <converters:ArtifactGlitchVisibilityConverter x:Key="ArtifactGlitchVisibilityConverter" />
+        <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
+        <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
+
+        <converters:ItemToNameConverter x:Key="ItemToNameConverter" />
+        <converters:ExtendedInventorySlotToColorConverter x:Key="ExtendedInventorySlotToColorConverter" />
+        <converters:BooleanToVisibilityConverter
+            x:Key="BooleanToHiddenConverter"
+            False="Hidden"
+            True="Visible" />
+    </UserControl.Resources>
+    <x:Code>
+        <![CDATA[ public InventoryView() { InitializeComponent(); }]]>
+    </x:Code>
+    <DataGrid
+        Grid.Row="0"
+        Grid.Column="0"
+        AutoGenerateColumns="False"
+        Background="Transparent"
+        CanUserAddRows="False"
+        CanUserResizeColumns="true"
+        ColumnWidth="*"
+        HeadersVisibility="Column"
+        ItemsSource="{Binding Path=RawItems}"
+        RowHeaderWidth="0"
+        SelectionMode="Extended"
+        SelectionUnit="FullRow">
+        <DataGrid.Resources>
+            <Style x:Key="NoFocus" TargetType="{x:Type DataGridCell}">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                <Setter Property="BorderBrush" Value="{StaticResource GESColorGray24}" />
+                <Setter Property="IsManipulationEnabled" Value="False" />
+                <Setter Property="IsTabStop" Value="False" />
+            </Style>
+        </DataGrid.Resources>
+        <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Padding" Value="4,0,4,0" />
+            </Style>
+        </DataGrid.ColumnHeaderStyle>
+        <DataGrid.Style>
+            <Style TargetType="{x:Type DataGrid}">
+                <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+            </Style>
+        </DataGrid.Style>
+        <DataGrid.CellStyle>
+            <Style TargetType="{x:Type DataGridCell}">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="BorderBrush" Value="{StaticResource GESColorBlue}" />
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="Background" Value="{StaticResource GESColorPanel}" />
+                <Setter Property="Foreground" Value="{StaticResource GESColorWhite}" />
+                <Setter Property="BorderBrush" Value="{StaticResource GESColorBorder}" />
+            </Style>
+        </DataGrid.CellStyle>
+        <DataGrid.Columns>
+            <DataGridTemplateColumn
+                Width="Auto"
+                CellStyle="{StaticResource NoFocus}"
+                Header="Slot"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="{Binding Path=Index, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="4,0,0,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text="(0x" />
+                                <TextBlock Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}" Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="0,0,4,0"
+                                    Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
+                                    Text=")" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                MinWidth="16"
+                MaxWidth="16"
+                Header=""
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="#ffe7b5">
+                            <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="Auto"
+                Header="Id"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <Menu VerticalAlignment="Center" Background="Transparent">
+                                    <MenuItem
+                                        Height="16"
+                                        Command="{Binding InventoryViewerViewModel.EditItemCommand, Source={StaticResource ViewModelLocator}}"
+                                        CommandParameter="{Binding .}"
+                                        ToolTip="Edit item"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <MenuItem.Header>
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                Margin="-4"
+                                                Source="{x:Static content:Images.Edit}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </Menu>
+                                <TextBlock Margin="0,0,8,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="Auto"
+                Header="Item Name"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="Auto"
+                Header="Artifact Glitch Pattern (CLES)"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Menu VerticalAlignment="Center" Background="Transparent">
+                                <MenuItem
+                                    Height="16"
+                                    Margin="-4,0,-4,0"
+                                    Command="{Binding InventoryViewerViewModel.ApplyArtifactsCommand, Source={StaticResource ViewModelLocator}}"
+                                    CommandParameter="{Binding .}"
+                                    ToolTip="{Binding InventoryViewerViewModel.ApplyArtifactsToolTip, Source={StaticResource ViewModelLocator}}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <MenuItem.Header>
+                                        <Image
+                                            Width="16"
+                                            Height="16"
+                                            Margin="-4"
+                                            VerticalAlignment="Center"
+                                            Source="{x:Static content:Images.Edit}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem
+                                    Height="16"
+                                    Margin="0,0,-4,0"
+                                    Command="{Binding InventoryViewerViewModel.CopyArtifactListCommand, Source={StaticResource ViewModelLocator}}"
+                                    CommandParameter="{Binding Index}"
+                                    ToolTip="Copy to clipboard"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <MenuItem.Header>
+                                        <Image
+                                            Width="16"
+                                            Height="16"
+                                            Margin="-4"
+                                            VerticalAlignment="Center"
+                                            Source="{x:Static content:Images.Script}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </Menu>
+                            <Border Margin="4,0,0,0" Background="#ffe7b5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=0}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=1}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=2}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=3}" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="4,0,0,0" Background="#ffe7b5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=4}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=5}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=6}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=7}" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="4,0,0,0" Background="#ffe7b5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=8}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=9}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=10}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=11}" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="4,0,0,0" Background="#ffe7b5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=12}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=13}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=14}" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Source="{x:Static content:Images.Icon_Artifact}"
+                                        Visibility="{Binding Index, Converter={StaticResource ArtifactGlitchVisibilityConverter}, ConverterParameter=15}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="Auto"
+                Header="Address"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <Menu VerticalAlignment="Center" Background="Transparent">
+                                    <MenuItem
+                                        Height="16"
+                                        Command="{Binding InventoryViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        CommandParameter="{Binding .}"
+                                        ToolTip="Copy to clipboard"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <MenuItem.Header>
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                Margin="-4"
+                                                Source="{x:Static content:Images.Script}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </Menu>
+                                <TextBlock
+                                    Width="56"
+                                    Margin="0,0,8,0"
+                                    Text="{Binding Path=Address, Converter={StaticResource IntToHexConverter}}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="*"
+                Header="Raw Address"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <Menu VerticalAlignment="Center" Background="Transparent">
+                                    <MenuItem
+                                        Height="16"
+                                        Command="{Binding InventoryViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                        CommandParameter="{Binding .}"
+                                        ToolTip="Copy to clipboard"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <MenuItem.Header>
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                Margin="-4"
+                                                Source="{x:Static content:Images.Script}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </Menu>
+                                <TextBlock Margin="0,0,8,0" Text="{Binding Path=RawAddress, Converter={StaticResource IntToHexConverter}}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

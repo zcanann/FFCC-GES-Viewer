@@ -1,4 +1,4 @@
-﻿namespace GES.Source.EquipmentViewer
+﻿namespace GES.Source.EquipmentListViewer
 {
     using GalaSoft.MvvmLight.Command;
     using GES.Engine.Common;
@@ -7,7 +7,6 @@
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.Docking;
-    using GES.Source.InventoryViewer;
     using GES.Source.Main;
     using System;
     using System.Linq;
@@ -19,12 +18,12 @@
     /// <summary>
     /// View model for the Heap Visualizer.
     /// </summary>
-    public class EquipmentViewerViewModel : ToolViewModel
+    public class EquipmentListViewerViewModel : ToolViewModel
     {
         /// <summary>
         /// Singleton instance of the <see cref="ActorReferenceCountVisualizer" /> class.
         /// </summary>
-        private static EquipmentViewerViewModel actorReferenceCountVisualizerInstance = new EquipmentViewerViewModel();
+        private static EquipmentListViewerViewModel actorReferenceCountVisualizerInstance = new EquipmentListViewerViewModel();
 
         private const Int32 PlayerCount = 4;
 
@@ -35,7 +34,7 @@
         /// <summary>
         /// Prevents a default instance of the <see cref="HeapVisualizerViewModel" /> class from being created.
         /// </summary>
-        private EquipmentViewerViewModel() : base("[GES] Equipment List Viewer")
+        private EquipmentListViewerViewModel() : base("[GES] Equipment List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
@@ -78,12 +77,12 @@
         private bool CanUpdate { get; set; }
 
         /// <summary>
-        /// Gets a singleton instance of the <see cref="EquipmentViewerViewModel"/> class.
+        /// Gets a singleton instance of the <see cref="EquipmentListViewerViewModel"/> class.
         /// </summary>
         /// <returns>A singleton instance of the class.</returns>
-        public static EquipmentViewerViewModel GetInstance()
+        public static EquipmentListViewerViewModel GetInstance()
         {
-            return EquipmentViewerViewModel.actorReferenceCountVisualizerInstance;
+            return EquipmentListViewerViewModel.actorReferenceCountVisualizerInstance;
         }
 
         /// <summary>

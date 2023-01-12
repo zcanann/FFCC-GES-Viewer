@@ -7,7 +7,7 @@
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.Docking;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using GES.Source.Main;
     using System;
     using System.Linq;

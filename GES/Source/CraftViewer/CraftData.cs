@@ -2,7 +2,7 @@
 namespace GES.Source.CraftViewer
 {
     using GES.Engine.Common.DataStructures;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using GES.Source.InventoryViewer;
     using System;
     using System.Collections;

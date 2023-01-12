@@ -44,7 +44,7 @@
         {
             switch (itemId)
             {
-                case 0x0000: return "<なし>";
+                case 0x0000: return "<ヌル>";
                 case 0x1: return "みがるなけん";
                 case 0x2: return "アイアンソード";
                 case 0x3: return "セーフブレイド";
@@ -545,7 +545,7 @@
                 case 0x1f2: return "レシピ９８";
                 case 0x1f3: return "レシピ９９";
                 case 0x1f4: return "レシピ１００";
-                case 0xFFFF: return "<ヌル>";
+                case 0xFFFF: return "<なし>";
             }
 
             if (itemId >= 0x01F5 && itemId <= 0x7FFF)
@@ -562,7 +562,7 @@
         {
             switch (itemId)
             {
-                case 0x0000: return "<None>";
+                case 0x0000: return "<Null>";
                 case 0x0001: return "Copper Sword";
                 case 0x0002: return "Iron Sword";
                 case 0x0003: return "Steel Blade";
@@ -1063,7 +1063,7 @@
                 case 0x01F2: return "design 98 (Unused)";
                 case 0x01F3: return "design 99 (Unused)";
                 case 0x01F4: return "design 100 (Unused)";
-                case 0xFFFF: return "<Null>";
+                case 0xFFFF: return "<None>";
             }
 
             if (itemId >= 0x01F5 && itemId <= 0x7FFF)

@@ -10,7 +10,7 @@
     using GES.Source.Docking;
     using GES.Source.Editors.ApplyArtifactsEditor;
     using GES.Source.Editors.InventoryItemEditor;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using GES.Source.Main;
     using GES.Source.Mvvm.Converters;
     using System;
@@ -143,6 +143,36 @@
         public ICommand ApplyArtifactsCommand { get; private set; }
 
         public UInt16 SelectedItem { get;  set; }
+
+        public String CopyArtifactListToClipboardToolTip
+        {
+            get
+            {
+                if (MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJPN)
+                {
+                    return "クリップボードにコピー";
+                }
+                else
+                {
+                    return "Copy to clipboard";
+                }
+            }
+        }
+
+        public String ApplyArtifactsToolTip
+        {
+            get
+            {
+                if (MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJPN)
+                {
+                    return "アーティファクトを適用する";
+                }
+                else
+                {
+                    return "Apply Artifacts";
+                }
+            }
+        }
 
         private void OnAppExit(object sender, ExitEventArgs e)
         {
@@ -317,7 +347,7 @@
 
                             if (nextSlotIndex == slotIndex)
                             {
-                                EquipmentViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
+                                EquipmentListViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
                                 CraftViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
                             }
                         }

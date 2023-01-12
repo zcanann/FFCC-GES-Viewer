@@ -2,7 +2,7 @@
 namespace GES.Source.MonsterTableViewer
 {
     using GES.Engine.Common.DataStructures;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using System;
     using System.Buffers.Binary;
     using System.ComponentModel;

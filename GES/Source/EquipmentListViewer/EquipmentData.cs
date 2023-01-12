@@ -1,9 +1,7 @@
 ﻿
-namespace GES.Source.EquipmentViewer
+namespace GES.Source.EquipmentListViewer
 {
-    using GES.Source.InventoryViewer;
     using System;
-    using System.Collections;
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = (1 + 256 + 2048))]

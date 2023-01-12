@@ -4,7 +4,7 @@
     using GES.Source.CraftViewer;
     using GES.Source.ItemCatalogViewer;
     using GES.Source.Docking;
-    using GES.Source.EquipmentViewer;
+    using GES.Source.EquipmentListViewer;
     using GES.Source.InventoryViewer;
     using GES.Source.Output;
     using GES.Source.ProcessSelector;
@@ -119,11 +119,11 @@
         /// <summary>
         /// Gets the Equipment Viewer view model.
         /// </summary>
-        public EquipmentViewerViewModel EquipmentViewerViewModel
+        public EquipmentListViewerViewModel EquipmentListViewerViewModel
         {
             get
             {
-                return EquipmentViewerViewModel.GetInstance();
+                return EquipmentListViewerViewModel.GetInstance();
             }
         }
 
