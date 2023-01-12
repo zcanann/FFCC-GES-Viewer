@@ -43,17 +43,6 @@
             False="Hidden"
             True="Visible" />
     </UserControl.Resources>
-    <x:Code>
-        <![CDATA[
-        public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(Int32), typeof(CraftView));
-        public CraftView() { InitializeComponent(); }
-        public Int32 Index
-        {
-            get { return (Int32)GetValue(IndexProperty); }
-            set { SetValue(IndexProperty, value); }
-        }
-        ]]>
-    </x:Code>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -71,7 +60,10 @@
                 Orientation="Horizontal">
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Slot " />
-                    <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding InventoryViewerViewModel.DisplayPlayerToSlotMap[0], Source={StaticResource ViewModelLocator}}" />
+                    <TextBlock
+                        Name="SlotText"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text="99" />
                 </StackPanel>
                 <TextBlock
                     HorizontalAlignment="Center"
