@@ -22,6 +22,22 @@
             <converters:ItemRefToIdConverter />
             <converters:IntToHexConverter />
         </converters:ValueConverterGroup>
+        <converters:CraftedItemIdConverter x:Key="CraftedItemIdConverter" />
+        <converters:ValueConverterGroup x:Key="CraftedItemIdHexConverter">
+            <converters:CraftedItemIdConverter />
+            <converters:IntToHexConverter />
+        </converters:ValueConverterGroup>
+        <converters:ValueConverterGroup x:Key="CraftedItemIconConverter">
+            <converters:CraftedItemIdConverter />
+            <converters:ItemToIconConverter />
+        </converters:ValueConverterGroup>
+        <converters:ValueConverterGroup x:Key="CraftedItemNameConverter">
+            <converters:CraftedItemIdConverter />
+            <converters:ItemToNameConverter />
+        </converters:ValueConverterGroup>
+        <converters:CraftColorConverter x:Key="CraftColorConverter" />
+        <converters:CraftSlotIconConverter x:Key="CraftSlotIconConverter" />
+        <converters:CraftPropertiesConverter x:Key="CraftPropertiesConverter" />
         <converters:BooleanToVisibilityConverter
             x:Key="BooleanToHiddenConverter"
             False="Hidden"
@@ -55,7 +71,7 @@
                     Text=" | " />
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Command List Size: " />
-                    <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=ItemCount}" />
+                    <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=CommandListCount}" />
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1">
@@ -66,7 +82,7 @@
                     CanUserResizeColumns="true"
                     ColumnWidth="*"
                     HeadersVisibility="Column"
-                    ItemsSource="{Binding Path=CommandListSlotList}"
+                    ItemsSource="{Binding Path=CommandListItems}"
                     RowHeaderWidth="0"
                     SelectionMode="Extended"
                     SelectionUnit="FullRow">
@@ -115,49 +131,63 @@
                     <DataGrid.Columns>
                         <DataGridTemplateColumn
                             Width="Auto"
-                            Header="Recipe Slot → Inv Slot → Recipe"
+                            Header="Command Slot"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Border Background="{Binding Path=SlotId, Converter={StaticResource AlternatingColorConverter}}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn
-                            Width="Auto"
-                            Header="Tribe"
-                            IsReadOnly="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Border Background="{Binding Path=SlotId, Converter={StaticResource AlternatingColorConverter}}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn
-                            Width="Auto"
-                            Header="Slot"
-                            IsReadOnly="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate />
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn
-                            Width="Auto"
-                            Header="CommandListed Item by Tribe"
-                            IsReadOnly="True">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Border Background="{Binding Path=SlotId, Converter={StaticResource AlternatingColorConverter}}" />
+                                    <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                        <TextBlock Margin="4,0,4,0" Text="{Binding Path=Index}" />
+                                    </Border>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
                             Width="*"
-                            Header="Required Items"
+                            Header="Inventory Slot → Referenced Item"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Border Background="{Binding Path=SlotId, Converter={StaticResource AlternatingColorConverter}}" />
+                                    <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel
+                                                Margin="4,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                                <TextBlock
+                                                    Width="32"
+                                                    Margin="4,0,4,0"
+                                                    Text="{Binding Path=InventorySlotId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                                <TextBlock
+                                                    Margin="4,0,4,0"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{Binding Path=., Converter={StaticResource CraftColorConverter}, Mode=OneWay}"
+                                                    Text="→" />
+                                            </StackPanel>
+                                            <StackPanel
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                                <TextBlock
+                                                    Width="32"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                    Text="{Binding Path=., Converter={StaticResource ItemRefToHexIdConverter}, Mode=OneWay}"
+                                                    TextAlignment="Right" />
+                                                <Border Margin="4,0,4,0" Background="#ffe7b5">
+                                                    <Image
+                                                        Width="16"
+                                                        Height="16"
+                                                        HorizontalAlignment="Left"
+                                                        Source="{Binding Path=., Converter={StaticResource ItemRefToIconConverter}, Mode=OneWay}" />
+                                                </Border>
+                                                <TextBlock
+                                                    Foreground="{Binding Path=., Converter={StaticResource InventorySlotColorConverter}, Mode=OneWay}"
+                                                    Text="{Binding Path=., Converter={StaticResource ItemRefToNameConverter}, Mode=OneWay}"
+                                                    TextAlignment="Left" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -188,7 +218,7 @@
                     <Menu VerticalAlignment="Center" Background="Transparent">
                         <MenuItem
                             Height="16"
-                            Command="{Binding CommandListViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                            Command="{Binding CraftListViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                             CommandParameter="{Binding .}"
                             ToolTip="Copy to clipboard"
                             WindowChrome.IsHitTestVisibleInChrome="True">
@@ -209,7 +239,7 @@
                     <Menu VerticalAlignment="Center" Background="Transparent">
                         <MenuItem
                             Height="16"
-                            Command="{Binding CommandListViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                            Command="{Binding CraftListViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                             CommandParameter="{Binding .}"
                             ToolTip="Copy to clipboard"
                             WindowChrome.IsHitTestVisibleInChrome="True">

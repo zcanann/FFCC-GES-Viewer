@@ -6,6 +6,7 @@ namespace GES.Source.CraftListViewer
     using GES.Source.InventoryViewer;
     using System;
     using System.Collections;
+    using System.ComponentModel;
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = (1 + 256 + 256 * 56))]
@@ -16,6 +17,42 @@ namespace GES.Source.CraftListViewer
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256 + 256 * 56)]
         public Byte[] craftListRawData;
+    }
+
+    public class RawCommandListEntry : INotifyPropertyChanged
+    {
+        public UInt16 PlayerSlotId { get; set; }
+
+        public UInt16 InventorySlotId { get; set; }
+
+        public Int32 Index { get; set; }
+
+        public UInt32 Address { get; set; }
+
+        public UInt64 RawAddress { get; set; }
+
+        public CraftData Parent { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Refresh()
+        {
+            this.RaisePropertyChanged(nameof(this.PlayerSlotId));
+            this.RaisePropertyChanged(nameof(this.InventorySlotId));
+            this.RaisePropertyChanged(nameof(this.Index));
+            this.RaisePropertyChanged(nameof(this.Address));
+            this.RaisePropertyChanged(nameof(this.RawAddress));
+            this.RaisePropertyChanged(nameof(this.Parent));
+        }
+
+        /// <summary>
+        /// Indicates that a given property in this project item has changed.
+        /// </summary>
+        /// <param name="propertyName">The name of the changed property.</param>
+        protected void RaisePropertyChanged(String propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public class CraftData
@@ -29,7 +66,11 @@ namespace GES.Source.CraftListViewer
 
         public Int32 PlayerIndex { get; set; }
 
+        public Int32 CommandListCount { get; set; }
+
         public CraftEntry[] craftSlotList;
+
+        public RawCommandListEntry[] commandListItems;
 
         public String JISText { get; set; }
 
@@ -61,8 +102,9 @@ namespace GES.Source.CraftListViewer
             }
         }
 
-        public void Refresh(UInt64 address, UInt64 rawAddress, Byte[] bytes, Int32 playerSlotIndex)
+        public void Refresh(UInt64 address, UInt64 rawAddress, Byte[] bytes, Int32 playerSlotIndex, Int32 commandListCount)
         {
+            this.CommandListCount = commandListCount;
             this.PlayerIndex = playerSlotIndex;
 
             Int32 remainder = (this.SerializableData.itemCount + 1) % 4;
@@ -71,6 +113,29 @@ namespace GES.Source.CraftListViewer
             // if (this.craftSlotList == null)
             {
                 this.craftSlotList = new CraftEntry[256];
+            }
+
+            // if (this.CommandListItems == null)
+            {
+                this.commandListItems = new RawCommandListEntry[64];
+            }
+
+            for (Int32 index = 0; index < 64; index++)
+            {
+                if (this.commandListItems[index] == null)
+                {
+                    this.commandListItems[index] = new RawCommandListEntry();
+                }
+
+                this.commandListItems[index].Index = index;
+                this.commandListItems[index].InventorySlotId = BitConverter.ToUInt16(bytes, index * sizeof(UInt16));
+                this.commandListItems[index].PlayerSlotId = (UInt16)playerSlotIndex;
+                this.commandListItems[index].Parent = this;
+                this.commandListItems[index].Address = (UInt32)address + (UInt32)(index * 2);
+                this.commandListItems[index].RawAddress = rawAddress + (UInt32)(index * 2);
+                this.commandListItems[index].Parent = this;
+                this.RawAddress = rawAddress;
+                this.commandListItems[index].Refresh();
             }
 
             for (Int32 index = 0; index < 256; index++)

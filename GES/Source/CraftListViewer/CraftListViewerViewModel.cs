@@ -32,6 +32,12 @@
         private UInt64 CraftListAddressJP = 0x32800;
         private UInt64 CraftListAddressPal = 0x3A800;
 
+        private UInt64 CommandListItemCountAddressEN = 0x27B4;
+        private UInt64 CommandListItemCountAddressJP = 0x2778;
+        private UInt64 CommandListItemCountAddressPAL = 0x27B4;
+
+
+
         /// <summary>
         /// Prevents a default instance of the <see cref="CraftListViewerViewModel" /> class from being created.
         /// </summary>
@@ -138,17 +144,25 @@
 
         private unsafe void UpdateCraftListData()
         {
-            UInt64[] gbaMemoryBases = new UInt64[PlayerCount]
+            UInt64[] gbaWMMemoryBases = new UInt64[PlayerCount]
             {
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_0", EmulatorType.Dolphin),
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_1", EmulatorType.Dolphin),
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_2", EmulatorType.Dolphin),
                 MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_WM_3", EmulatorType.Dolphin),
             };
+            UInt64[] gbaIMMemoryBases = new UInt64[PlayerCount]
+            {
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_IM_0", EmulatorType.Dolphin),
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_IM_1", EmulatorType.Dolphin),
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_IM_2", EmulatorType.Dolphin),
+                MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GBA_IM_3", EmulatorType.Dolphin),
+            };
 
             UInt64 craftListAddress;
-            
-            switch(MainViewModel.GetInstance().DetectedVersion)
+            UInt64 commandListItemCountAddress;
+
+            switch (MainViewModel.GetInstance().DetectedVersion)
             {
                 default: return;
                 case EDetectedVersion.JP: craftListAddress = CraftListAddressJP; break;
@@ -156,9 +170,17 @@
                 case EDetectedVersion.PAL: craftListAddress = CraftListAddressPal; break;
             }
 
+            switch (MainViewModel.GetInstance().DetectedVersion)
+            {
+                default: return;
+                case EDetectedVersion.JP: commandListItemCountAddress = CommandListItemCountAddressJP; break;
+                case EDetectedVersion.EN: commandListItemCountAddress = CommandListItemCountAddressEN; break;
+                case EDetectedVersion.PAL: commandListItemCountAddress = CommandListItemCountAddressPAL; break;
+            }
+
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
-                UInt64 slotPointer = gbaMemoryBases[playerIndex] + craftListAddress;
+                UInt64 slotPointer = gbaWMMemoryBases[playerIndex] + craftListAddress;
 
                 if (this.RawCraftData == null)
                 {
@@ -173,29 +195,41 @@
                     slotPointer,
                     out success);
 
-                if (success)
+                if (!success)
                 {
-                    if (this.CachedPlayerSlotData[playerIndex] == null)
-                    {
-                        this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(CraftDataSerializable).StructLayoutAttribute.Size];
-                    }
-
-                    if (this.PlayerCraftData[playerIndex].CraftData == null)
-                    {
-                        this.PlayerCraftData[playerIndex].CraftData = new CraftData();
-                    }
-
-                    CraftData.Deserialize(this.PlayerCraftData[playerIndex].CraftData, this.RawCraftData);
-
-                    // Notify changes if new bytes differ from cached
-                    if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawCraftData) || this.ForceRefresh)
-                    {
-                        this.PlayerCraftData[playerIndex].CraftData.Refresh(craftListAddress, slotPointer, this.RawCraftData, playerIndex);
-                        this.PlayerCraftData[playerIndex].RefreshAllProperties();
-                    }
-
-                    this.RawCraftData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
+                    continue;
                 }
+
+                Byte commandListCount = MemoryReader.Instance.Read<Byte>(
+                    SessionManager.Session.OpenedProcess,
+                    gbaIMMemoryBases[playerIndex] + commandListItemCountAddress,
+                    out success);
+
+                if (!success)
+                {
+                    continue;
+                }
+
+                if (this.CachedPlayerSlotData[playerIndex] == null)
+                {
+                    this.CachedPlayerSlotData[playerIndex] = new Byte[typeof(CraftDataSerializable).StructLayoutAttribute.Size];
+                }
+
+                if (this.PlayerCraftData[playerIndex].CraftData == null)
+                {
+                    this.PlayerCraftData[playerIndex].CraftData = new CraftData();
+                }
+
+                CraftData.Deserialize(this.PlayerCraftData[playerIndex].CraftData, this.RawCraftData);
+
+                // Notify changes if new bytes differ from cached
+                if (!this.CachedPlayerSlotData[playerIndex].SequenceEqual(this.RawCraftData) || this.ForceRefresh)
+                {
+                    this.PlayerCraftData[playerIndex].CraftData.Refresh(craftListAddress, slotPointer, this.RawCraftData, playerIndex, commandListCount);
+                    this.PlayerCraftData[playerIndex].RefreshAllProperties();
+                }
+
+                this.RawCraftData.CopyTo(this.CachedPlayerSlotData[playerIndex], 0);
             }
 
             this.ForceRefresh = false;

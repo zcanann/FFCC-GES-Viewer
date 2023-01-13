@@ -17,10 +17,12 @@
             EquipmentEntry equipmentEntry = value as EquipmentEntry;
             CraftEntry craftEntry = value as CraftEntry;
             RawEquipmentEntry rawEquipmentEntry = value as RawEquipmentEntry;
+            RawCommandListEntry rawCommandListEntry = value as RawCommandListEntry;
 
             if ((equipmentEntry == null || equipmentEntry.Parent == null)
                 && (rawEquipmentEntry == null || rawEquipmentEntry.Parent == null)
                 && (craftEntry == null || craftEntry.Parent == null)
+                && (rawCommandListEntry == null || rawCommandListEntry.Parent == null)
                 && value is not UInt16
                 && value is not Int32)
             {
@@ -56,6 +58,12 @@
             {
                 inventorySlot = rawEquipmentEntry.InventorySlotId;
                 playerSlotId = rawEquipmentEntry.Parent.PlayerSlotIndex;
+            }
+
+            if (rawCommandListEntry != null)
+            {
+                inventorySlot = rawCommandListEntry.InventorySlotId;
+                playerSlotId = rawCommandListEntry.Parent.PlayerIndex;
             }
 
             PlayerSlotDataView slotDataView = InventoryViewerViewModel.GetInstance().PlayerSlots.ElementAtOrDefault(playerSlotId);

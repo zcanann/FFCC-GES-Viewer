@@ -27,6 +27,19 @@
             }
         }
 
+        public int CommandListCount
+        {
+            get
+            {
+                return CraftData.CommandListCount;
+            }
+
+            set
+            {
+                CraftData.CommandListCount = value;
+            }
+        }
+
         public Byte ItemCount
         {
             get
@@ -50,6 +63,19 @@
             set
             {
                 CraftData.craftSlotList = value;
+            }
+        }
+
+        public RawCommandListEntry[] CommandListItems
+        {
+            get
+            {
+                return CraftData.commandListItems;
+            }
+
+            set
+            {
+                CraftData.commandListItems = value;
             }
         }
 
@@ -107,9 +133,11 @@
 
         public void RefreshAllProperties()
         {
+            RaisePropertyChanged(nameof(CommandListCount));
             RaisePropertyChanged(nameof(PlayerIndex));
             RaisePropertyChanged(nameof(ItemCount));
             RaisePropertyChanged(nameof(CraftSlotList));
+            RaisePropertyChanged(nameof(CommandListItems));
             RaisePropertyChanged(nameof(JISText));
             RaisePropertyChanged(nameof(BytesText));
             RaisePropertyChanged(nameof(Address));
