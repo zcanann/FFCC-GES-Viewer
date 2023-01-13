@@ -1,4 +1,4 @@
-﻿namespace GES.Source.CraftViewer
+﻿namespace GES.Source.CraftListViewer
 {
     using GalaSoft.MvvmLight.Command;
     using GES.Engine.Common;
@@ -19,12 +19,12 @@
     /// <summary>
     /// View model for the Craft Visualizer.
     /// </summary>
-    public class CraftViewerViewModel : ToolViewModel
+    public class CraftListViewerViewModel : ToolViewModel
     {
         /// <summary>
         /// Singleton instance of the <see cref="ActorReferenceCountVisualizer" /> class.
         /// </summary>
-        private static CraftViewerViewModel actorReferenceCountVisualizerInstance = new CraftViewerViewModel();
+        private static CraftListViewerViewModel actorReferenceCountVisualizerInstance = new CraftListViewerViewModel();
 
         private const Int32 PlayerCount = 4;
 
@@ -33,9 +33,9 @@
         private UInt64 CraftListAddressPal = 0x3A800;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="CraftViewerViewModel" /> class from being created.
+        /// Prevents a default instance of the <see cref="CraftListViewerViewModel" /> class from being created.
         /// </summary>
-        private CraftViewerViewModel() : base("[CLES/WM] Craft List Viewer")
+        private CraftListViewerViewModel() : base("[WM] Craft List Viewer")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
 
@@ -78,12 +78,12 @@
         private bool CanUpdate { get; set; }
 
         /// <summary>
-        /// Gets a singleton instance of the <see cref="CraftViewerViewModel"/> class.
+        /// Gets a singleton instance of the <see cref="CraftListViewerViewModel"/> class.
         /// </summary>
         /// <returns>A singleton instance of the class.</returns>
-        public static CraftViewerViewModel GetInstance()
+        public static CraftListViewerViewModel GetInstance()
         {
-            return CraftViewerViewModel.actorReferenceCountVisualizerInstance;
+            return CraftListViewerViewModel.actorReferenceCountVisualizerInstance;
         }
 
         /// <summary>
@@ -105,13 +105,13 @@
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    UpdateActorSlots();
+                                    UpdateCraftListData();
                                 });
                             }
                         }
                         catch (Exception ex)
                         {
-                            Logger.Log(LogLevel.Error, "Error updating the Heap Visualizer", ex);
+                            Logger.Log(LogLevel.Error, "Error updating the Craft List / Command List Visualizer", ex);
                         }
                     }
 
@@ -136,7 +136,7 @@
             }
         }
 
-        private unsafe void UpdateActorSlots()
+        private unsafe void UpdateCraftListData()
         {
             UInt64[] gbaMemoryBases = new UInt64[PlayerCount]
             {

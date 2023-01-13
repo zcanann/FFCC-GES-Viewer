@@ -2,7 +2,7 @@
 {
     using GES.Content;
     using GES.Engine.Common;
-    using GES.Source.CraftViewer;
+    using GES.Source.CraftListViewer;
     using GES.Source.EquipmentListViewer;
     using GES.Source.InventoryViewer;
     using System;

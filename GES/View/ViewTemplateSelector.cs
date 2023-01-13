@@ -1,7 +1,7 @@
 ﻿namespace GES.View
 {
     using GES.Source.ItemCatalogViewer;
-    using GES.Source.CraftViewer;
+    using GES.Source.CraftListViewer;
     using GES.Source.EquipmentListViewer;
     using GES.Source.InventoryViewer;
     using GES.Source.Output;
@@ -14,6 +14,7 @@
     using GES.Source.MonsterTableViewer;
     using GES.Source.Editors.InventoryItemEditor;
     using GES.Source.Editors.ApplyArtifactsEditor;
+    using GES.Source.SlotDataViewer;
 
     /// <summary>
     /// Provides the template required to view a pane.
@@ -56,14 +57,19 @@
         private DataTemplate monsterTableViewerViewTemplate;
 
         /// <summary>
-        /// The template for the Craft Table Viewer.
+        /// The template for the Item Catalog Viewer.
         /// </summary>
         private DataTemplate itemCatalogViewerViewTemplate;
 
         /// <summary>
         /// The template for the Craft Viewer.
         /// </summary>
-        private DataTemplate craftViewerViewTemplate;
+        private DataTemplate craftListViewerViewTemplate;
+
+        /// <summary>
+        /// The template for the Command List Viewer.
+        /// </summary>
+        private DataTemplate commandListViewerViewTemplate;
 
         /// <summary>
         /// The template for the Inventory Item Editor Viewer.
@@ -227,17 +233,34 @@
         /// <summary>
         /// Gets or sets the template for the Craft Viewer.
         /// </summary>
-        public DataTemplate CraftViewerViewTemplate
+        public DataTemplate CraftListViewerViewTemplate
         {
             get
             {
-                return this.craftViewerViewTemplate;
+                return this.craftListViewerViewTemplate;
             }
 
             set
             {
-                this.craftViewerViewTemplate = value;
-                this.DataTemplates[typeof(CraftViewerViewModel)] = value;
+                this.craftListViewerViewTemplate = value;
+                this.DataTemplates[typeof(CraftListViewerViewModel)] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the template for the Command List Viewer.
+        /// </summary>
+        public DataTemplate CommandListViewerViewTemplate
+        {
+            get
+            {
+                return this.commandListViewerViewTemplate;
+            }
+
+            set
+            {
+                this.commandListViewerViewTemplate = value;
+                this.DataTemplates[typeof(CommandListViewerViewModel)] = value;
             }
         }
 

@@ -206,9 +206,14 @@
                             IsChecked="{Binding EquipmentListViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                         <shell:MenuItem
+                            Header="Command List Viewer"
+                            IsCheckable="True"
+                            IsChecked="{Binding CommandListViewerViewModel.IsVisible, Mode=TwoWay}"
+                            Style="{Binding .}" />
+                        <shell:MenuItem
                             Header="Craft Viewer"
                             IsCheckable="True"
-                            IsChecked="{Binding CraftViewerViewModel.IsVisible, Mode=TwoWay}"
+                            IsChecked="{Binding CraftListViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                         <shell:MenuItem
                             Header="Monster List Viewer"
@@ -319,12 +324,18 @@
                                 <view:EquipmentListViewer />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.EquipmentListViewerViewTemplate>
-                        <!--  Craft Viewer  -->
-                        <view:ViewTemplateSelector.CraftViewerViewTemplate>
+                        <!--  Command List Viewer  -->
+                        <view:ViewTemplateSelector.CommandListViewerViewTemplate>
                             <shell:DataTemplate>
-                                <view:CraftViewer />
+                                <view:CommandListViewer />
                             </shell:DataTemplate>
-                        </view:ViewTemplateSelector.CraftViewerViewTemplate>
+                        </view:ViewTemplateSelector.CommandListViewerViewTemplate>
+                        <!--  Craft Viewer  -->
+                        <view:ViewTemplateSelector.CraftListViewerViewTemplate>
+                            <shell:DataTemplate>
+                                <view:CraftListViewer />
+                            </shell:DataTemplate>
+                        </view:ViewTemplateSelector.CraftListViewerViewTemplate>
                         <!--  Monster Table Viewer  -->
                         <view:ViewTemplateSelector.MonsterTableViewerViewTemplate>
                             <shell:DataTemplate>

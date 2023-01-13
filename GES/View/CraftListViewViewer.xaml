@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="GES.View.CraftViewer"
+    x:Class="GES.View.CraftListViewer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="clr-namespace:GES.View.Controls"
@@ -12,14 +12,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:src="clr-namespace:GES.View;assembly=GES"
     xmlns:templates="clr-namespace:GES.View.Templates"
-    x:Name="GESCraftViewer"
+    x:Name="GESCraftListViewer"
     d:DesignHeight="512"
     d:DesignWidth="1024"
     x:ClassModifier="public"
-    DataContext="{Binding CraftViewerViewModel, Source={StaticResource ViewModelLocator}}"
+    DataContext="{Binding CraftListViewerViewModel, Source={StaticResource ViewModelLocator}}"
     mc:Ignorable="d">
     <x:Code>
-        <![CDATA[ public CraftViewer() { InitializeComponent(); }]]>
+        <![CDATA[ public CraftListViewer() { InitializeComponent(); }]]>
     </x:Code>
     <Grid Background="{StaticResource GESColorPanel}">
         <TabControl Background="{StaticResource GESColorPanel}" SelectedIndex="0">
@@ -46,16 +46,16 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Background="Transparent" Header="Player 1">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[0]}" Index="0" />
+                <templates:CraftListView DataContext="{Binding PlayerCraftData[0]}" Index="0" />
             </TabItem>
             <TabItem Background="Transparent" Header="Player 2">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[1]}" Index="1" />
+                <templates:CraftListView DataContext="{Binding PlayerCraftData[1]}" Index="1" />
             </TabItem>
             <TabItem Background="Transparent" Header="Player 3">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[2]}" Index="2" />
+                <templates:CraftListView DataContext="{Binding PlayerCraftData[2]}" Index="2" />
             </TabItem>
             <TabItem Background="Transparent" Header="Player 4">
-                <templates:CraftView DataContext="{Binding PlayerCraftData[3]}" Index="3" />
+                <templates:CraftListView DataContext="{Binding PlayerCraftData[3]}" Index="3" />
             </TabItem>
         </TabControl>
     </Grid>

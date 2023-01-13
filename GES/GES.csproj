@@ -332,10 +332,13 @@
     <Page Update="View\Controls\HexDecBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="View\CommandListViewer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="View\DataTemplateError.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="View\CraftViewer.xaml">
+    <Page Update="View\CraftListViewer.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\EquipmentListViewer.xaml">

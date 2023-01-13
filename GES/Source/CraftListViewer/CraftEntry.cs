@@ -1,4 +1,4 @@
-﻿namespace GES.Source.CraftViewer
+﻿namespace GES.Source.CraftListViewer
 {
     using System;
     using System.ComponentModel;

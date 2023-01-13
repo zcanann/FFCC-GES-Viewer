@@ -5,7 +5,7 @@
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
-    using GES.Source.CraftViewer;
+    using GES.Source.CraftListViewer;
     using GES.Source.Docking;
     using GES.Source.EquipmentListViewer;
     using GES.Source.Main;
@@ -182,7 +182,7 @@
                 this.MonsterTable.RefreshAllProperties();
                 this.RaisePropertyChanged(nameof(this.MonsterTable));
 
-                CraftViewerViewModel.GetInstance().ExternalRefreshAll();
+                CraftListViewerViewModel.GetInstance().ExternalRefreshAll();
             }
 
             this.RawMonsterTableBytes.CopyTo(this.CachedRawMonsterTableBytes, 0);

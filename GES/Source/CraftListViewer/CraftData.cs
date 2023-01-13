@@ -1,5 +1,5 @@
 ﻿
-namespace GES.Source.CraftViewer
+namespace GES.Source.CraftListViewer
 {
     using GES.Engine.Common.DataStructures;
     using GES.Source.EquipmentListViewer;

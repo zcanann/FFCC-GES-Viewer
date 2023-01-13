@@ -4,7 +4,7 @@
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
-    using GES.Source.CraftViewer;
+    using GES.Source.CraftListViewer;
     using GES.Source.Docking;
     using GES.Source.Main;
     using System;
@@ -146,7 +146,7 @@
                     this.ItemCatalog.ItemCatalogData.Refresh(0x80000000 + ItemCatalogAddress, slotPointer, this.RawCraftDataBytes);
                     this.ItemCatalog.RefreshAllProperties();
 
-                    CraftViewerViewModel.GetInstance().ExternalRefreshAll();
+                    CraftListViewerViewModel.GetInstance().ExternalRefreshAll();
                 }
 
                 this.RawCraftDataBytes.CopyTo(this.CachedRawCraftDataBytes, 0);

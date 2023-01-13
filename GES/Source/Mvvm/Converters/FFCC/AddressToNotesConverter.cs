@@ -88,25 +88,11 @@
                     {
                         return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress);
                     }
-                    else if (offset == 169)
+                    else if (offset >= 169 && offset <= 174)
                     {
-                        return (isEn ? "? Badge of the Thunderbolt, Test 2, Runeblade, Partisan" : "?") + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 170)
-                    {
-                        return (isEn ? "? Sometimes FFFF, 0000" : "?") + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 171)
-                    {
-                        return (isEn ? "Memories" : "思い出") + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 172)
-                    {
-                        return (isEn ? "?" : "?") + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 173 && offset <= 174)
-                    {
-                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress);
+                        UInt16 commandListOffset = (UInt16)(6 - (174 - offset));
+
+                        return (isEn ? "Command list slot " : "コマンド・リスト・スロット ") + commandListOffset.ToString() + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset >= 175 && offset <= 375)
                     {
@@ -266,9 +252,25 @@
                     }
                     else if (offset == 1031)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0002) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0002, 0x0802) + this.GetSlotSuffix(slotAddress);
                     }
-                    else if (offset >= 1032 && offset <= 1058)
+                    else if (offset == 1032)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
+                    }
+                    else if (offset == 1033)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(slotAddress);
+                    }
+                    else if (offset == 1034)
+                    {
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                    }
+                    else if (offset == 1035)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x0008) + this.GetSlotSuffix(slotAddress);
+                    }
+                    else if (offset >= 1036 && offset <= 1058)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
                     }
@@ -404,7 +406,7 @@
                     {
                         return this.Constant(isEn, 0x0000, 0x0036) + this.GetSlotSuffix(slotAddress);
                     }
-                    else if (offset >= 1194 && offset <= 1221)
+                    else if (offset >= 1194 && offset <= 1222)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
                     }
@@ -418,59 +420,111 @@
                     }
                     else if (offset >= 1347 && offset <= 1398)
                     {
-                        return this.Constant(isEn, 0x0000);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1399)
                     {
-                        return (isEn ? "? Large value ranges observed" : "?");
+                        return (isEn ? "? Large value ranges observed" : "?") + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1400)
                     {
-                        return this.Constant(isEn, 0x0000);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1401)
                     {
-                        return this.Constant(isEn, 0x0004);
+                        return this.Constant(isEn, 0x0004) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1402)
                     {
-                        return this.Constant(isEn, 0x0004, 0x0006);
+                        return this.Constant(isEn, 0x0004, 0x0006) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset >= 1403 && offset <= 1418)
                     {
-                        return this.Constant(isEn, 0x0000);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1419)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0019);
+                        return this.Constant(isEn, 0x0000, 0x0019) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset >= 1420 && offset <= 1421)
                     {
-                        return this.Constant(isEn, 0x0000);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1422)
                     {
-                        return (isEn ? "Food buff timer" : "フードバフタイマー");
+                        return (isEn ? "Food buff timer" : "フードバフタイマー") + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1423)
                     {
-                        return this.Constant(isEn, 0x0000);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1424)
                     {
-                        return (isEn ? "Last eaten food" : "最後に食べた食べ物");
+                        return (isEn ? "Last eaten food" : "最後に食べた食べ物") + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset >= 1425 && offset <= 1456)
                     {
-                        return this.Constant(isEn, 0x0000);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1457)
+                    {
+                        return (isEn ? "? 2C observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1458)
+                    {
+                        return (isEn ? "? D observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1459)
+                    {
+                        return (isEn ? "? 2E observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1460)
+                    {
+                        return (isEn ? "? 100 observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1461)
+                    {
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1462)
+                    {
+                        return (isEn ? "? 192A observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset >= 1463 && offset <= 1468)
+                    {
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1469)
+                    {
+                        return (isEn ? "? 8022 observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1470)
+                    {
+                        return (isEn ? "? CCBC observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset >= 1471 && offset <= 1472)
+                    {
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset >= 1473 && offset <= 1474)
+                    {
+                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset >= 1475 && offset <= 1478)
+                    {
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1479)
+                    {
+                        return (isEn ? "? Player data" : "?") + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1487)
                     {
-                        return (isEn ? "Hitbox 1" : "ヒットボックス 1");
+                        return (isEn ? "Hitbox 1" : "ヒットボックス 1") + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1488)
                     {
-                        return (isEn ? "Hitbox 2" : "ヒットボックス 2");
+                        return (isEn ? "Hitbox 2" : "ヒットボックス 2") + this.GetSlotSuffix(slotAddress, true);
                     }
                 }
             }
@@ -499,7 +553,7 @@
             }
         }
 
-        private String GetSlotSuffix(UInt32 address)
+        private String GetSlotSuffix(UInt32 address, Boolean isNextSlot = false)
         {
             UInt32[] slotDataAddresses = InventoryViewerViewModel.GetInstance().GetSlotDataAddresses();
             Boolean isEn = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageEN;
@@ -512,7 +566,7 @@
                     {
                         String prefix = isEn ? " - (Character Slot " : "キャラクタースロット ";
 
-                        prefix += (slotIndex + 1).ToString();
+                        prefix += (slotIndex + (isNextSlot ? 2 : 1)).ToString();
                         prefix += ")";
 
                         return prefix;

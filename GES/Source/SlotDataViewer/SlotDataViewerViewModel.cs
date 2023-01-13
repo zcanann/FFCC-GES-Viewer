@@ -1,16 +1,16 @@
-﻿namespace GES.Source.InventoryViewer
+﻿namespace GES.Source.SlotDataViewer
 {
     using GES.Source.Docking;
 
     /// <summary>
-    /// View model for the Heap Visualizer.
+    /// View model for the Slot Data Viewer. IMPORTANT: You probably want <see cref="InventoryViewerViewModel"/> instead.
     /// </summary>
     public class SlotDataViewerViewModel : ToolViewModel
     {
         /// <summary>
         /// Singleton instance of the <see cref="SlotDataViewerViewModel" /> class.
         /// </summary>
-        private static SlotDataViewerViewModel slotDataViewerinstance = new SlotDataViewerViewModel();
+        private static readonly SlotDataViewerViewModel Instance = new SlotDataViewerViewModel();
 
         /// <summary>
         /// Prevents a default instance of the <see cref="SlotDataViewerViewModel" /> class from being created.
@@ -22,7 +22,7 @@
 
         public static SlotDataViewerViewModel GetInstance()
         {
-            return SlotDataViewerViewModel.slotDataViewerinstance;
+            return Instance;
         }
     }
     //// End class

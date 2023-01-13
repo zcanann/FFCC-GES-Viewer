@@ -1,7 +1,7 @@
 ﻿namespace GES.View
 {
     using GES.Source.Controls;
-    using GES.Source.CraftViewer;
+    using GES.Source.CraftListViewer;
     using GES.Source.ItemCatalogViewer;
     using GES.Source.Docking;
     using GES.Source.EquipmentListViewer;
@@ -14,6 +14,7 @@
     using GES.Source.MonsterTableViewer;
     using GES.Source.Editors.InventoryItemEditor;
     using GES.Source.Editors.ApplyArtifactsEditor;
+    using GES.Source.SlotDataViewer;
 
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -152,11 +153,22 @@
         /// <summary>
         /// Gets the Craft Viewer view model.
         /// </summary>
-        public CraftViewerViewModel CraftViewerViewModel
+        public CraftListViewerViewModel CraftListViewerViewModel
         {
             get
             {
-                return CraftViewerViewModel.GetInstance();
+                return CraftListViewerViewModel.GetInstance();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Command List Viewer view model.
+        /// </summary>
+        public CommandListViewerViewModel CommandListViewerViewModel
+        {
+            get
+            {
+                return CommandListViewerViewModel.GetInstance();
             }
         }
 

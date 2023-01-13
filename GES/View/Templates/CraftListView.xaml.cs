@@ -7,13 +7,13 @@
 	using System.Windows;
 	using System.Windows.Controls;
 
-	public partial class CraftView : UserControl
+	public partial class CraftListView : UserControl
 	{
-		public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(Int32), typeof(CraftView));
+		public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(Int32), typeof(CraftListView));
 
 		private static PlayerIndexToSlotConverter PlayerIndexToSlotConverter = new PlayerIndexToSlotConverter();
 
-		public CraftView()
+		public CraftListView()
 		{
 			InitializeComponent();
 
@@ -22,12 +22,12 @@
                 this.RefreshText();
             };
 
-            InventoryViewerViewModel.GetInstance().PropertyChanged += this.CraftView_PropertyChanged;
+            InventoryViewerViewModel.GetInstance().PropertyChanged += this.CraftListView_PropertyChanged;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void CraftView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		private void CraftListView_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(InventoryViewerViewModel.DisplayPlayerToSlotMap))
 			{

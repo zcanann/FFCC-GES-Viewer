@@ -6,7 +6,7 @@
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
-    using GES.Source.CraftViewer;
+    using GES.Source.CraftListViewer;
     using GES.Source.Docking;
     using GES.Source.Editors.ApplyArtifactsEditor;
     using GES.Source.Editors.InventoryItemEditor;
@@ -368,7 +368,7 @@
                             if (nextSlotIndex == slotIndex)
                             {
                                 EquipmentListViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
-                                CraftViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
+                                CraftListViewerViewModel.GetInstance().ExternalRefresh(this.PlayerToSlotMap[nextPlayerIndex]);
                             }
                         }
                     }

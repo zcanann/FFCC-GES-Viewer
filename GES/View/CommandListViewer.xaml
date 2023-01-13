@@ -1,0 +1,62 @@
+﻿<UserControl
+    x:Class="GES.View.CommandListViewer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:GES.View.Controls"
+    xmlns:behaviors="clr-namespace:GES.Source.Mvvm.AttachedBehaviors"
+    xmlns:content="clr-namespace:GES.Content"
+    xmlns:converters="clr-namespace:GES.Source.Mvvm.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hexEditor="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
+    xmlns:intr="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:src="clr-namespace:GES.View;assembly=GES"
+    xmlns:templates="clr-namespace:GES.View.Templates"
+    x:Name="GESCommandListViewer"
+    d:DesignHeight="512"
+    d:DesignWidth="1024"
+    x:ClassModifier="public"
+    DataContext="{Binding CommandListViewerViewModel, Source={StaticResource ViewModelLocator}}"
+    mc:Ignorable="d">
+    <x:Code>
+        <![CDATA[ public CommandListViewer() { InitializeComponent(); }]]>
+    </x:Code>
+    <Grid Background="{StaticResource GESColorPanel}">
+        <TabControl Background="{StaticResource GESColorPanel}" SelectedIndex="0">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Border Background="{StaticResource GESColorGray20}" BorderThickness="0">
+                                    <ContentPresenter>
+                                        <ContentPresenter.Content>
+                                            <TextBlock
+                                                Margin="4,2,4,2"
+                                                Foreground="{StaticResource GESColorWhite}"
+                                                Text="{TemplateBinding Content}" />
+                                        </ContentPresenter.Content>
+                                    </ContentPresenter>
+                                </Border>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Background="Transparent" Header="Player 1">
+                <templates:CommandListView DataContext="{Binding PlayerCommandListData[0]}" Index="0" />
+            </TabItem>
+            <TabItem Background="Transparent" Header="Player 2">
+                <templates:CommandListView DataContext="{Binding PlayerCommandListData[1]}" Index="1" />
+            </TabItem>
+            <TabItem Background="Transparent" Header="Player 3">
+                <templates:CommandListView DataContext="{Binding PlayerCommandListData[2]}" Index="2" />
+            </TabItem>
+            <TabItem Background="Transparent" Header="Player 4">
+                <templates:CommandListView DataContext="{Binding PlayerCommandListData[3]}" Index="3" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
