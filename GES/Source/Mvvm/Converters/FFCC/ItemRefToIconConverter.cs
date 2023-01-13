@@ -82,7 +82,16 @@
             if (rawCommandListEntry != null)
             {
                 inventorySlot = rawCommandListEntry.InventorySlotId;
-                playerSlotId = rawCommandListEntry.Parent.PlayerIndex;
+
+                // parameter for this case will be slot id, and if set, don't pull from the associated slot (used for CLES view)
+                if (playerId == -1)
+                {
+                    playerSlotId = rawCommandListEntry.Parent.PlayerIndex;
+                }
+                else
+                {
+                    playerSlotId = playerId;
+                }
             }
 
             PlayerSlotDataView slotDataView = InventoryViewerViewModel.GetInstance().PlayerSlots.ElementAtOrDefault(playerSlotId);

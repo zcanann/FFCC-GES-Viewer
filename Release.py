@@ -23,7 +23,7 @@ def main():
     for root, dirnames, filenames in os.walk(currentPath):
         for filename in filenames:
             if filename.lower().endswith(".csproj"):
-                replaceVersionInFile(join(root, filename), "2.0.0")
+                replaceVersionInFile(join(root, filename), "2.1.1")
                 continue
 	
 def replaceVersionInFile(filename, newVersion):
