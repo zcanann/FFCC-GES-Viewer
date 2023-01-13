@@ -125,7 +125,10 @@
                                                     Height="16"
                                                     Source="{Binding Path=Index, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                             </Border>
-                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Mode=OneWay}" />
+                                            <TextBlock Text=" (0x" />
+                                            <TextBlock Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                            <TextBlock Text=")" />
                                             <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
                                         </StackPanel>
                                     </Border>

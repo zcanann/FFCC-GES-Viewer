@@ -114,9 +114,9 @@
                     {
                         return this.Constant(isEn, 0x0000);
                     }
-                    else if (offset <= 380)
+                    else if (offset == 380)
                     {
-                        return (isEn ? "? Iron Sword, Steel Sword, Bastard Sword, Defender" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Family Type (0-7)" : "ファミリータイプ (0-7)") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 381)
                     {
@@ -124,11 +124,11 @@
                     }
                     else if (offset == 382)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Watched family cutscene" : "見た家族のカットシーン") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 383)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0xFFFF) + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 384)
                     {
@@ -136,7 +136,7 @@
                     }
                     else if (offset >= 385 && offset <= 392)
                     {
-                        UInt16 favoritesOffset = (UInt16)((UInt16)392 - offset);
+                        UInt16 favoritesOffset = (UInt16)(7 - ((UInt16)392 - offset));
                         UInt16 itemId = (UInt16)((UInt16)0x017D + favoritesOffset);
                         String foodName = ItemToNameConverter.Convert(itemId, null, null, null)?.ToString();
 
@@ -160,19 +160,19 @@
                     }
                     else if (offset == 404)
                     {
-                        return (isEn ? "? 0-27 observed values" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Memories" : "思い出") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 405)
                     {
-                        return (isEn ? "? 0-3 observed values" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Tribe (0-3)" : "部族") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 406)
                     {
-                        return (isEn ? "? 0-1 observed values" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gender (0-1)" : "性別") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 407)
                     {
-                        return (isEn ? "? 0-1 observed values" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Skin (0-3)" : "肌") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset >= 408 && offset <= 409)
                     {
