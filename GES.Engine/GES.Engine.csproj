@@ -15,7 +15,7 @@
     <Copyright></Copyright>
     <PackageTags></PackageTags>
     <NeutralLanguage />
-    <Version>2.1.1</Version>
+    <Version>2.1.2</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
@@ -30,8 +30,8 @@
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <AssemblyVersion>2.1.1</AssemblyVersion>
-    <FileVersion>2.1.1</FileVersion>
+    <AssemblyVersion>2.1.2</AssemblyVersion>
+    <FileVersion>2.1.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
