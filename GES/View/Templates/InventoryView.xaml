@@ -93,7 +93,7 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                 <TextBlock
                                     Margin="4,0,4,0"
                                     Foreground="{Binding Path=., Converter={StaticResource ExtendedInventorySlotToColorConverter}}"
@@ -120,7 +120,7 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Border Background="#ffe7b5">
-                            <Image Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                            <Image VerticalAlignment="Center" Source="{Binding Path=ItemId, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                         </Border>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
@@ -149,7 +149,10 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
-                                <TextBlock Margin="0,0,8,0" Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                <TextBlock
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -162,7 +165,10 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                            <TextBlock Margin="4,0,4,0" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                            <TextBlock
+                                Margin="4,0,4,0"
+                                VerticalAlignment="Center"
+                                Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                         </Border>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
@@ -209,7 +215,7 @@
                                 </MenuItem>
                             </Menu>
                             <Border Margin="4,0,0,0" Background="#ffe7b5">
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <Image
                                         Width="16"
                                         Height="16"
@@ -233,7 +239,7 @@
                                 </StackPanel>
                             </Border>
                             <Border Margin="4,0,0,0" Background="#ffe7b5">
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <Image
                                         Width="16"
                                         Height="16"
@@ -257,7 +263,7 @@
                                 </StackPanel>
                             </Border>
                             <Border Margin="4,0,0,0" Background="#ffe7b5">
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <Image
                                         Width="16"
                                         Height="16"
@@ -281,7 +287,7 @@
                                 </StackPanel>
                             </Border>
                             <Border Margin="4,0,0,0" Background="#ffe7b5">
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <Image
                                         Width="16"
                                         Height="16"
@@ -315,7 +321,7 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
@@ -347,7 +353,7 @@
                 IsReadOnly="True">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                        <Border VerticalAlignment="Center" Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem

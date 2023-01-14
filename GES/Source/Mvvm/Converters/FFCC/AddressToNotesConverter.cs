@@ -39,6 +39,15 @@
             throw new NotImplementedException();
         }
 
+        enum LetterSender
+        {
+            Mother,
+            Father,
+            Sister,
+            Brother,
+            Roland,
+        };
+
         private string GetNotes(UInt32 address)
         {
             address -= 0x80000000;;
@@ -58,7 +67,16 @@
                     }
 
                     UInt32 slotOffset = slotAddress - slotDataAddresses[slotIndex];
-                    UInt32 offset = (slotOffset - PlayerSlotData.InventoryOffset) / 2;
+                    UInt32 offset = 0;
+                    
+                    if (slotOffset >= PlayerSlotData.InventoryOffset)
+                    {
+                        offset = (slotOffset - PlayerSlotData.InventoryOffset) / 2;
+                    }
+                    else
+                    {
+                        offset = SlotDataSize / 2 - PlayerSlotData.InventoryOffset + slotOffset;
+                    }
 
                     if (offset <= 63)
                     {
@@ -178,17 +196,35 @@
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
                     }
-                    else if (offset >= 410 && offset <= 494)
+                    else if (offset == 410)
                     {
-                        return (isEn ? "? Various food related?" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Letter Count" : "文字数") + this.GetSlotSuffix(slotAddress);
                     }
-                    else if (offset >= 495 && offset <= 1011)
+                    else if (offset >= 411 && offset <= 1010)
+                    {
+                        const UInt16 baseOffset = 411;
+                        UInt16 letterOffset = (UInt16)((offset - baseOffset) % 6);
+                        UInt16 letterIndex = (UInt16)((offset - baseOffset) / 6);
+                        String prefix = (isEn ? "Letter #" : " 手紙 #") + (letterIndex + 1).ToString() + " - ";
+                        String suffix = String.Empty;
+
+                        switch(letterOffset)
+                        {
+                            case 0: return prefix + (isEn ? "Letter State (Opened, Replied) (Byte 0) / Letter Id (Byte 1)" : "文字の状態 (開封済み、返信済み) (バイト 0) / 文字 ID (バイト 1)") + suffix + this.GetSlotSuffix(slotAddress);
+                            case 1: return prefix + (isEn ? "Item Attached (Byte 0) / Item Attached (Byte 1)" : "アイテム添付 (バイト 0) / アイテム添付 (バイト 1)") + suffix + this.GetSlotSuffix(slotAddress);
+                            case 2: return prefix + (isEn ? "Attached Item ID 1" : "添付アイテム ID 1") + suffix + this.GetSlotSuffix(slotAddress);
+                            case 3: return prefix + (isEn ? "Attached Item ID 2" : "添付アイテム ID 2") + suffix + this.GetSlotSuffix(slotAddress);
+                            case 4: return prefix + this.Constant(isEn, 0x0000, 0x0003) + suffix + this.GetSlotSuffix(slotAddress);
+                            case 5: return prefix + (isEn ? "? Rarely an id like 0x89 (Flower Bracer)" : "?") + suffix + this.GetSlotSuffix(slotAddress);
+                        }
+                    }
+                    else if (offset == 1011)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 1012)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0128) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0108, 0x0128) + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset >= 1013 && offset <= 1014)
                     {
@@ -212,125 +248,43 @@
                     }
                     else if (offset == 1019)
                     {
-                        return this.Constant(isEn, 0x0000, 0x8000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x8000) + this.GetSlotSuffix(slotAddress);
                     }
-                    else if (offset == 1020)
+                    else if (offset >= 1021 && offset <= 1114)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(slotAddress);
+                        return this.LetterData(isEn, null);
                     }
+                    /*
                     else if (offset == 1021)
                     {
-                        return this.Constant(isEn, 0x0000, 0x8000) + this.GetSlotSuffix(slotAddress);
+                        return this.LetterData(isEn,
+                            this.RespondedLetterWithOption(isEn, 0x0001, 2, "母のしんぱい", "母のしんぱい", LetterSender.Mother) + this.GetSlotSuffix(slotAddress),
+                            this.RespondedLetterWithOption(isEn, 0x0002, 1, "母のしんぱい", "母のしんぱい", LetterSender.Mother) + this.GetSlotSuffix(slotAddress),
+                            this.RespondedLetterWithOption(isEn, 0x0003, 3, "母のしんぱい", "母のしんぱい", LetterSender.Mother) + this.GetSlotSuffix(slotAddress),
+                            this.RecievedLetter(isEn, 0x0004, "スキキライ", "スキキライ", LetterSender.Mother) + this.GetSlotSuffix(slotAddress),
+                            this.RespondedLetterWithOption(isEn, 0x0008, 2, "スキキライ", "スキキライ", LetterSender.Mother) + this.GetSlotSuffix(slotAddress),
+                            this.RespondedLetterWithOption(isEn, 0x0010, 1, "スキキライ", "スキキライ", LetterSender.Mother) + this.GetSlotSuffix(slotAddress),
+                            this.RecievedLetter(isEn, 0x8000, "母のしんぱい", "母のしんぱい", LetterSender.Mother) + this.GetSlotSuffix(slotAddress)
+                        );
                     }
-                    else if (offset >= 1022 && offset <= 1023)
+                    else if (offset == 1022)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        // this.RespondedLetterWithItemOrGil(isEn, 0x0080, "あわいさゃんい", "あわいさゃんい", "Father", "ちち") + this.GetSlotSuffix(slotAddress),
+                        // this.RecievedLetter(isEn, 0x0800, "あわいさゃんい", "あわいさゃんい", "Father", "ちち") + this.GetSlotSuffix(slotAddress)
+                        return this.LetterData(isEn,
+                            this.RespondedLetterWithItemOrGil(isEn, 0x0080, "あわいさゃんい", "あわいさゃんい", LetterSender.Sister) + this.GetSlotSuffix(slotAddress),
+                            this.RecievedLetter(isEn, 0x0800, "あわいさゃんい", "あわいさゃんい", LetterSender.Sister) + this.GetSlotSuffix(slotAddress)
+                        );
                     }
                     else if (offset == 1024)
                     {
-                        return this.Constant(isEn, 0x0000, 0x8000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1025)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1026)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x2000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1027 && offset <= 1028)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1029)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1030)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1031)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0002, 0x0802) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1032)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1033)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1034)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1035)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0008) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1036 && offset <= 1058)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1059)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x2001) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1061 && offset <= 1063)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1064)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0800) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1065 && offset <= 1069)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1070)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0080) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1071 && offset <= 1075)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1076)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0010, 0x0090) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1077 && offset <= 1079)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1080)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1081 && offset <= 1082)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1083)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x2000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1084 && offset <= 1086)
-                    {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1087)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x1000) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset == 1088)
-                    {
-                        return this.Constant(isEn, 0x0000, 0x0100) + this.GetSlotSuffix(slotAddress);
-                    }
-                    else if (offset >= 1089 && offset <= 1126)
+                        return this.LetterData(isEn,
+                            this.RespondedLetterWithNothing(isEn, 0x0001, "われらのキボウたち", "われらのキボウたち", LetterSender.Roland) + this.GetSlotSuffix(slotAddress),
+                            this.RespondedLetterWithItemOrGil(isEn, 0x0002, "われらのキボウたち", "われらのキボウたち", LetterSender.Roland) + this.GetSlotSuffix(slotAddress),
+                            this.RecievedLetter(isEn, 0x8000, "われらのキボウたち", "われらのキボウたち", LetterSender.Roland) + this.GetSlotSuffix(slotAddress)
+                        );
+                    }*/
+                    else if (offset >= 1115 && offset <= 1126)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
                     }
@@ -344,7 +298,7 @@
                     }
                     else if (offset == 1145)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0005, 0x000E) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0001, 0x0005, 0x000E) + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset >= 1146 && offset <= 1148)
                     {
@@ -352,7 +306,7 @@
                     }
                     else if (offset == 1149)
                     {
-                        return this.Constant(isEn, 0x0000, 0x7530) + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gil during letter reply Bytes (max 30000 / 0x7530)" : "レター返信中のギルバイト(最大30000 / 0x7530)") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 1150)
                     {
@@ -372,7 +326,7 @@
                     }
                     else if (offset >= 1162 && offset <= 1167)
                     {
-                        return (isEn ? "? 0, or Roughly in range of 0xE0-0xFF" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "? 0, or Roughly in range of 0x80-0xFF" : "?") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset >= 1168 && offset <= 1171)
                     {
@@ -384,7 +338,7 @@
                     }
                     else if (offset == 1173)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gil to family / 10" : "ギルから家族へ / 10") + this.GetSlotSuffix(slotAddress);
                     }
                     else if (offset == 1174)
                     {
@@ -418,6 +372,7 @@
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
                     }
+                    // <Slot rollover starts here!>
                     else if (offset >= 1347 && offset <= 1398)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
@@ -518,13 +473,29 @@
                     {
                         return (isEn ? "? Player data" : "?") + this.GetSlotSuffix(slotAddress, true);
                     }
+                    else if (offset == 1483)
+                    {
+                        return (isEn ? "Max Health" : "最大体力") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1483)
+                    {
+                        return (isEn ? "Health" : "健康") + this.GetSlotSuffix(slotAddress, true);
+                    }
                     else if (offset == 1487)
                     {
                         return (isEn ? "Hitbox 1" : "ヒットボックス 1") + this.GetSlotSuffix(slotAddress, true);
                     }
                     else if (offset == 1488)
                     {
-                        return (isEn ? "Hitbox 2" : "ヒットボックス 2") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Hitbox 2 (Big Chungus Glitch)" : "ヒットボックス 2") + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1558)
+                    {
+                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress, true);
+                    }
+                    else if (offset == 1559)
+                    {
+                        return (isEn ? "Inventory Item Count" : "在庫品目数") + this.GetSlotSuffix(slotAddress, true);
                     }
                 }
             }
@@ -535,6 +506,75 @@
             }
 
             return String.Empty;
+        }
+
+        private String LetterData(Boolean isEn, params String[] letters)
+        {
+            // return String.Join(Environment.NewLine, letters);
+
+            return isEn ? "Letter Data (Recieved / Response)" : "レターデータ(受信/応答)";
+        }
+
+        private String LetterSenderToString(Boolean isEn, LetterSender letterSender)
+        {
+            switch (letterSender)
+            {
+                case LetterSender.Sister: return isEn ? "Sister" : "いもうと";
+                case LetterSender.Mother: return isEn ? "Mother" : "はは";
+                case LetterSender.Brother: return isEn ? "Brother" : "おとうと";
+                case LetterSender.Father: return isEn ? "Father" : "ちち";
+                case LetterSender.Roland: return isEn ? "Roland" : "ローラン";
+            }
+
+            return String.Empty;
+        }
+
+        private String GetLetterInfo(Boolean isEn, String letterNameEn, String letterNameJp, LetterSender letterSender)
+        {
+            String letterInfoEn = letterNameEn + " from " + this.LetterSenderToString(isEn, letterSender);
+            String letterInfoJp = this.LetterSenderToString(isEn, letterSender) + " の " + letterNameJp;
+
+            return isEn ? letterInfoEn : letterInfoJp;
+        }
+
+        private String BuildLetterFlagPrefix(UInt16 flag)
+        {
+            return flag.ToString("X4") + " - ";
+        }
+
+        private String RespondedLetterWithOption(Boolean isEn, UInt16 flag, Int32 optionIndex, String letterNameEn, String letterNameJp, LetterSender letterSender)
+        {
+            String letterInfo = this.GetLetterInfo(isEn, letterNameEn, letterNameJp, letterSender);
+
+            return this.BuildLetterFlagPrefix(flag) + (isEn ? ("Responded with option #" + optionIndex.ToString() + " to ") : ("オプションで応答# : " + letterInfo));
+        }
+
+        private String RespondedLetterWithGil(Boolean isEn, UInt16 flag, UInt16 minGil, String letterNameEn, String letterNameJp, LetterSender letterSender)
+        {
+            String letterInfo = this.GetLetterInfo(isEn, letterNameEn, letterNameJp, letterSender);
+
+            return this.BuildLetterFlagPrefix(flag) + (isEn ? ("Responded to Letter with " + minGil.ToString() + " Gil: ") : (minGil.ToString() + "ギルで手紙に返信 : ")) + letterInfo;
+        }
+
+        private String RespondedLetterWithNothing(Boolean isEn, UInt16 flag, String letterNameEn, String letterNameJp, LetterSender letterSender)
+        {
+            String letterInfo = this.GetLetterInfo(isEn, letterNameEn, letterNameJp, letterSender);
+
+            return this.BuildLetterFlagPrefix(flag) + (isEn ? ("Responded to Letter with nothing ") : ("何もせずに手紙に返信した ")) + letterInfo;
+        }
+
+        private String RespondedLetterWithItemOrGil(Boolean isEn, UInt16 flag, String letterNameEn, String letterNameJp, LetterSender letterSender)
+        {
+            String letterInfo = this.GetLetterInfo(isEn, letterNameEn, letterNameJp, letterSender);
+
+            return this.BuildLetterFlagPrefix(flag) + (isEn ? ("Responded to Letter with item or Gil ") : ("アイテムまたはギルで手紙に返信しました ")) + letterInfo;
+        }
+
+        private String RecievedLetter(Boolean isEn, UInt16 flag, String letterNameEn, String letterNameJp, LetterSender letterSender)
+        {
+            String letterInfo = this.GetLetterInfo(isEn, letterNameEn, letterNameJp, letterSender);
+
+            return this.BuildLetterFlagPrefix(flag) + (isEn ? ("Recieved Letter ") : ("受け取った手紙: ")) + letterInfo;
         }
 
         private String Constant(Boolean isEn, params UInt16[] constant)
