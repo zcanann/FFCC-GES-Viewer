@@ -72,6 +72,42 @@
             0x2257E0,
         };
 
+        private UInt32[] inventoryAddressesJP = new UInt32[SlotCount]
+        {
+            0x23BB90 + PlayerSlotData.InventoryOffset,
+            0x23C7C0 + PlayerSlotData.InventoryOffset,
+            0x23D3F0 + PlayerSlotData.InventoryOffset,
+            0x23E020 + PlayerSlotData.InventoryOffset,
+            0x23EC50 + PlayerSlotData.InventoryOffset,
+            0x23F880 + PlayerSlotData.InventoryOffset,
+            0x2404B0 + PlayerSlotData.InventoryOffset,
+            0x2410E0 + PlayerSlotData.InventoryOffset,
+        };
+
+        private UInt32[] inventoryAddressesEN = new UInt32[SlotCount]
+        {
+            0x21F250 + PlayerSlotData.InventoryOffset,
+            0x21FE80 + PlayerSlotData.InventoryOffset,
+            0x220AB0 + PlayerSlotData.InventoryOffset,
+            0x2216E0 + PlayerSlotData.InventoryOffset,
+            0x222310 + PlayerSlotData.InventoryOffset,
+            0x222F40 + PlayerSlotData.InventoryOffset,
+            0x223B70 + PlayerSlotData.InventoryOffset,
+            0x2247A0 + PlayerSlotData.InventoryOffset,
+        };
+
+        private UInt32[] inventoryAddressesPAL = new UInt32[SlotCount]
+        {
+            0x220290 + PlayerSlotData.InventoryOffset,
+            0x220EC0 + PlayerSlotData.InventoryOffset,
+            0x221AF0 + PlayerSlotData.InventoryOffset,
+            0x222720 + PlayerSlotData.InventoryOffset,
+            0x223350 + PlayerSlotData.InventoryOffset,
+            0x223F80 + PlayerSlotData.InventoryOffset,
+            0x224BB0 + PlayerSlotData.InventoryOffset,
+            0x2257E0 + PlayerSlotData.InventoryOffset,
+        };
+
         private UInt32[] slotMappingAddressesJP = new UInt32[PlayerCount]
         {
             0x23A7E3,
@@ -283,6 +319,18 @@
                 case EDetectedVersion.JP: return slotDataAddressesJP;
                 case EDetectedVersion.EN: return slotDataAddressesEN;
                 case EDetectedVersion.PAL: return slotDataAddressesPAL;
+            }
+        }
+
+        public UInt32[] GetInventoryAddresses()
+        {
+            switch (MainViewModel.GetInstance().DetectedVersion)
+            {
+                default:
+                case EDetectedVersion.None: return null;
+                case EDetectedVersion.JP: return inventoryAddressesJP;
+                case EDetectedVersion.EN: return inventoryAddressesEN;
+                case EDetectedVersion.PAL: return inventoryAddressesPAL;
             }
         }
 

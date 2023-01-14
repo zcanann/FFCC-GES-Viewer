@@ -52,81 +52,71 @@
         {
             address -= 0x80000000;;
             Boolean isEn = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageEN;
-            UInt32[] slotDataAddresses = InventoryViewerViewModel.GetInstance().GetSlotDataAddresses();
+            UInt32[] inventoryAddresses = InventoryViewerViewModel.GetInstance().GetInventoryAddresses();
 
-            if (slotDataAddresses != null)
+            if (inventoryAddresses != null)
             {
                 // Inventory items take 2 bytes each, thus two addresses. Floor to nearest even address.
-                UInt32 slotAddress = address & ~(UInt32)0x1;
+                UInt32 inventoryAddress = address & ~(UInt32)0x1;
 
-                for (Int32 slotIndex = 0; slotIndex < 8; slotIndex++)
+                for (Int32 inventoryIndex = 0; inventoryIndex < 8; inventoryIndex++)
                 {
-                    if (slotAddress < slotDataAddresses[slotIndex] || slotAddress >= slotDataAddresses[slotIndex] + SlotDataSize)
+                    if (inventoryAddress < inventoryAddresses[inventoryIndex] || inventoryAddress >= inventoryAddresses[inventoryIndex] + SlotDataSize)
                     {
                         continue;
                     }
 
-                    UInt32 slotOffset = slotAddress - slotDataAddresses[slotIndex];
-                    UInt32 offset = 0;
-                    
-                    if (slotOffset >= PlayerSlotData.InventoryOffset)
-                    {
-                        offset = (slotOffset - PlayerSlotData.InventoryOffset) / 2;
-                    }
-                    else
-                    {
-                        offset = SlotDataSize / 2 - PlayerSlotData.InventoryOffset + slotOffset;
-                    }
+                    UInt32 offset = (inventoryAddress - inventoryAddresses[inventoryIndex]) / 2;
 
                     if (offset <= 63)
                     {
-                        return (isEn ? "Inventory Slot " : "キャラクタースロット ") + offset.ToString() + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Inventory Slot " : "キャラクタースロット ") + offset.ToString() + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset <= 136)
                     {
-                        return (isEn ? "Artifact Slot " : "アーティファクトスロット ") + (offset - 64).ToString() + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Artifact Slot " : "アーティファクトスロット ") + (offset - 64).ToString() + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 163)
                     {
-                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 164)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 165)
                     {
-                        return (isEn ? "Gil High Bytes (65535+)" : "ギルハイバイト (65535+)") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gil High Bytes (65535+)" : "ギルハイバイト (65535+)") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 166)
                     {
-                        return (isEn ? "Gil Low Bytes (0-65535)" : "ギル低バイト (0-65535)") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gil Low Bytes (0-65535)" : "ギル低バイト (0-65535)") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 167 && offset <= 168)
                     {
-                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 169 && offset <= 174)
                     {
                         UInt16 commandListOffset = (UInt16)(6 - (174 - offset));
 
-                        return (isEn ? "Command list slot " : "コマンド・リスト・スロット ") + commandListOffset.ToString() + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Command list slot " : "コマンド・リスト・スロット ") + commandListOffset.ToString() + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 175 && offset <= 375)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 376)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 377)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 378)
                     {
-                        return (isEn ? "? Sometimes Blizzard" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "? Sometimes Blizzard" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 379)
                     {
@@ -134,23 +124,23 @@
                     }
                     else if (offset == 380)
                     {
-                        return (isEn ? "Family Type (0-7)" : "ファミリータイプ (0-7)") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Family Type (0-7)" : "ファミリータイプ (0-7)") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 381)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 382)
                     {
-                        return (isEn ? "Watched family cutscene" : "見た家族のカットシーン") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Watched family cutscene" : "見た家族のカットシーン") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 383)
                     {
-                        return this.Constant(isEn, 0x0000, 0xFFFF) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 384)
                     {
-                        return (isEn ? "GBA Port (0-4)" : "ゲームボーイアドバンス ポート 0-4") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "GBA Port (0-4)" : "ゲームボーイアドバンス ポート 0-4") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 385 && offset <= 392)
                     {
@@ -158,7 +148,7 @@
                         UInt16 itemId = (UInt16)((UInt16)0x017D + favoritesOffset);
                         String foodName = ItemToNameConverter.Convert(itemId, null, null, null)?.ToString();
 
-                        return (isEn ? "Favorites (" + foodName + ")" : "お気に入り(" + foodName + ")") + " 0-64" + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Favorites (" + foodName + ")" : "お気に入り(" + foodName + ")") + " 0-64" + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 393)
                     {
@@ -170,35 +160,35 @@
                         String asciiRange = "[" + (nameOffset / 2).ToString() + "-" + (nameOffset / 2 + 1).ToString() + "] (ASCII)";
                         String jisRange = "[" + (nameOffset).ToString() + "] (JIS)";
 
-                        return isEn ? "Name " + asciiRange + " | Name " + jisRange : "名前 " + asciiRange + " | 名前 " + jisRange + this.GetSlotSuffix(slotAddress);
+                        return isEn ? "Name " + asciiRange + " | Name " + jisRange : "名前 " + asciiRange + " | 名前 " + jisRange + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 401 && offset <= 403)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 404)
                     {
-                        return (isEn ? "Memories" : "思い出") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Memories" : "思い出") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 405)
                     {
-                        return (isEn ? "Tribe (0-3)" : "部族") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Tribe (0-3)" : "部族") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 406)
                     {
-                        return (isEn ? "Gender (0-1)" : "性別") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gender (0-1)" : "性別") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 407)
                     {
-                        return (isEn ? "Skin (0-3)" : "肌") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Skin (0-3)" : "肌") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 408 && offset <= 409)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 410)
                     {
-                        return (isEn ? "Letter Count" : "文字数") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Letter Count" : "文字数") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 411 && offset <= 1010)
                     {
@@ -210,49 +200,49 @@
 
                         switch(letterOffset)
                         {
-                            case 0: return prefix + (isEn ? "Letter State (Opened, Replied) (Byte 0) / Letter Id (Byte 1)" : "文字の状態 (開封済み、返信済み) (バイト 0) / 文字 ID (バイト 1)") + suffix + this.GetSlotSuffix(slotAddress);
-                            case 1: return prefix + (isEn ? "Item Attached (Byte 0) / Item Attached (Byte 1)" : "アイテム添付 (バイト 0) / アイテム添付 (バイト 1)") + suffix + this.GetSlotSuffix(slotAddress);
-                            case 2: return prefix + (isEn ? "Attached Item ID 1" : "添付アイテム ID 1") + suffix + this.GetSlotSuffix(slotAddress);
-                            case 3: return prefix + (isEn ? "Attached Item ID 2" : "添付アイテム ID 2") + suffix + this.GetSlotSuffix(slotAddress);
-                            case 4: return prefix + this.Constant(isEn, 0x0000, 0x0003) + suffix + this.GetSlotSuffix(slotAddress);
-                            case 5: return prefix + (isEn ? "? Rarely an id like 0x89 (Flower Bracer)" : "?") + suffix + this.GetSlotSuffix(slotAddress);
+                            case 0: return prefix + (isEn ? "Letter State (Opened, Replied) (Byte 0) / Letter Id (Byte 1)" : "文字の状態 (開封済み、返信済み) (バイト 0) / 文字 ID (バイト 1)") + suffix + this.GetSlotSuffix(inventoryAddress);
+                            case 1: return prefix + (isEn ? "Item Attached (Byte 0) / Item Attached (Byte 1)" : "アイテム添付 (バイト 0) / アイテム添付 (バイト 1)") + suffix + this.GetSlotSuffix(inventoryAddress);
+                            case 2: return prefix + (isEn ? "Attached Item ID 1" : "添付アイテム ID 1") + suffix + this.GetSlotSuffix(inventoryAddress);
+                            case 3: return prefix + (isEn ? "Attached Item ID 2" : "添付アイテム ID 2") + suffix + this.GetSlotSuffix(inventoryAddress);
+                            case 4: return prefix + this.Constant(isEn, 0x0000, 0x0003) + suffix + this.GetSlotSuffix(inventoryAddress);
+                            case 5: return prefix + (isEn ? "? Rarely an id like 0x89 (Flower Bracer)" : "?") + suffix + this.GetSlotSuffix(inventoryAddress);
                         }
                     }
                     else if (offset == 1011)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1012)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0108, 0x0128) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0108, 0x0128) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1013 && offset <= 1014)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1015)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0008) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0008) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1016)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1017)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1018)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1019)
                     {
-                        return this.Constant(isEn, 0x8000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x8000) + this.GetSlotSuffix(inventoryAddress);
                     }
-                    else if (offset >= 1021 && offset <= 1114)
+                    else if (offset >= 1020 && offset <= 1114)
                     {
-                        return this.LetterData(isEn, null);
+                        return this.LetterData(isEn, null) + this.GetSlotSuffix(inventoryAddress);
                     }
                     /*
                     else if (offset == 1021)
@@ -286,216 +276,216 @@
                     }*/
                     else if (offset >= 1115 && offset <= 1126)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1127)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1128 && offset <= 1144)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1145)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0001, 0x0005, 0x000E) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0001, 0x0005, 0x000E) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1146 && offset <= 1148)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1149)
                     {
-                        return (isEn ? "Gil during letter reply Bytes (max 30000 / 0x7530)" : "レター返信中のギルバイト(最大30000 / 0x7530)") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gil during letter reply Bytes (max 30000 / 0x7530)" : "レター返信中のギルバイト(最大30000 / 0x7530)") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1150)
                     {
-                        return this.Constant(isEn, 0x0000, 0x3A98) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x3A98) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1151)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0001) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1152)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1153 && offset <= 1161)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1162 && offset <= 1167)
                     {
-                        return (isEn ? "? 0, or Roughly in range of 0x80-0xFF" : "?") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "? 0, or Roughly in range of 0x80-0xFF" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1168 && offset <= 1171)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1172)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0004) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1173)
                     {
-                        return (isEn ? "Gil to family / 10" : "ギルから家族へ / 10") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Gil to family / 10" : "ギルから家族へ / 10") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1174)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0005) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0005) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1175)
                     {
-                        return this.Constant(isEn, 0x0000, 0x000A) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x000A) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1176)
                     {
-                        return this.Constant(isEn, 0x0000, 0x000A) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x000A) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1177 && offset <= 1192)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1193)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0036) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000, 0x0036) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1194 && offset <= 1222)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1223 && offset <= 1226)
                     {
-                        return (isEn ? "Last eaten food" : "最後に食べた食べ物") + this.GetSlotSuffix(slotAddress);
+                        return (isEn ? "Last eaten food" : "最後に食べた食べ物") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1227 && offset <= 1346)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     // <Slot rollover starts here!>
                     else if (offset >= 1347 && offset <= 1398)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1399)
                     {
-                        return (isEn ? "? Large value ranges observed" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? Large value ranges observed" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1400)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1401)
                     {
-                        return this.Constant(isEn, 0x0004) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0004) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1402)
                     {
-                        return this.Constant(isEn, 0x0004, 0x0006) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0004, 0x0006) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1403 && offset <= 1418)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1419)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0019) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000, 0x0019) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1420 && offset <= 1421)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1422)
                     {
-                        return (isEn ? "Food buff timer" : "フードバフタイマー") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Food buff timer" : "フードバフタイマー") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1423)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1424)
                     {
-                        return (isEn ? "Last eaten food" : "最後に食べた食べ物") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Last eaten food" : "最後に食べた食べ物") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1425 && offset <= 1456)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1457)
                     {
-                        return (isEn ? "? 2C observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? 2C observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1458)
                     {
-                        return (isEn ? "? D observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? D observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1459)
                     {
-                        return (isEn ? "? 2E observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? 2E observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1460)
                     {
-                        return (isEn ? "? 100 observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? 100 observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1461)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1462)
                     {
-                        return (isEn ? "? 192A observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? 192A observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1463 && offset <= 1468)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1469)
                     {
-                        return (isEn ? "? 8022 observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? 8022 observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1470)
                     {
-                        return (isEn ? "? CCBC observed value" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? CCBC observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1471 && offset <= 1472)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1473 && offset <= 1474)
                     {
-                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1475 && offset <= 1478)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1479)
                     {
-                        return (isEn ? "? Player data" : "?") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "? Player data" : "?") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1483)
                     {
-                        return (isEn ? "Max Health" : "最大体力") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Max Health" : "最大体力") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1483)
                     {
-                        return (isEn ? "Health" : "健康") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Health" : "健康") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1487)
                     {
-                        return (isEn ? "Hitbox 1" : "ヒットボックス 1") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Hitbox 1" : "ヒットボックス 1") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1488)
                     {
-                        return (isEn ? "Hitbox 2 (Big Chungus Glitch)" : "ヒットボックス 2") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Hitbox 2 (Big Chungus Glitch)" : "ヒットボックス 2") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1558)
                     {
-                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(slotAddress, true);
+                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1559)
                     {
-                        return (isEn ? "Inventory Item Count" : "在庫品目数") + this.GetSlotSuffix(slotAddress, true);
+                        return (isEn ? "Inventory Item Count" : "在庫品目数") + this.GetSlotSuffix(inventoryAddress);
                     }
                 }
             }
@@ -593,7 +583,7 @@
             }
         }
 
-        private String GetSlotSuffix(UInt32 address, Boolean isNextSlot = false)
+        private String GetSlotSuffix(UInt32 address)
         {
             UInt32[] slotDataAddresses = InventoryViewerViewModel.GetInstance().GetSlotDataAddresses();
             Boolean isEn = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageEN;
@@ -606,7 +596,7 @@
                     {
                         String prefix = isEn ? " - (Character Slot " : "キャラクタースロット ";
 
-                        prefix += (slotIndex + (isNextSlot ? 2 : 1)).ToString();
+                        prefix += (slotIndex + 1).ToString();
                         prefix += ")";
 
                         return prefix;
