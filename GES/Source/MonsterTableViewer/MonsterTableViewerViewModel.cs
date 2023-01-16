@@ -1,17 +1,14 @@
 ﻿namespace GES.Source.MonsterTableViewer
 {
     using GES.Engine.Common;
-    using GES.Engine.Common.DataStructures;
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.CraftListViewer;
     using GES.Source.Docking;
-    using GES.Source.EquipmentListViewer;
     using GES.Source.Main;
     using System;
     using System.Buffers.Binary;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;

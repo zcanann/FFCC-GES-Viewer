@@ -39,7 +39,7 @@
                 {
                     if (CraftEntry.IsLiltyWeapon)
                     {
-                        return Images.Icon_WeaponClavat;
+                        return Images.Icon_WeaponLilty;
                     }
                     else if (CraftEntry.IsLiltyChest)
                     {
@@ -47,7 +47,7 @@
                     }
                     else if (CraftEntry.IsLiltyTribal)
                     {
-                        return Images.Icon_TribalClavat;
+                        return Images.Icon_TribalLilty;
                     }
                     else if (CraftEntry.IsLiltyAccessory)
                     {
@@ -58,7 +58,7 @@
                 {
                     if (CraftEntry.IsYukeWeapon)
                     {
-                        return Images.Icon_WeaponClavat;
+                        return Images.Icon_WeaponYuke;
                     }
                     else if (CraftEntry.IsYukeChest)
                     {
@@ -66,7 +66,7 @@
                     }
                     else if (CraftEntry.IsYukeTribal)
                     {
-                        return Images.Icon_TribalClavat;
+                        return Images.Icon_TribalYuke;
                     }
                     else if (CraftEntry.IsYukeAccessory)
                     {
@@ -77,7 +77,7 @@
                 {
                     if (CraftEntry.IsSelkieWeapon)
                     {
-                        return Images.Icon_WeaponClavat;
+                        return Images.Icon_WeaponSelkie;
                     }
                     else if (CraftEntry.IsSelkieChest)
                     {
@@ -85,7 +85,7 @@
                     }
                     else if (CraftEntry.IsSelkieTribal)
                     {
-                        return Images.Icon_TribalClavat;
+                        return Images.Icon_TribalSelkie;
                     }
                     else if (CraftEntry.IsSelkieAccessory)
                     {

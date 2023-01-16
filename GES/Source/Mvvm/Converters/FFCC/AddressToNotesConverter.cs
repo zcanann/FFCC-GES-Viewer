@@ -76,6 +76,11 @@
                     {
                         return (isEn ? "Artifact Slot " : "アーティファクトスロット ") + (offset - 64).ToString() + this.GetSlotSuffix(inventoryAddress);
                     }
+                    else if (offset >= 160 && offset <= 163)
+                    {
+                        UInt16 commandListOffset = (UInt16)(4 - (163 - offset));
+                        return (isEn ? "Treasure slot " : "宝スロット ") + commandListOffset.ToString() + this.GetSlotSuffix(inventoryAddress);
+                    }
                     else if (offset == 163)
                     {
                         return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
@@ -479,9 +484,21 @@
                     {
                         return (isEn ? "Hitbox 2 (Big Chungus Glitch)" : "ヒットボックス 2") + this.GetSlotSuffix(inventoryAddress);
                     }
+                    else if (offset == 1555)
+                    {
+                        return (isEn ? "Equipped Weapon" : "装備武器") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1556)
+                    {
+                        return (isEn ? "Equipped Armor" : "装備された装甲") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1557)
+                    {
+                        return (isEn ? "Equipped Tribal" : "装備された部族") + this.GetSlotSuffix(inventoryAddress);
+                    }
                     else if (offset == 1558)
                     {
-                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "Equipped Accessory" : "装備アクセサリー") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1559)
                     {

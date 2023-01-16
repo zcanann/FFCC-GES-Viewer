@@ -134,10 +134,10 @@ namespace GES.Source.ItemCatalogViewer
         }
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x04B5 * 72)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0xFFFF * 72)] // Intended is 0x4B5
     public class ItemCatalogDataSerializable
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x04B5 * 72)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0xFFFF * 72)] // Intended is 0x4B5
         public Byte[] rawItemCatalogSlots;
     }
 
@@ -234,11 +234,17 @@ namespace GES.Source.ItemCatalogViewer
                 this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 60));
                 this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 62));
 
+                /*
+                if (this.rawItems[index].LiltyCraftedItem == 557)
+                {
+                    int bp = 5;
+                }*/
+
                 // EXTERNAL
                 this.rawItems[index].Index = (UInt16)index;
                 this.rawItems[index].Address = address + (UInt64)(index * StructSize);
                 this.rawItems[index].RawAddress = rawAddress + (UInt64)(index * StructSize);
-                this.rawItems[index].Refresh();
+                // this.rawItems[index].Refresh();
 
                 // DERIVATIE
                 Int16 bonusValue = this.rawItems[index].BonusValue;

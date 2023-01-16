@@ -410,8 +410,7 @@
         {
             return this.HasProperties
                 && !this.IsWeapon(index)
-                && ((this.Properties[index] & 0b0100) != 0 // Higher priority flag (4)
-                    || (((this.Properties[index] & 0b1000) != 0) && (this.Properties[index] & 0b0010) == 0)); // Lower priority flag (8), contingent on no tribal flag (2)
+                && (this.Properties[index] & 0b0100) != 0;
         }
 
         public Boolean IsTribal(Int32 index)
@@ -419,7 +418,7 @@
             return this.HasProperties 
                 && !this.IsWeapon(index)
                 && !this.IsChest(index)
-                && (this.Properties[index] & 0b0010) != 0;
+                && ((this.Properties[index] & 0b0010) != 0 || (this.Properties[index] & 0b1000) != 0);
         }
 
         public Boolean IsAccessory(Int32 index)
