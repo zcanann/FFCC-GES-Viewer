@@ -251,13 +251,16 @@ namespace GES.Source.InventoryViewer
                 UInt16 newId = BinaryPrimitives.ReverseEndianness(inventoryBytesRaw[index]);
                 Int32 newIndex = index;
 
+                UInt32 newAddress = slotPointerBase + PlayerSlotData.InventoryOffset + (UInt32)newIndex * 2;
+                UInt64 newRawAddress = rawSlotPointerBase + PlayerSlotData.InventoryOffset + (UInt64)newIndex * 2;
+
                 if (index >= this.rawItems.Count || this.rawItems[index] == null)
                 {
                     this.rawItems.Add(new RawItemEntry());
                     this.rawItems[index].ItemId = newId;
                     this.rawItems[index].Index = newIndex;
-                    this.rawItems[index].Address = slotPointerBase + PlayerSlotData.InventoryOffset + (UInt32)newIndex * 2;
-                    this.rawItems[index].RawAddress = rawSlotPointerBase + PlayerSlotData.InventoryOffset + (UInt64)newIndex * 2;
+                    this.rawItems[index].Address = newAddress;
+                    this.rawItems[index].RawAddress = newRawAddress;
                     this.rawItems[index].Parent = this;
                 }
                 else
@@ -273,9 +276,23 @@ namespace GES.Source.InventoryViewer
                     if (newIndex != this.rawItems[index].Index)
                     {
                         this.rawItems[index].Index = newIndex;
-                        this.rawItems[index].Address = slotPointerBase + PlayerSlotData.InventoryOffset + (UInt32)newIndex * 2;
-                        this.rawItems[index].RawAddress = rawSlotPointerBase + PlayerSlotData.InventoryOffset + (UInt64)newIndex * 2;
                         refresh = true;
+                    }
+
+                    if (newIndex != this.rawItems[index].Index)
+                    {
+                        this.rawItems[index].Index = newIndex;
+                        refresh = true;
+                    }
+
+                    if (newAddress != this.rawItems[index].Address)
+                    {
+                        this.rawItems[index].Address = newAddress;
+                    }
+
+                    if (newRawAddress != this.rawItems[index].RawAddress)
+                    {
+                        this.rawItems[index].RawAddress = newRawAddress;
                     }
 
                     if (refresh && shouldRefresh)

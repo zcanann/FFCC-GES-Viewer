@@ -12,8 +12,8 @@
     <NoWarn>$(NoWarn);NU1605</NoWarn>
     <SignAssembly>false</SignAssembly>
     <ApplicationManifest>Application.manifest</ApplicationManifest>
-    <AssemblyVersion>2.1.2</AssemblyVersion>
-    <FileVersion>2.1.2</FileVersion>
+    <AssemblyVersion>2.1.3</AssemblyVersion>
+    <FileVersion>2.1.3</FileVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 

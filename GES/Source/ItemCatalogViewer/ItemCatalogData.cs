@@ -234,11 +234,15 @@ namespace GES.Source.ItemCatalogViewer
                 this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 60));
                 this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 62));
 
-                /*
-                if (this.rawItems[index].LiltyCraftedItem == 557)
+                if (false
+                    || this.rawItems[index].ClavatCraftedItem == 0x021A
+                    //|| this.rawItems[index].LiltyCraftedItem == 0x022D
+                    // || this.rawItems[index].YukeCraftedItem == 0x022D
+                    // || this.rawItems[index].SelkieCraftedItem == 0x022D
+                    )
                 {
                     int bp = 5;
-                }*/
+                }
 
                 // EXTERNAL
                 this.rawItems[index].Index = (UInt16)index;
