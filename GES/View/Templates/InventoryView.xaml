@@ -16,6 +16,7 @@
         <converters:IntToHexConverter x:Key="IntToHexConverter" />
         <converters:IntToBinaryConverter x:Key="IntToBinaryConverter" />
         <converters:ArtifactGlitchVisibilityConverter x:Key="ArtifactGlitchVisibilityConverter" />
+        <converters:LetterListGlitchIconConverter x:Key="LetterListGlitchIconConverter" />
         <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
         <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
 
@@ -133,6 +134,23 @@
                     <DataTemplate>
                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                             <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="Auto"
+                Header="Item"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <StackPanel Orientation="Horizontal">
                                 <Menu VerticalAlignment="Center" Background="Transparent">
                                     <MenuItem
                                         Height="16"
@@ -150,25 +168,10 @@
                                     </MenuItem>
                                 </Menu>
                                 <TextBlock
-                                    Margin="0,0,8,0"
+                                    Margin="4,0,4,0"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                                    Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                             </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn
-                Width="Auto"
-                Header="Item Name"
-                IsReadOnly="True">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                            <TextBlock
-                                Margin="4,0,4,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
                         </Border>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
@@ -385,6 +388,10 @@
                     <DataTemplate>
                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                             <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Source="{Binding Path=Address, Converter={StaticResource LetterListGlitchIconConverter}, ConverterParameter=0}" />
                                 <TextBlock Text="{Binding Path=Address, Converter={StaticResource AddressToNotesConverter}}" />
                             </StackPanel>
                         </Border>

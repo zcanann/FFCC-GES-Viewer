@@ -18,7 +18,7 @@ namespace GES.Source.ItemCatalogViewer
         public Byte Slot { get; set; } // 4
         public Byte Tribe { get; set; } // 5
         public Int16 BonusValue { get; set; } // 6, 7
-        public Int16 BonusType { get; set; } // 8, 9
+        public UInt16 BonusType { get; set; } // 8, 9
         public Int16 Focus { get; set; } // 10, 11
         public Byte[] WeaponUnusedByes1 { get; set; } // 12, 13, 14, 15
         public UInt16 ItemFXSize { get; set; } // 16, 17
@@ -158,6 +158,8 @@ namespace GES.Source.ItemCatalogViewer
 
         const Int32 StructSize = 72;
 
+        Byte[] cachedBytes = null;
+
         public static void Deserialize(ItemCatalogData entry, Byte[] bytes)
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
@@ -182,90 +184,312 @@ namespace GES.Source.ItemCatalogViewer
 
         public void Refresh(UInt64 address, UInt64 rawAddress, Byte[] bytes)
         {
-            for (Int32 index = 0; index < bytes.Length / StructSize; index++)
+            for (Int32 entryIndex = 0; entryIndex < bytes.Length / StructSize; entryIndex++)
             {
-                if (index >= this.rawItems.Count || this.rawItems[index] == null)
+                if (entryIndex >= this.rawItems.Count || this.rawItems[entryIndex] == null)
                 {
                     this.rawItems.Add(new RawItemCatalogItemEntry());
                 }
 
                 // UNIVERSAL
-                this.rawItems[index].BaseItemId = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 0));
+                this.rawItems[entryIndex].BaseItemId = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 0));
 
                 // EQUIPMENT
-                this.rawItems[index].ModelFx = bytes[index * StructSize + 2];
-                this.rawItems[index].ModelId = bytes[index * StructSize + 3];
-                this.rawItems[index].Slot = bytes[index * StructSize + 4];
-                this.rawItems[index].Tribe = bytes[index * StructSize + 5];
-                this.rawItems[index].BonusValue = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 6));
-                this.rawItems[index].BonusType = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 8));
-                this.rawItems[index].Focus = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 10));
-                this.rawItems[index].WeaponUnusedByes1 = null; // // 12, 13, 14, 15
-                this.rawItems[index].ItemFXSize = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 16));
-                this.rawItems[index].ItemFX1 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 18));
-                this.rawItems[index].ItemFX2 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 20));
-                this.rawItems[index].ItemFX3 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 22));
-                this.rawItems[index].ItemFX4 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 24));
-                this.rawItems[index].ItemFX5 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 26));
-                this.rawItems[index].ItemFX6 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 28));
-                this.rawItems[index].ItemFX7 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 30));
-                this.rawItems[index].WeaponUnusedByes3 = null; // 32-55
-                this.rawItems[index].SwingSound1 = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 56));
-                this.rawItems[index].SwingSound1Delay = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 58));
-                this.rawItems[index].SwingSound2 = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 60));
-                this.rawItems[index].SwingSound2Delay = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 62));
-                this.rawItems[index].SwingHitSound = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 64));
-                this.rawItems[index].HitSound = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 66));
-                this.rawItems[index].WeaponUnusedByes4 = null; // 68, 69, 70, 71
+                this.rawItems[entryIndex].ModelFx = bytes[entryIndex * StructSize + 2];
+                this.rawItems[entryIndex].ModelId = bytes[entryIndex * StructSize + 3];
+                this.rawItems[entryIndex].Slot = bytes[entryIndex * StructSize + 4];
+                this.rawItems[entryIndex].Tribe = bytes[entryIndex * StructSize + 5];
+                this.rawItems[entryIndex].BonusValue = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 6));
+                this.rawItems[entryIndex].BonusType = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 8));
+                this.rawItems[entryIndex].Focus = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 10));
+                this.rawItems[entryIndex].WeaponUnusedByes1 = null; // // 12, 13, 14, 15
+                this.rawItems[entryIndex].ItemFXSize = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 16));
+                this.rawItems[entryIndex].ItemFX1 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 18));
+                this.rawItems[entryIndex].ItemFX2 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 20));
+                this.rawItems[entryIndex].ItemFX3 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 22));
+                this.rawItems[entryIndex].ItemFX4 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 24));
+                this.rawItems[entryIndex].ItemFX5 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 26));
+                this.rawItems[entryIndex].ItemFX6 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 28));
+                this.rawItems[entryIndex].ItemFX7 = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 30));
+                this.rawItems[entryIndex].WeaponUnusedByes3 = null; // 32-55
+                this.rawItems[entryIndex].SwingSound1 = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 56));
+                this.rawItems[entryIndex].SwingSound1Delay = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 58));
+                this.rawItems[entryIndex].SwingSound2 = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 60));
+                this.rawItems[entryIndex].SwingSound2Delay = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 62));
+                this.rawItems[entryIndex].SwingHitSound = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 64));
+                this.rawItems[entryIndex].HitSound = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 66));
+                this.rawItems[entryIndex].WeaponUnusedByes4 = null; // 68, 69, 70, 71
 
                 // EQUIPMENT
                 // this.rawItems[index].ModelFx = bytes[index * StructSize + 2];
                 // this.rawItems[index].ModelId = bytes[index * StructSize + 3];
-                this.rawItems[index].ItemUnknown1 = null; // 4, 5
-                this.rawItems[index].ItemUnknown2 = null; // 8, 9
-                this.rawItems[index].ItemSpell = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, index * StructSize + 10));
-                this.rawItems[index].ItemUnknown3 = null; // 12, 13, 14, 15
-                this.rawItems[index].ItemPrice = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 32));
-                this.rawItems[index].ItemUnused = null; // 34-71
+                this.rawItems[entryIndex].ItemUnknown1 = null; // 4, 5
+                this.rawItems[entryIndex].ItemUnknown2 = null; // 8, 9
+                this.rawItems[entryIndex].ItemSpell = BinaryPrimitives.ReverseEndianness(BitConverter.ToInt16(bytes, entryIndex * StructSize + 10));
+                this.rawItems[entryIndex].ItemUnknown3 = null; // 12, 13, 14, 15
+                this.rawItems[entryIndex].ItemPrice = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 32));
+                this.rawItems[entryIndex].ItemUnused = null; // 34-71
 
                 // RECIPE
-                this.rawItems[index].ClavatCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 56));
-                this.rawItems[index].LiltyCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 58));
-                this.rawItems[index].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 60));
-                this.rawItems[index].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, index * StructSize + 62));
+                this.rawItems[entryIndex].ClavatCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 56));
+                this.rawItems[entryIndex].LiltyCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 58));
+                this.rawItems[entryIndex].YukeCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 60));
+                this.rawItems[entryIndex].SelkieCraftedItem = BinaryPrimitives.ReverseEndianness(BitConverter.ToUInt16(bytes, entryIndex * StructSize + 62));
 
+                // EXTERNAL
+                this.rawItems[entryIndex].Index = (UInt16)entryIndex;
+                this.rawItems[entryIndex].Address = address + (UInt64)(entryIndex * StructSize);
+                this.rawItems[entryIndex].RawAddress = rawAddress + (UInt64)(entryIndex * StructSize);
+
+                /*
+                if (this.cachedBytes != null)
+                {
+                    for (Int32 byteIndex = entryIndex * StructSize; byteIndex < entryIndex * StructSize + StructSize; byteIndex++)
+                    {
+                        if (this.cachedBytes[byteIndex] != bytes[byteIndex])
+                        {
+                            this.rawItems[entryIndex].Refresh();
+                            break;
+                        }
+                    }
+                }*/
+
+                // DERIVATIE
+                Int16 bonusValue = this.rawItems[entryIndex].BonusValue;
+                UInt16 bonusType = this.rawItems[entryIndex].BonusType;
+                UInt16 baseItemId = this.rawItems[entryIndex].BaseItemId;
+
+                Boolean resistFire = bonusType == 1;
+                Boolean resistCold = bonusType == 2;
+                Boolean resistLightning = bonusType == 3;
+                Boolean resistSlow = bonusType == 4;
+                Boolean resistStatis = bonusType == 5;
+                Boolean resistPoison = bonusType == 6;
+                Boolean resistCurse = bonusType == 7;
+                Boolean resistParalysis = bonusType == 8;
+                Boolean castingTime = bonusType == 9;
+                Boolean chargeTime = bonusType == 10;
+                Boolean spellDuration1 = bonusType == 11;
+                Boolean spellDuration2 = bonusType == 12;
+                Boolean resistMiasma = bonusType == 13;
+                Boolean longSpellRange = bonusType == 14;
+                Boolean longFocusAttack = bonusType == 15;
+                Boolean regen = bonusType == 16;
+                Boolean focusAttacks = bonusType == 17;
+                Boolean spellDamage = bonusType == 18;
+                Boolean stunProof = bonusType == 19;
+
+                // Nope
+                // baseItemId = (UInt16)(baseItemId & (UInt16)0xFF);
+
+                if (baseItemId == 1)
+                {
+                    this.rawItems[entryIndex].BonusValue = bonusValue;
+                }
+                else if (baseItemId == 0x45)
+                {
+                    this.rawItems[entryIndex].Defense = bonusValue;
+                }
+
+                // Crystal Mail (Free)
                 if (false
-                    || this.rawItems[index].ClavatCraftedItem == 0x021A
-                    //|| this.rawItems[index].LiltyCraftedItem == 0x022D
-                    // || this.rawItems[index].YukeCraftedItem == 0x022D
-                    // || this.rawItems[index].SelkieCraftedItem == 0x022D
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x53
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x53
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x53
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x53
                     )
                 {
                     int bp = 5;
                 }
 
-                // EXTERNAL
-                this.rawItems[index].Index = (UInt16)index;
-                this.rawItems[index].Address = address + (UInt64)(index * StructSize);
-                this.rawItems[index].RawAddress = rawAddress + (UInt64)(index * StructSize);
-                // this.rawItems[index].Refresh();
-
-                // DERIVATIE
-                Int16 bonusValue = this.rawItems[index].BonusValue;
-                UInt16 baseItemId = this.rawItems[index].BaseItemId;
-
-                if (baseItemId == 1)
+                // Cudgel
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x008B
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x008B
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x008B
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x008B
+                    )
                 {
-                    this.rawItems[index].BonusValue = bonusValue;
+                    int bp = 5;
                 }
-                else if (baseItemId == 0x45)
-                {
-                    this.rawItems[index].Defense = bonusValue;
-                }
-             }
 
-            this.Address = address;
-            this.RawAddress = rawAddress;
+                // Talisman of Speed
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x008B
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x008B
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x008B
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x008B
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Thiefs Emblem
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x8C
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x8C
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x8C
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x8C
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Hastega (Dev)
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x22D
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x22D
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x22D
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x22D
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Gobbie Pocket
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00DD
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x00DD
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00DD
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00DD
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Ultimate Pocket
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00DE
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x00DE
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00DE
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00DE
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Star Pendant
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E6
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x00E6
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00E6
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00E6
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Sun Pendant
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E7
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x00E7
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00E7
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00E7
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Sun Pendant
+                if (false
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x0034
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x0037
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x003D
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Abbadon
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x21A
+                    // || this.rawItems[entryIndex].LiltyCraftedItem == 0x21A
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x21A
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x21A
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Curega
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x21B
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x21A
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x21A
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x21A
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // LizWar
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x216
+                    // || this.rawItems[entryIndex].LiltyCraftedItem == 0x216
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x216
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x216
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Electric Jellyfish
+                if (false
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x21E
+                    // || this.rawItems[entryIndex].LiltyCraftedItem == 0x21E
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x21E
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x21E
+                    )
+                {
+                    int bp = 5;
+                }
+
+                if (entryIndex > 600)
+                {
+
+                    if (baseItemId == 0x45)
+                    {
+                        int bp = 5;
+                    }
+
+                    if (baseItemId == 0x7F)
+                    {
+                        int bp = 5;
+                    }
+
+                    if (baseItemId == 0x1F5)
+                    {
+                        int bp = 5;
+                    }
+
+                    if (baseItemId == 0x17D)
+                    {
+                        int bp = 5;
+                    }
+
+                    if (resistMiasma == true)
+                    {
+                        int bp = 5;
+                    }
+
+                    if (baseItemId == 1
+                        // && (this.rawItems[index].ModelId >= 1 && this.rawItems[index].ModelId <= 26)
+                        )
+                    {
+                        int bp = 5;
+                    }
+                }
+
+                this.Address = address;
+                this.RawAddress = rawAddress;
+            }
+
+            if (this.cachedBytes == null)
+            {
+                this.cachedBytes = new Byte[bytes.Length];
+            }
+
+            bytes.CopyTo(this.cachedBytes, 0);
         }
     }
     //// End class

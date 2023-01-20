@@ -1,5 +1,6 @@
 ﻿namespace GES.Source.ItemCatalogViewer
 {
+    using GalaSoft.MvvmLight.Command;
     using GES.Engine.Common;
     using GES.Engine.Common.Logging;
     using GES.Engine.Memory;
@@ -11,6 +12,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
     using static GES.Source.Main.MainViewModel;
 
     /// <summary>
@@ -33,6 +35,8 @@
         private ItemCatalogViewerViewModel() : base("Item Catalog")
         {
             DockingViewModel.GetInstance().RegisterViewModel(this);
+            this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
+            this.CopyRawAddressCommand = new RelayCommand<Object>((obj) => this.CopyRawAddress(obj));
 
             Application.Current.Exit += this.OnAppExit;
 
@@ -43,6 +47,10 @@
         {
             this.CanUpdate = false;
         }
+
+        public ICommand CopyAddressCommand { get; private set; }
+
+        public ICommand CopyRawAddressCommand { get; private set; }
 
         public ItemCatalogDataView ItemCatalog { get; private set; }
 
@@ -150,6 +158,26 @@
                 }
 
                 this.RawCraftDataBytes.CopyTo(this.CachedRawCraftDataBytes, 0);
+            }
+        }
+
+        private void CopyAddress(Object itemObj)
+        {
+            if (itemObj is RawItemCatalogItemEntry)
+            {
+                RawItemCatalogItemEntry rawItem = (RawItemCatalogItemEntry)itemObj;
+
+                Clipboard.SetText(rawItem.Address.ToString("X"));
+            }
+        }
+
+        private void CopyRawAddress(Object itemObj)
+        {
+            if (itemObj is RawItemCatalogItemEntry)
+            {
+                RawItemCatalogItemEntry rawItem = (RawItemCatalogItemEntry)itemObj;
+
+                Clipboard.SetText(rawItem.RawAddress.ToString("X"));
             }
         }
     }

@@ -76,6 +76,10 @@
                     {
                         return (isEn ? "Artifact Slot " : "アーティファクトスロット ") + (offset - 64).ToString() + this.GetSlotSuffix(inventoryAddress);
                     }
+                    else if (offset >= 137 && offset <= 159)
+                    {
+                        return this.Constant(isEn, 0xFFFF) + this.GetSlotSuffix(inventoryAddress);
+                    }
                     else if (offset >= 160 && offset <= 163)
                     {
                         UInt16 commandListOffset = (UInt16)(4 - (163 - offset));
@@ -137,7 +141,7 @@
                     }
                     else if (offset == 382)
                     {
-                        return (isEn ? "Watched family cutscene" : "見た家族のカットシーン") + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "Resistances from Equipment / Watched family cutscene" : "機器からの抵抗 / 見た家族のカットシーン") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 383)
                     {
@@ -388,9 +392,13 @@
                     {
                         return this.Constant(isEn, 0x0004, 0x0006) + this.GetSlotSuffix(inventoryAddress);
                     }
-                    else if (offset >= 1403 && offset <= 1418)
+                    else if (offset >= 1403 && offset <= 1417)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1418)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x64) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1419)
                     {
@@ -412,29 +420,45 @@
                     {
                         return (isEn ? "Last eaten food" : "最後に食べた食べ物") + this.GetSlotSuffix(inventoryAddress);
                     }
-                    else if (offset >= 1425 && offset <= 1456)
+                    else if (offset >= 1425 && offset <= 1428)
+                    {
+                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1429)
+                    {
+                        return (isEn ? "Merchant item count" : "販売者のアイテム数") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset >= 1430 && offset <= 1449)
+                    {
+                        return (isEn ? "Merchant shop item" : "加盟店アイテム") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1450)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x07FF) + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset >= 1451 && offset <= 1456)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1457)
                     {
-                        return (isEn ? "? 2C observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0000, 0x0017, 0x002C) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1458)
                     {
-                        return (isEn ? "? D observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0000, 0x000A, 0x000D) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1459)
                     {
-                        return (isEn ? "? 2E observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0000, 0x0017, 0x002E) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1460)
                     {
-                        return (isEn ? "? 100 observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0000, 0x0100) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1461)
                     {
-                        return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0000, 0x0100) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1462)
                     {
@@ -466,15 +490,39 @@
                     }
                     else if (offset == 1479)
                     {
-                        return (isEn ? "? Player data" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "Tribe (0-3)" : "部族") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1480)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x002F) + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1481)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x0012) + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1482)
+                    {
+                        return this.Constant(isEn, 0x0000, 0x002F) + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1482)
+                    {
+                        return (isEn ? "Health" : "健康") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1483)
                     {
                         return (isEn ? "Max Health" : "最大体力") + this.GetSlotSuffix(inventoryAddress);
                     }
-                    else if (offset == 1483)
+                    else if (offset == 1484)
                     {
-                        return (isEn ? "Health" : "健康") + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "ATK" : "こうげき") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1485)
+                    {
+                        return (isEn ? "MAG" : "まほう") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1486)
+                    {
+                        return (isEn ? "DEF" : "まうぎよ") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1487)
                     {

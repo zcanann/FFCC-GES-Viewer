@@ -297,7 +297,7 @@
                                             <Menu VerticalAlignment="Center" Background="Transparent">
                                                 <MenuItem
                                                     Height="16"
-                                                    Command="{Binding CraftListViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                    Command="{Binding ItemCatalogViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                                     CommandParameter="{Binding .}"
                                                     ToolTip="Copy to clipboard"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
@@ -330,7 +330,7 @@
                                             <Menu VerticalAlignment="Center" Background="Transparent">
                                                 <MenuItem
                                                     Height="16"
-                                                    Command="{Binding CraftListViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                    Command="{Binding ItemCatalogViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                                     CommandParameter="{Binding .}"
                                                     ToolTip="Copy to clipboard"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
@@ -423,7 +423,10 @@
                                                     Height="16"
                                                     Source="{Binding Path=Index, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                             </Border>
-                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Mode=OneWay}" />
+                                            <TextBlock Text=" (0x" />
+                                            <TextBlock Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                            <TextBlock Text=")" />
                                             <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
                                         </StackPanel>
                                     </Border>
@@ -510,7 +513,7 @@
                                             <Menu VerticalAlignment="Center" Background="Transparent">
                                                 <MenuItem
                                                     Height="16"
-                                                    Command="{Binding CraftListViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                    Command="{Binding ItemCatalogViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                                     CommandParameter="{Binding .}"
                                                     ToolTip="Copy to clipboard"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
@@ -543,7 +546,7 @@
                                             <Menu VerticalAlignment="Center" Background="Transparent">
                                                 <MenuItem
                                                     Height="16"
-                                                    Command="{Binding CraftListViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                    Command="{Binding ItemCatalogViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                                     CommandParameter="{Binding .}"
                                                     ToolTip="Copy to clipboard"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
@@ -636,7 +639,10 @@
                                                     Height="16"
                                                     Source="{Binding Path=Index, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
                                             </Border>
-                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Mode=OneWay}" />
+                                            <TextBlock Text=" (0x" />
+                                            <TextBlock Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                            <TextBlock Text=")" />
                                             <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
                                         </StackPanel>
                                     </Border>
@@ -884,7 +890,7 @@
                                             <Menu VerticalAlignment="Center" Background="Transparent">
                                                 <MenuItem
                                                     Height="16"
-                                                    Command="{Binding CraftListViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                    Command="{Binding ItemCatalogViewerViewModel.CopyAddressCommand, Source={StaticResource ViewModelLocator}}"
                                                     CommandParameter="{Binding .}"
                                                     ToolTip="Copy to clipboard"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
@@ -917,7 +923,7 @@
                                             <Menu VerticalAlignment="Center" Background="Transparent">
                                                 <MenuItem
                                                     Height="16"
-                                                    Command="{Binding CraftListViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
+                                                    Command="{Binding ItemCatalogViewerViewModel.CopyRawAddressCommand, Source={StaticResource ViewModelLocator}}"
                                                     CommandParameter="{Binding .}"
                                                     ToolTip="Copy to clipboard"
                                                     WindowChrome.IsHitTestVisibleInChrome="True">
