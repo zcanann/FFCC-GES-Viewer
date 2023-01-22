@@ -15,6 +15,7 @@
     using GES.Source.Editors.InventoryItemEditor;
     using GES.Source.Editors.ApplyArtifactsEditor;
     using GES.Source.SlotDataViewer;
+    using GES.Source.LetterTableViewer;
 
     /// <summary>
     /// Provides the template required to view a pane.
@@ -55,6 +56,11 @@
         /// The template for the Monster Table Viewer.
         /// </summary>
         private DataTemplate monsterTableViewerViewTemplate;
+
+        /// <summary>
+        /// The template for the Letter Table Viewer.
+        /// </summary>
+        private DataTemplate letterTableViewerViewTemplate;
 
         /// <summary>
         /// The template for the Item Catalog Viewer.
@@ -195,7 +201,7 @@
                 this.DataTemplates[typeof(EquipmentListViewerViewModel)] = value;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the template for the Monster Table Viewer.
         /// </summary>
@@ -210,6 +216,23 @@
             {
                 this.monsterTableViewerViewTemplate = value;
                 this.DataTemplates[typeof(MonsterTableViewerViewModel)] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the template for the Letter Table Viewer.
+        /// </summary>
+        public DataTemplate LetterTableViewerViewTemplate
+        {
+            get
+            {
+                return this.letterTableViewerViewTemplate;
+            }
+
+            set
+            {
+                this.letterTableViewerViewTemplate = value;
+                this.DataTemplates[typeof(LetterTableViewerViewModel)] = value;
             }
         }
 

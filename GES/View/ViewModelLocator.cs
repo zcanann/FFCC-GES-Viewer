@@ -15,6 +15,7 @@
     using GES.Source.Editors.InventoryItemEditor;
     using GES.Source.Editors.ApplyArtifactsEditor;
     using GES.Source.SlotDataViewer;
+    using GES.Source.LetterTableViewer;
 
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -136,6 +137,17 @@
             get
             {
                 return MonsterTableViewerViewModel.GetInstance();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Letter Table Viewer view model.
+        /// </summary>
+        public LetterTableViewerViewModel LetterTableViewerViewModel
+        {
+            get
+            {
+                return LetterTableViewerViewModel.GetInstance();
             }
         }
 

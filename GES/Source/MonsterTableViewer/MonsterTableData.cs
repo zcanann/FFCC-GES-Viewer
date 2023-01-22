@@ -79,10 +79,10 @@ namespace GES.Source.MonsterTableViewer
         }
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 242 * 72)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 272 * 64)]
     public class MonsterTableDataSerializable
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 242 * 72)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 272 * 64)]
         public Byte[] rawMonsterTableSlots;
     }
 

@@ -133,7 +133,7 @@
                     }
                     else if (offset == 380)
                     {
-                        return (isEn ? "Family Type (0-7)" : "ファミリータイプ (0-7)") + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "Profession (0-7)" : "職業 (0-7)") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 381)
                     {
@@ -223,7 +223,7 @@
                     }
                     else if (offset == 1012)
                     {
-                        return this.Constant(isEn, 0x0000, 0x0108, 0x0128) + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "Set on world map (0x128)" : "世界地図上に設定 (0x128)") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1013 && offset <= 1014)
                     {
@@ -378,7 +378,7 @@
                     }
                     else if (offset == 1399)
                     {
-                        return (isEn ? "? Large value ranges observed" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "Dungeon bonus objective" : "ダンジョンボーナス目標") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1400)
                     {
@@ -390,9 +390,25 @@
                     }
                     else if (offset == 1402)
                     {
-                        return this.Constant(isEn, 0x0004, 0x0006) + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0004, 0x0005, 0x0006) + this.GetSlotSuffix(inventoryAddress);
                     }
-                    else if (offset >= 1403 && offset <= 1417)
+                    else if (offset >= 1403 && offset <= 1408)
+                    {
+                        return (isEn ? "Focus attack coordinates" : "攻撃座標のフォーカス") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset >= 1409 && offset <= 1414)
+                    {
+                        return (isEn ? "Focus attack related" : "フォーカス攻撃関連") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1415)
+                    {
+                        return (isEn ? "Number of enemies killed in dungeon" : "ダンジョンで倒した敵の数") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1416)
+                    {
+                        return (isEn ? "Number of items picked up in dungeon" : "ダンジョンで拾ったアイテムの数") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1417)
                     {
                         return this.Constant(isEn, 0x0000) + this.GetSlotSuffix(inventoryAddress);
                     }
@@ -462,7 +478,7 @@
                     }
                     else if (offset == 1462)
                     {
-                        return (isEn ? "? 192A observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0004, 0x192A) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1463 && offset <= 1468)
                     {
@@ -470,11 +486,11 @@
                     }
                     else if (offset == 1469)
                     {
-                        return (isEn ? "? 8022 observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0004, 0x8022) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1470)
                     {
-                        return (isEn ? "? CCBC observed value" : "?") + this.GetSlotSuffix(inventoryAddress);
+                        return this.Constant(isEn, 0x0004, 0xCCBC) + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset >= 1471 && offset <= 1472)
                     {
@@ -490,7 +506,7 @@
                     }
                     else if (offset == 1479)
                     {
-                        return (isEn ? "Tribe (0-3)" : "部族") + this.GetSlotSuffix(inventoryAddress);
+                        return (isEn ? "Tribe Model" : "トライブモデル") + this.GetSlotSuffix(inventoryAddress);
                     }
                     else if (offset == 1480)
                     {

@@ -221,6 +221,11 @@
                             IsChecked="{Binding MonsterTableViewerViewModel.IsVisible, Mode=TwoWay}"
                             Style="{Binding .}" />
                         <shell:MenuItem
+                            Header="Letter List Viewer"
+                            IsCheckable="True"
+                            IsChecked="{Binding LetterTableViewerViewModel.IsVisible, Mode=TwoWay}"
+                            Style="{Binding .}" />
+                        <shell:MenuItem
                             Header="Item Catalog Viewer"
                             IsCheckable="True"
                             IsChecked="{Binding ItemCatalogViewerViewModel.IsVisible, Mode=TwoWay}"
@@ -342,6 +347,12 @@
                                 <view:MonsterTableViewer />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.MonsterTableViewerViewTemplate>
+                        <!--  Letter Table Viewer  -->
+                        <view:ViewTemplateSelector.LetterTableViewerViewTemplate>
+                            <shell:DataTemplate>
+                                <view:LetterTableViewer />
+                            </shell:DataTemplate>
+                        </view:ViewTemplateSelector.LetterTableViewerViewTemplate>
                         <!--  Item Catalog Viewer  -->
                         <view:ViewTemplateSelector.ItemCatalogViewerViewTemplate>
                             <shell:DataTemplate>

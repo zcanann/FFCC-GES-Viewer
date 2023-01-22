@@ -22,7 +22,7 @@
         /// <summary>
         /// Singleton instance of the <see cref="MonsterTableViewerViewModel" /> class.
         /// </summary>
-        private static MonsterTableViewerViewModel monsterTableViewerInstance = new MonsterTableViewerViewModel();
+        private static readonly MonsterTableViewerViewModel Instance = new MonsterTableViewerViewModel();
 
         private UInt64 MonsterTableAddressEN = 0x00226020;
         private UInt64 MonsterTableAddressJP = 0x00242960;
@@ -68,7 +68,7 @@
         /// <returns>A singleton instance of the class.</returns>
         public static MonsterTableViewerViewModel GetInstance()
         {
-            return MonsterTableViewerViewModel.monsterTableViewerInstance;
+            return MonsterTableViewerViewModel.Instance;
         }
 
         /// <summary>

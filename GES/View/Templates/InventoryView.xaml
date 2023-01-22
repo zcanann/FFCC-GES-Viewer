@@ -128,23 +128,6 @@
             </DataGridTemplateColumn>
             <DataGridTemplateColumn
                 Width="Auto"
-                Header="Id"
-                IsReadOnly="True">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn
-                Width="Auto"
                 Header="Item"
                 IsReadOnly="True">
                 <DataGridTemplateColumn.CellTemplate>
@@ -167,10 +150,24 @@
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </Menu>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="Auto"
+                Header="Id"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="4,0,4,0"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Path=ItemId, Converter={StaticResource ItemToNameConverter}}" />
+                                    Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>
