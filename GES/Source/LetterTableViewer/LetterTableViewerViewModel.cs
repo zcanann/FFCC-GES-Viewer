@@ -25,23 +25,23 @@
 
         private UInt64 LetterDataTableAddressEN = 0x0099CB80;
         private UInt64 LetterDataTableAddressJP = 0x009B84C0;
-        private UInt64 LetterDataTableAddressPAL = 0x009B84C0; // TODO
+        private UInt64 LetterDataTableAddressPAL = 0x0099DDC0;
 
         private UInt64 LetterNameTableAddressEN = 0x00977E40;
         private UInt64 LetterNameTableAddressJP = 0x00994FC0;
-        private UInt64 LetterNameTableAddressPAL = 0x00994FC0; // TODO
+        private UInt64 LetterNameTableAddressPAL = 0x00979000;
 
         private UInt64 LetterContentsTableAddressEN = 0x00985080;
         private UInt64 LetterContentsTableAddressJP = 0x009A1240;
-        private UInt64 LetterContentsTableAddressPAL = 0x009A1240; // TODO
+        private UInt64 LetterContentsTableAddressPAL = 0x009862C0;
 
         private Int32 LetterNameTableSizeEN = 6265;
         private Int32 LetterNameTableSizeJP = 6440;
-        private Int32 LetterNameTableSizePAL = 6440; // TODO
+        private Int32 LetterNameTableSizePAL = 6306;
 
         private Int32 LetterContentsTableSizeEN = 91822;
         private Int32 LetterContentsTableSizeJP = 94804;
-        private Int32 LetterContentsTableSizePAL = 94804; // TODO
+        private Int32 LetterContentsTableSizePAL = 92242;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="LetterTableViewerViewModel" /> class from being created.
