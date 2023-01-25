@@ -29,6 +29,8 @@
             <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
             <converters:ItemToNameConverter x:Key="ItemToNameConverter" />
             <converters:ExtendedInventorySlotToColorConverter x:Key="ExtendedInventorySlotToColorConverter" />
+            <converters:LetterTypeToStringConverter x:Key="LetterTypeToStringConverter" />
+            <converters:LetterProfessionToStringConverter x:Key="LetterProfessionToStringConverter" />
             <converters:BooleanToVisibilityConverter
                 x:Key="BooleanToHiddenConverter"
                 False="Hidden"
@@ -132,7 +134,7 @@
                         <DataTemplate>
                             <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=LetterType, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=LetterType, Converter={StaticResource LetterTypeToStringConverter}, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -147,7 +149,7 @@
                         <DataTemplate>
                             <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Profession, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Path=Profession, Converter={StaticResource LetterProfessionToStringConverter}, Mode=OneWay}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

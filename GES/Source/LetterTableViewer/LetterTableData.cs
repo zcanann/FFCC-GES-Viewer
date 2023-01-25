@@ -88,13 +88,13 @@ namespace GES.Source.LetterTableViewer
             }
         }
 
-        public void Refresh(Byte[] dataBytes, Byte[] nameBytes, Byte[] contentsBytes)
+        public void Refresh(Byte[] dataBytes, Byte[] nameBytes, Byte[] contentsBytes, Int32 contentsSkipCount)
         {
             Span<Byte> nameSpan = new Span<Byte>(nameBytes);
             Span<Byte> contentsSpan = new Span<Byte>(contentsBytes);
 
             // Letter contents table is padded with 16 junk strings. Skip them.
-            for (Int32 skipIndex = 0; skipIndex < 16; skipIndex++)
+            for (Int32 skipIndex = 0; skipIndex < contentsSkipCount; skipIndex++)
             {
                 Int32 endContentsIndex = this.GetNextNullTerminator(contentsSpan);
                 Int32 newContentsStartIndex = endContentsIndex + 1;
@@ -116,25 +116,32 @@ namespace GES.Source.LetterTableViewer
                 Int32 endNameIndex = this.GetNextNullTerminator(nameSpan);
                 Int32 newNameStartIndex = endNameIndex + 1;
 
-                this.rawLetters[index].LetterName = System.Text.Encoding.GetEncoding("shift-jis").GetString(nameSpan.Slice(0, endNameIndex));
-
-                nameSpan = nameSpan.Slice(newNameStartIndex, nameSpan.Length - newNameStartIndex);
+                if (endNameIndex >= 0)
+                {
+                    this.rawLetters[index].LetterName = System.Text.Encoding.GetEncoding("shift-jis").GetString(nameSpan.Slice(0, endNameIndex));
+                    nameSpan = nameSpan.Slice(newNameStartIndex, nameSpan.Length - newNameStartIndex);
+                }
 
                 // Contents
                 Int32 endContentsIndex = this.GetNextNullTerminator(contentsSpan);
                 Int32 newContentsStartIndex = endContentsIndex + 1;
 
-                this.rawLetters[index].LetterContents = System.Text.Encoding.GetEncoding("shift-jis").GetString(contentsSpan.Slice(0, endContentsIndex));
+                if (endContentsIndex >= 0)
+                {
 
-                contentsSpan = contentsSpan.Slice(newContentsStartIndex, contentsSpan.Length - newContentsStartIndex);
+                    this.rawLetters[index].LetterContents = System.Text.Encoding.GetEncoding("shift-jis").GetString(contentsSpan.Slice(0, endContentsIndex));
+                    contentsSpan = contentsSpan.Slice(newContentsStartIndex, contentsSpan.Length - newContentsStartIndex);
 
-                // Choices
-                endContentsIndex = this.GetNextNullTerminator(contentsSpan);
-                newContentsStartIndex = endContentsIndex + 1;
+                    // Choices
+                    endContentsIndex = this.GetNextNullTerminator(contentsSpan);
+                    newContentsStartIndex = endContentsIndex + 1;
 
-                this.rawLetters[index].LetterChoices = System.Text.Encoding.GetEncoding("shift-jis").GetString(contentsSpan.Slice(0, endContentsIndex));
-
-                contentsSpan = contentsSpan.Slice(newContentsStartIndex, contentsSpan.Length - newContentsStartIndex);
+                    if (endContentsIndex >= 0)
+                    {
+                        this.rawLetters[index].LetterChoices = System.Text.Encoding.GetEncoding("shift-jis").GetString(contentsSpan.Slice(0, endContentsIndex));
+                        contentsSpan = contentsSpan.Slice(newContentsStartIndex, contentsSpan.Length - newContentsStartIndex);
+                    }
+                }
 
                 this.rawLetters[index].Index = (UInt16)index;
                 this.rawLetters[index].Refresh();

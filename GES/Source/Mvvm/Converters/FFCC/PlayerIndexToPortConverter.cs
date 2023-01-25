@@ -9,7 +9,7 @@
     /// <summary>
     /// Converts an Int32 value to a hexedecimal value.
     /// </summary>
-    public class PlayerIndexToSlotConverter : IValueConverter
+    public class PlayerIndexToPortConverter : IValueConverter
     {
         /// <summary>
         /// Converts an Int32 to a Hex string.
@@ -26,9 +26,9 @@
                 return String.Empty;
             }
 
-            if (value is Int32 && InventoryViewerViewModel.GetInstance().DisplayPlayerToSlotMap.ContainsKey((Int32)value))
+            if (value is Int32 && InventoryViewerViewModel.GetInstance().DisplayGbaToPortMap.ContainsKey((Int32)value))
             {
-                return InventoryViewerViewModel.GetInstance().DisplayPlayerToSlotMap[(Int32)value];
+                return InventoryViewerViewModel.GetInstance().DisplayGbaToPortMap[(Int32)value];
             }
 
             return String.Empty;

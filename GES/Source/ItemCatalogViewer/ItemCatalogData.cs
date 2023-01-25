@@ -293,21 +293,29 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Crystal Mail (Free)
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x53
-                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x53
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x53
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x53
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x51
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x51
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x51
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x51
                     )
                 {
                     int bp = 5;
                 }
 
-                // Cudgel
+                // Lilty zippies
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x008B
-                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x008B
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x008B
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x008B
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x0034 // Aura // 52
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x0037 // Cudgel // 55
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x003C // DC // 60
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x003D // TM // 61
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // High STR wep
+                if (false
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 27
                     )
                 {
                     int bp = 5;
@@ -315,10 +323,10 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Talisman of Speed
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x008B
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x008B
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x008B
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x008B
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x008B
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x008B
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x008B
                     )
                 {
                     int bp = 5;
@@ -326,21 +334,10 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Thiefs Emblem
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x8C
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x8C
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x8C
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x8C
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x8C
-                    )
-                {
-                    int bp = 5;
-                }
-
-                // Hastega (Dev)
-                if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x22D
-                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x22D
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x22D
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x22D
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x8C
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x8C
                     )
                 {
                     int bp = 5;
@@ -348,10 +345,10 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Gobbie Pocket
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00DD
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x00DD
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x00DD
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00DD
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00DD
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x00DD
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x00DD
                     )
                 {
                     int bp = 5;
@@ -359,10 +356,10 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Ultimate Pocket
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00DE
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x00DE
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x00DE
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00DE
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00DE
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x00DE
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x00DE
                     )
                 {
                     int bp = 5;
@@ -370,10 +367,10 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Star Pendant
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E6
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E6
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x00E6
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00E6
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00E6
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x00E6
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x00E6
                     )
                 {
                     int bp = 5;
@@ -381,16 +378,16 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Sun Pendant
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E7
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E7
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x00E7
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x00E7
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x00E7
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x00E7
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x00E7
                     )
                 {
                     int bp = 5;
                 }
 
-                // Sun Pendant
+                // Lilty Zippies
                 if (false
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x0034
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x0037
@@ -402,8 +399,8 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Abbadon
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x21A
-                    // || this.rawItems[entryIndex].LiltyCraftedItem == 0x21A
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x21A
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x21A
                     // || this.rawItems[entryIndex].YukeCraftedItem == 0x21A
                     // || this.rawItems[entryIndex].SelkieCraftedItem == 0x21A
                     )
@@ -411,12 +408,23 @@ namespace GES.Source.ItemCatalogViewer
                     int bp = 5;
                 }
 
-                // Curega
+                // Hastega (Dev)
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x21B
-                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x21A
-                    || this.rawItems[entryIndex].YukeCraftedItem == 0x21A
-                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x21A
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x22D
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x22D
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x22D
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x22D
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Curega (Dev)
+                if (false
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x21B
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x21B
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x21B
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x21B
                     )
                 {
                     int bp = 5;
@@ -424,8 +432,8 @@ namespace GES.Source.ItemCatalogViewer
 
                 // LizWar
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x216
-                    // || this.rawItems[entryIndex].LiltyCraftedItem == 0x216
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x216
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x216
                     // || this.rawItems[entryIndex].YukeCraftedItem == 0x216
                     // || this.rawItems[entryIndex].SelkieCraftedItem == 0x216
                     )
@@ -435,8 +443,8 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Electric Jellyfish
                 if (false
-                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x21E
-                    // || this.rawItems[entryIndex].LiltyCraftedItem == 0x21E
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x21E
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x21E
                     // || this.rawItems[entryIndex].YukeCraftedItem == 0x21E
                     // || this.rawItems[entryIndex].SelkieCraftedItem == 0x21E
                     )

@@ -132,6 +132,30 @@
             0x21EEEF,
         };
 
+        private UInt32[] portMappingAddressesJP = new UInt32[PlayerCount]
+        {
+            0x30C0E1,
+            0x30C11D,
+            0x30C159,
+            0x30C195,
+        };
+
+        private UInt32[] portMappingAddressesEN = new UInt32[PlayerCount] // TODO
+        {
+            0x30C0E1,
+            0x30C11D,
+            0x30C159,
+            0x30C195,
+        };
+
+        private UInt32[] portMappingAddressesPAL = new UInt32[PlayerCount] // TODO
+        {
+            0x30C0E1,
+            0x30C11D,
+            0x30C159,
+            0x30C195,
+        };
+
         private Int32 activeSlot;
 
         /// <summary>
@@ -150,6 +174,8 @@
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
             this.DisplayPlayerToSlotMap = new Dictionary<Int32, Int32>();
             this.PlayerToSlotMap = new Dictionary<Int32, Int32>();
+            this.DisplayGbaToPortMap = new Dictionary<Int32, Int32>();
+            this.GbaToPortMap = new Dictionary<Int32, Int32>();
             this.CachedSlotData = new Byte[SlotCount][];
 
             for (Int32 index = 0; index < SlotCount; index++)
@@ -161,6 +187,8 @@
             {
                 this.PlayerToSlotMap[index] = 99;
                 this.DisplayPlayerToSlotMap[index] = 99;
+                this.GbaToPortMap[index] = 99;
+                this.DisplayGbaToPortMap[index] = 99;
             }
 
             Application.Current.Exit += this.OnAppExit;
@@ -223,6 +251,10 @@
         public Dictionary<Int32, Int32> DisplayPlayerToSlotMap { get; private set; }
 
         public Dictionary<Int32, Int32> PlayerToSlotMap { get; private set; }
+
+        public Dictionary<Int32, Int32> DisplayGbaToPortMap { get; private set; }
+
+        public Dictionary<Int32, Int32> GbaToPortMap { get; private set; }
 
         public Int32 ActiveSlot
         {
@@ -298,6 +330,21 @@
 
         private UInt64 CachedRawSlotPointerBase = 0;
 
+        public Int32 GetPortIndex(Int32 playerIndex)
+        {
+            if (this.GbaToPortMap.ContainsKey(playerIndex))
+            {
+                Int32 portIndex = this.GbaToPortMap[playerIndex];
+
+                if (portIndex >= 0 && portIndex < 4)
+                {
+                    return portIndex;
+                }
+            }
+
+            return playerIndex;
+        }
+
         public UInt32[] GetSlotMappingAddresses()
         {
             switch (MainViewModel.GetInstance().DetectedVersion)
@@ -307,6 +354,18 @@
                 case EDetectedVersion.JP: return slotMappingAddressesJP;
                 case EDetectedVersion.EN: return slotMappingAddressesEN;
                 case EDetectedVersion.PAL: return slotMappingAddressesPAL;
+            }
+        }
+
+        public UInt32[] GetPortMappingAddresses()
+        {
+            switch (MainViewModel.GetInstance().DetectedVersion)
+            {
+                default:
+                case EDetectedVersion.None: return null;
+                case EDetectedVersion.JP: return portMappingAddressesJP;
+                case EDetectedVersion.EN: return portMappingAddressesEN;
+                case EDetectedVersion.PAL: return portMappingAddressesPAL;
             }
         }
 
@@ -338,9 +397,10 @@
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
             UInt32[] slotMappingAddresses = this.GetSlotMappingAddresses();
+            UInt32[] portMappingAddresses = this.GetPortMappingAddresses();
             UInt32[] slotDataAddresses = this.GetSlotDataAddresses();
 
-            if (MainViewModel.GetInstance().DetectedVersion == EDetectedVersion.None || slotMappingAddresses == null || slotDataAddresses == null)
+            if (MainViewModel.GetInstance().DetectedVersion == EDetectedVersion.None || slotMappingAddresses == null || slotDataAddresses == null || portMappingAddresses == null)
             {
                 return;
             }
@@ -359,6 +419,23 @@
                     this.PlayerToSlotMap[playerIndex] = result;
                     this.DisplayPlayerToSlotMap[playerIndex] = result + 1;
                     this.RaisePropertyChanged(nameof(this.DisplayPlayerToSlotMap));
+                }
+            }
+
+            for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
+            {
+                UInt64 portPointer = gameCubeMemoryBase + (UInt64)portMappingAddresses[playerIndex];
+                Boolean success;
+                Byte result = MemoryReader.Instance.Read<Byte>(
+                    SessionManager.Session.OpenedProcess,
+                    portPointer,
+                    out success);
+
+                if (success && this.GbaToPortMap[playerIndex] != result)
+                {
+                    this.GbaToPortMap[playerIndex] = result;
+                    this.DisplayGbaToPortMap[playerIndex] = result + 1;
+                    this.RaisePropertyChanged(nameof(this.DisplayGbaToPortMap));
                 }
             }
 

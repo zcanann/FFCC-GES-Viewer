@@ -23,24 +23,24 @@
         /// </summary>
         private static readonly LetterTableViewerViewModel Instance = new LetterTableViewerViewModel();
 
-        private UInt64 LetterTableAddressEN = 0x009B84C0; // TODO
-        private UInt64 LetterTableAddressJP = 0x009B84C0;
-        private UInt64 LetterTableAddressPAL = 0x009B84C0; // TODO
+        private UInt64 LetterDataTableAddressEN = 0x0099CB80;
+        private UInt64 LetterDataTableAddressJP = 0x009B84C0;
+        private UInt64 LetterDataTableAddressPAL = 0x009B84C0; // TODO
 
-        private UInt64 LetterNameTableAddressEN = 0x00994FC0; // TODO
+        private UInt64 LetterNameTableAddressEN = 0x00977E40;
         private UInt64 LetterNameTableAddressJP = 0x00994FC0;
         private UInt64 LetterNameTableAddressPAL = 0x00994FC0; // TODO
 
-        private UInt64 LetterContentsTableAddressEN = 0x009A1240; // TODO
+        private UInt64 LetterContentsTableAddressEN = 0x00985080;
         private UInt64 LetterContentsTableAddressJP = 0x009A1240;
         private UInt64 LetterContentsTableAddressPAL = 0x009A1240; // TODO
 
-        private Int32 LetterNameTableSizeEN = 6440; // TODO
-        private Int32 LetterNameTableSizeJP = 6440; // TODO
+        private Int32 LetterNameTableSizeEN = 6265;
+        private Int32 LetterNameTableSizeJP = 6440;
         private Int32 LetterNameTableSizePAL = 6440; // TODO
 
-        private Int32 LetterContentsTableSizeEN = 94804; // TODO
-        private Int32 LetterContentsTableSizeJP = 94804; // TODO
+        private Int32 LetterContentsTableSizeEN = 91822;
+        private Int32 LetterContentsTableSizeJP = 94804;
         private Int32 LetterContentsTableSizePAL = 94804; // TODO
 
         /// <summary>
@@ -126,41 +126,45 @@
         {
             UInt64 gameCubeMemoryBase = MemoryQueryer.Instance.ResolveModule(SessionManager.Session.OpenedProcess, "GC", EmulatorType.Dolphin);
 
-            UInt64 LetterDataTableAddress;
-            UInt64 LetterNameTableAddress;
-            UInt64 LetterContentsTableAddress;
-            Int32 LetterNameTableSize;
-            Int32 LetterContentsTableSize;
+            UInt64 letterDataTableAddress;
+            UInt64 letterNameTableAddress;
+            UInt64 letterContentsTableAddress;
+            Int32 letterNameTableSize;
+            Int32 letterContentsTableSize;
+            Int32 contentsSkipCount;
 
             switch (MainViewModel.GetInstance().DetectedVersion)
             {
                 default: return;
                 case EDetectedVersion.JP:
-                    LetterDataTableAddress = LetterTableAddressJP;
-                    LetterNameTableAddress = LetterNameTableAddressJP;
-                    LetterContentsTableAddress = LetterContentsTableAddressJP;
-                    LetterNameTableSize = LetterNameTableSizeJP;
-                    LetterContentsTableSize = LetterContentsTableSizeJP;
+                    letterDataTableAddress = LetterDataTableAddressJP;
+                    letterNameTableAddress = LetterNameTableAddressJP;
+                    letterContentsTableAddress = LetterContentsTableAddressJP;
+                    letterNameTableSize = LetterNameTableSizeJP;
+                    letterContentsTableSize = LetterContentsTableSizeJP;
+                    contentsSkipCount = 16;
                     break;
                 case EDetectedVersion.EN:
-                    LetterDataTableAddress = LetterTableAddressEN;
-                    LetterNameTableAddress = LetterNameTableAddressEN;
-                    LetterContentsTableAddress = LetterContentsTableAddressEN;
-                    LetterNameTableSize = LetterNameTableSizeEN;
-                    LetterContentsTableSize = LetterContentsTableSizeEN;
+                    letterDataTableAddress = LetterDataTableAddressEN;
+                    letterNameTableAddress = LetterNameTableAddressEN;
+                    letterContentsTableAddress = LetterContentsTableAddressEN;
+                    letterNameTableSize = LetterNameTableSizeEN;
+                    letterContentsTableSize = LetterContentsTableSizeEN;
+                    contentsSkipCount = 16;
                     break;
                 case EDetectedVersion.PAL:
-                    LetterDataTableAddress = LetterTableAddressPAL;
-                    LetterNameTableAddress = LetterNameTableAddressPAL;
-                    LetterContentsTableAddress = LetterContentsTableAddressPAL;
-                    LetterNameTableSize = LetterNameTableSizePAL;
-                    LetterContentsTableSize = LetterContentsTableSizePAL;
+                    letterDataTableAddress = LetterDataTableAddressPAL;
+                    letterNameTableAddress = LetterNameTableAddressPAL;
+                    letterContentsTableAddress = LetterContentsTableAddressPAL;
+                    letterNameTableSize = LetterNameTableSizePAL;
+                    letterContentsTableSize = LetterContentsTableSizePAL;
+                    contentsSkipCount = 16;
                     break;
             }
 
-            UInt64 LetterDataTablePointer = gameCubeMemoryBase + LetterDataTableAddress;
-            UInt64 LetterNameTablePointer = gameCubeMemoryBase + LetterNameTableAddress;
-            UInt64 LetterContentsTablePointer = gameCubeMemoryBase + LetterContentsTableAddress;
+            UInt64 LetterDataTablePointer = gameCubeMemoryBase + letterDataTableAddress;
+            UInt64 LetterNameTablePointer = gameCubeMemoryBase + letterNameTableAddress;
+            UInt64 LetterContentsTablePointer = gameCubeMemoryBase + letterContentsTableAddress;
 
             if (this.RawLetterDataTableBytes == null)
             {
@@ -169,13 +173,13 @@
             }
             if (this.RawLetterNameTableBytes == null)
             {
-                this.RawLetterNameTableBytes = new Byte[LetterNameTableSize];
-                this.CachedRawLetterNameTableBytes = new Byte[LetterNameTableSize];
+                this.RawLetterNameTableBytes = new Byte[letterNameTableSize];
+                this.CachedRawLetterNameTableBytes = new Byte[letterNameTableSize];
             }
             if (this.RawLetterContentsTableBytes == null)
             {
-                this.RawLetterContentsTableBytes = new Byte[LetterContentsTableSize];
-                this.CachedRawLetterContentsTableBytes = new Byte[LetterContentsTableSize];
+                this.RawLetterContentsTableBytes = new Byte[letterContentsTableSize];
+                this.CachedRawLetterContentsTableBytes = new Byte[letterContentsTableSize];
             }
 
             // Read the entire actor reference counting table
@@ -225,7 +229,7 @@
                 || !this.RawLetterNameTableBytes.SequenceEqual(this.CachedRawLetterNameTableBytes)
                 || !this.RawLetterContentsTableBytes.SequenceEqual(this.CachedRawLetterContentsTableBytes))
             {
-                this.LetterTable.LetterTableData.Refresh(this.RawLetterDataTableBytes, this.RawLetterNameTableBytes, this.RawLetterContentsTableBytes);
+                this.LetterTable.LetterTableData.Refresh(this.RawLetterDataTableBytes, this.RawLetterNameTableBytes, this.RawLetterContentsTableBytes, contentsSkipCount);
                 this.LetterTable.RefreshAllProperties();
                 this.RaisePropertyChanged(nameof(this.LetterTable));
 

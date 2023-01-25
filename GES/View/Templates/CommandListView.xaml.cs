@@ -11,9 +11,10 @@
 	{
 		public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(Int32), typeof(CommandListView));
 
-		private static PlayerIndexToSlotConverter PlayerIndexToSlotConverter = new PlayerIndexToSlotConverter();
+        private static readonly PlayerIndexToSlotConverter PlayerIndexToSlotConverter = new PlayerIndexToSlotConverter();
+        private static readonly PlayerIndexToPortConverter PlayerIndexToPortConverter = new PlayerIndexToPortConverter();
 
-		public CommandListView()
+        public CommandListView()
 		{
 			InitializeComponent();
 
@@ -43,12 +44,19 @@
 
 		private void RefreshText()
 		{
-			TextBlock myTextBlock = (TextBlock)this.FindName("SlotText");
+			TextBlock slotText = (TextBlock)this.FindName("SlotText");
 
-			if (myTextBlock != null)
+			if (slotText != null)
 			{
-				myTextBlock.Text = PlayerIndexToSlotConverter.Convert(this.Index, null, null, null)?.ToString();
+				slotText.Text = PlayerIndexToSlotConverter.Convert(this.Index, null, null, null)?.ToString();
 			}
-		}
+
+            TextBlock portText = (TextBlock)this.FindName("PortText");
+
+            if (portText != null)
+            {
+                portText.Text = PlayerIndexToPortConverter.Convert(this.Index, null, null, null)?.ToString();
+            }
+        }
 	}
 }

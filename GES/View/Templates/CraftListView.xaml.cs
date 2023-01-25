@@ -11,9 +11,10 @@
 	{
 		public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(Int32), typeof(CraftListView));
 
-		private static PlayerIndexToSlotConverter PlayerIndexToSlotConverter = new PlayerIndexToSlotConverter();
+        private static readonly PlayerIndexToSlotConverter PlayerIndexToSlotConverter = new PlayerIndexToSlotConverter();
+        private static readonly PlayerIndexToPortConverter PlayerIndexToPortConverter = new PlayerIndexToPortConverter();
 
-		public CraftListView()
+        public CraftListView()
 		{
 			InitializeComponent();
 
@@ -42,13 +43,20 @@
 		}
 
 		private void RefreshText()
-		{
-			TextBlock myTextBlock = (TextBlock)this.FindName("SlotText");
+        {
+            TextBlock slotText = (TextBlock)this.FindName("SlotText");
 
-			if (myTextBlock != null)
-			{
-				myTextBlock.Text = PlayerIndexToSlotConverter.Convert(this.Index, null, null, null)?.ToString();
-			}
-		}
+            if (slotText != null)
+            {
+                slotText.Text = PlayerIndexToSlotConverter.Convert(this.Index, null, null, null)?.ToString();
+            }
+
+            TextBlock portText = (TextBlock)this.FindName("PortText");
+
+            if (portText != null)
+            {
+                portText.Text = PlayerIndexToPortConverter.Convert(this.Index, null, null, null)?.ToString();
+            }
+        }
 	}
 }

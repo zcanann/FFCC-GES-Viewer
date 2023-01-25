@@ -40,11 +40,26 @@
                 Grid.Row="0"
                 Margin="4,0,0,0"
                 Orientation="Horizontal">
-                <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Slot " />
-                <TextBlock
-                    Name="SlotText"
-                    Foreground="{StaticResource GESColorWhite}"
-                    Text="99" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Slot " />
+                    <TextBlock
+                        Name="SlotText"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text="99" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text=" | " />
+                    <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Port " />
+                    <TextBlock
+                        Name="PortText"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text="99" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text=" | " />
+                </StackPanel>
                 <TextBlock Foreground="{StaticResource GESColorWhite}" Text=" | Equip List Size: " />
                 <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=ItemCount}" />
             </StackPanel>

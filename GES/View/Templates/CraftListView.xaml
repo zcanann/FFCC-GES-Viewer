@@ -64,11 +64,20 @@
                         Name="SlotText"
                         Foreground="{StaticResource GESColorWhite}"
                         Text="99" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text=" | " />
+                    <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Port " />
+                    <TextBlock
+                        Name="PortText"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text="99" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource GESColorWhite}"
+                        Text=" | " />
                 </StackPanel>
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Foreground="{StaticResource GESColorWhite}"
-                    Text=" | " />
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock Foreground="{StaticResource GESColorWhite}" Text="Recipe Count: " />
                     <TextBlock Foreground="{StaticResource GESColorWhite}" Text="{Binding Path=ItemCount}" />

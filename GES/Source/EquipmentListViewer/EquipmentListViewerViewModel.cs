@@ -7,6 +7,7 @@
     using GES.Engine.Memory;
     using GES.Source;
     using GES.Source.Docking;
+    using GES.Source.InventoryViewer;
     using GES.Source.Main;
     using System;
     using System.Linq;
@@ -156,7 +157,8 @@
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
-                UInt64 slotPointer = gbaMemoryBases[playerIndex] + equipmentListAddress;
+                Int32 portIndex = InventoryViewerViewModel.GetInstance().GetPortIndex(playerIndex);
+                UInt64 slotPointer = gbaMemoryBases[portIndex] + equipmentListAddress;
 
                 if (this.RawEquipmentData == null)
                 {

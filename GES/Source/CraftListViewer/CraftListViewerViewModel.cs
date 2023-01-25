@@ -8,6 +8,7 @@
     using GES.Source;
     using GES.Source.Docking;
     using GES.Source.EquipmentListViewer;
+    using GES.Source.InventoryViewer;
     using GES.Source.Main;
     using System;
     using System.Linq;
@@ -180,7 +181,8 @@
 
             for (Int32 playerIndex = 0; playerIndex < PlayerCount; playerIndex++)
             {
-                UInt64 slotPointer = gbaWMMemoryBases[playerIndex] + craftListAddress;
+                Int32 portIndex = InventoryViewerViewModel.GetInstance().GetPortIndex(playerIndex);
+                UInt64 slotPointer = gbaWMMemoryBases[portIndex] + craftListAddress;
 
                 if (this.RawCraftData == null)
                 {
@@ -202,7 +204,7 @@
 
                 Byte commandListCount = MemoryReader.Instance.Read<Byte>(
                     SessionManager.Session.OpenedProcess,
-                    gbaIMMemoryBases[playerIndex] + commandListItemCountAddress,
+                    gbaIMMemoryBases[portIndex] + commandListItemCountAddress,
                     out success);
 
                 if (!success)
