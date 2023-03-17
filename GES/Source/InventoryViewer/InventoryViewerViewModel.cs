@@ -170,6 +170,7 @@
             this.CopyRawAddressCommand = new RelayCommand<Object>((obj) => this.CopyRawAddress(obj));
             this.EditItemCommand = new RelayCommand<Object>((obj) => this.EditItem(obj));
             this.ApplyArtifactsCommand = new RelayCommand<Object>((obj) => this.ApplyArtifacts(obj));
+            this.ApplyLetterListGlitchCommand = new RelayCommand<Object>((obj) => this.ApplyLetterListGlitch(obj));
 
             this.PlayerSlots = new FullyObservableCollection<PlayerSlotDataView>();
             this.DisplayPlayerToSlotMap = new Dictionary<Int32, Int32>();
@@ -206,6 +207,8 @@
 
         public ICommand ApplyArtifactsCommand { get; private set; }
 
+        public ICommand ApplyLetterListGlitchCommand { get; private set; }
+
         public UInt16 SelectedItem { get;  set; }
 
         public String CopyArtifactListToClipboardToolTip
@@ -237,6 +240,23 @@
                 }
             }
         }
+
+        public String LetterListGlitchToolTip
+        {
+            get
+            {
+                if (MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJPN)
+                {
+                    return "レターリストの不具合を適用する (間違ったメニューの不具合で無効なレターを開く)";
+                }
+                else
+                {
+                    return "Apply Letter List Glitch (Open invalid letter via wrong menu glitch)";
+                }
+            }
+        }
+
+        
 
         private void OnAppExit(object sender, ExitEventArgs e)
         {
@@ -632,6 +652,20 @@
                 RawItemEntry itemEntry = itemObj as RawItemEntry;
                 Window mainWindow = Application.Current.MainWindow;
                 ApplyArtifactsEditorViewModel.GetInstance().Show(owner: mainWindow, itemEntry);
+            }
+        }
+
+        private void ApplyLetterListGlitch(Object itemObj)
+        {
+            if (itemObj is RawItemEntry)
+            {
+                RawItemEntry itemEntry = itemObj as RawItemEntry;
+                Window mainWindow = Application.Current.MainWindow;
+
+                MemoryWriter.Instance.Write<UInt16>(
+                    SessionManager.Session.OpenedProcess,
+                    itemEntry.RawAddress,
+                    BinaryPrimitives.ReverseEndianness((UInt16)(itemEntry.ItemId | (UInt16)0x8000)));
             }
         }
 

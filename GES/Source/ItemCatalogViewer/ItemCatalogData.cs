@@ -401,8 +401,8 @@ namespace GES.Source.ItemCatalogViewer
                 if (false
                     // || this.rawItems[entryIndex].ClavatCraftedItem == 0x21A
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x21A
-                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x21A
-                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x21A
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x21A
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x21A
                     )
                 {
                     int bp = 5;
@@ -410,10 +410,10 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Hastega (Dev)
                 if (false
-                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x22D
+                    || this.rawItems[entryIndex].ClavatCraftedItem == 0x22D
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x22D
-                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x22D
-                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x22D
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x22D
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x22D
                     )
                 {
                     int bp = 5;
@@ -433,9 +433,9 @@ namespace GES.Source.ItemCatalogViewer
                 // LizWar
                 if (false
                     // || this.rawItems[entryIndex].ClavatCraftedItem == 0x216
-                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x216
-                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x216
-                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x216
+                    // || this.rawItems[entryIndex].LiltyCraftedItem == 0x216
+                    || this.rawItems[entryIndex].YukeCraftedItem == 0x216
+                    || this.rawItems[entryIndex].SelkieCraftedItem == 0x216
                     )
                 {
                     int bp = 5;

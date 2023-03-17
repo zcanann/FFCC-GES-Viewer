@@ -17,6 +17,7 @@
         <converters:IntToBinaryConverter x:Key="IntToBinaryConverter" />
         <converters:ArtifactGlitchVisibilityConverter x:Key="ArtifactGlitchVisibilityConverter" />
         <converters:LetterListGlitchIconConverter x:Key="LetterListGlitchIconConverter" />
+        <converters:LetterListGlitchVisibilityConverter x:Key="LetterListGlitchVisibilityConverter" />
         <converters:ItemToIconConverter x:Key="ItemToIconConverter" />
         <converters:AlternatingColorConverter x:Key="AlternatingColorConverter" />
 
@@ -168,6 +169,34 @@
                                     Margin="4,0,4,0"
                                     VerticalAlignment="Center"
                                     Text="{Binding Path=ItemId, Converter={StaticResource IntToHexConverter}, ConverterParameter=true}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+                Width="Auto"
+                Header="LLG"
+                IsReadOnly="True">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <MenuItem
+                                    Height="16"
+                                    Command="{Binding InventoryViewerViewModel.ApplyLetterListGlitchCommand, Source={StaticResource ViewModelLocator}}"
+                                    CommandParameter="{Binding .}"
+                                    ToolTip="{Binding InventoryViewerViewModel.LetterListGlitchToolTip, Source={StaticResource ViewModelLocator}}"
+                                    Visibility="{Binding Path=Address, Converter={StaticResource LetterListGlitchVisibilityConverter}, ConverterParameter=0}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <MenuItem.Header>
+                                        <Image
+                                            Width="16"
+                                            Height="16"
+                                            Margin="-4"
+                                            Source="{Binding Path=Address, Converter={StaticResource LetterListGlitchIconConverter}, ConverterParameter=0}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -385,10 +414,6 @@
                     <DataTemplate>
                         <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
                             <StackPanel Orientation="Horizontal">
-                                <Image
-                                    Width="16"
-                                    Height="16"
-                                    Source="{Binding Path=Address, Converter={StaticResource LetterListGlitchIconConverter}, ConverterParameter=0}" />
                                 <TextBlock Text="{Binding Path=Address, Converter={StaticResource AddressToNotesConverter}}" />
                             </StackPanel>
                         </Border>
