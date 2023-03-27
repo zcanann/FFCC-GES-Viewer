@@ -367,6 +367,17 @@ namespace GES.Source.ItemCatalogViewer
 
                 // Star Pendant
                 if (false
+                    // || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E5
+                    || this.rawItems[entryIndex].LiltyCraftedItem == 0x00E5
+                    // || this.rawItems[entryIndex].YukeCraftedItem == 0x00E5
+                    // || this.rawItems[entryIndex].SelkieCraftedItem == 0x00E5
+                    )
+                {
+                    int bp = 5;
+                }
+
+                // Star Pendant
+                if (false
                     // || this.rawItems[entryIndex].ClavatCraftedItem == 0x00E6
                     || this.rawItems[entryIndex].LiltyCraftedItem == 0x00E6
                     // || this.rawItems[entryIndex].YukeCraftedItem == 0x00E6

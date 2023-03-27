@@ -548,6 +548,30 @@
                     {
                         return (isEn ? "Hitbox 2 (Big Chungus Glitch)" : "ヒットボックス 2") + this.GetSlotSuffix(inventoryAddress);
                     }
+                    else if (offset == 1503)
+                    {
+                        return (isEn ? "Ice Status Effect Timer" : "氷ステータス効果タイマー") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1509)
+                    {
+                        return (isEn ? "Status Effect Timer" : "ステータス効果タイマー") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1515)
+                    {
+                        return (isEn ? "Status Effect Timer" : "ステータス効果タイマー") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1521)
+                    {
+                        return (isEn ? "Status Effect Timer" : "ステータス効果タイマー") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1527)
+                    {
+                        return (isEn ? "Status Effect Timer" : "ステータス効果タイマー") + this.GetSlotSuffix(inventoryAddress);
+                    }
+                    else if (offset == 1533)
+                    {
+                        return (isEn ? "Status Effect Timer" : "ステータス効果タイマー") + this.GetSlotSuffix(inventoryAddress);
+                    }
                     else if (offset == 1555)
                     {
                         return (isEn ? "Equipped Weapon" : "装備武器") + this.GetSlotSuffix(inventoryAddress);

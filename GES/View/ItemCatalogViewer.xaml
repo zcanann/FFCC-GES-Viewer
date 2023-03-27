@@ -118,19 +118,38 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border Background="{Binding Path=Index, Converter={StaticResource AlternatingColorConverter}}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Border Background="#ffe7b5">
-                                                <Image
-                                                    Width="16"
-                                                    Height="16"
-                                                    Source="{Binding Path=Index, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
-                                            </Border>
-                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Mode=OneWay}" />
-                                            <TextBlock Text=" (0x" />
-                                            <TextBlock Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
-                                            <TextBlock Text=")" />
-                                            <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
-                                        </StackPanel>
+                                        <Grid>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Background="#ffe7b5">
+                                                    <Image
+                                                        Width="16"
+                                                        Height="16"
+                                                        Source="{Binding Path=Index, Converter={StaticResource ItemToIconConverter}, Mode=OneWay}" />
+                                                </Border>
+                                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Mode=OneWay}" />
+                                                <TextBlock Text=" (0x" />
+                                                <TextBlock Text="{Binding Path=Index, Converter={StaticResource IntToHexConverter}, Mode=OneWay}" />
+                                                <TextBlock Text=")" />
+                                                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Index, Converter={StaticResource ItemToNameConverter}, Mode=OneWay}" />
+                                            </StackPanel>
+
+                                            <MenuItem
+                                                Height="16"
+                                                HorizontalAlignment="Right"
+                                                Command="{Binding ItemCatalogViewerViewModel.CopyWrongCraftGilAmountsCommand, Source={StaticResource ViewModelLocator}}"
+                                                CommandParameter="{Binding .}"
+                                                ToolTip="{Binding ItemCatalogViewerViewModel.CopyWrongCraftGilAmountsToolTip, Source={StaticResource ViewModelLocator}}"
+                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                                <MenuItem.Header>
+                                                    <Image
+                                                        Width="16"
+                                                        Height="16"
+                                                        Margin="-4"
+                                                        VerticalAlignment="Center"
+                                                        Source="{x:Static content:Images.Script}" />
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                        </Grid>
                                     </Border>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

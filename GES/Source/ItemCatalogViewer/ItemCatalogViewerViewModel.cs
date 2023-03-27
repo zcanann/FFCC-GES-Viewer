@@ -37,6 +37,7 @@
             DockingViewModel.GetInstance().RegisterViewModel(this);
             this.CopyAddressCommand = new RelayCommand<Object>((obj) => this.CopyAddress(obj));
             this.CopyRawAddressCommand = new RelayCommand<Object>((obj) => this.CopyRawAddress(obj));
+            this.CopyWrongCraftGilAmountsCommand = new RelayCommand<Object>((obj) => this.CopyWrongCraftGilAmounts(obj));
 
             Application.Current.Exit += this.OnAppExit;
 
@@ -52,7 +53,24 @@
 
         public ICommand CopyRawAddressCommand { get; private set; }
 
+        public ICommand CopyWrongCraftGilAmountsCommand { get; private set; }
+
         public ItemCatalogDataView ItemCatalog { get; private set; }
+
+        public String CopyWrongCraftGilAmountsToolTip
+        {
+            get
+            {
+                if (MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJPN)
+                {
+                    return "このアイテムを作成するために必要なギル量をコピーします (現在のマップ データに基づいて変更される場合があります)。";
+                }
+                else
+                {
+                    return "Copy required Gil amounts to craft this item (may change based on current map data).";
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the actor reference count visualizer update loop can run.
@@ -178,6 +196,62 @@
                 RawItemCatalogItemEntry rawItem = (RawItemCatalogItemEntry)itemObj;
 
                 Clipboard.SetText(rawItem.RawAddress.ToString("X"));
+            }
+        }
+
+        private void CopyWrongCraftGilAmounts(Object itemObj)
+        {
+            Boolean isJpn = MainViewModel.GetInstance().SelectedLanguage == MainViewModel.LanguageJPN;
+            if (itemObj is RawItemCatalogItemEntry)
+            {
+                RawItemCatalogItemEntry rawItem = (RawItemCatalogItemEntry)itemObj;
+                String result = String.Empty;
+
+                foreach (RawItemCatalogItemEntry next in this.ItemCatalog.RawItems)
+                {
+
+                    String gilStr;
+                    
+                    if (next.Index < UInt16.MaxValue / 2)
+                    {
+                        gilStr = (isJpn ? " ギル" : " Gil") + Environment.NewLine;
+                    }
+                    else
+                    {
+                        gilStr = (isJpn ? " ギル (働けそうにない)" : " Gil (Unlikely to work)") + Environment.NewLine;
+                    }
+
+                    if (next.ClavatCraftedItem == rawItem.Index)
+                    {
+                        result += (isJpn ? "クラヴァット: " : "Clavat: ") + next.Index.ToString() + gilStr;
+                    }
+
+                    if (next.LiltyCraftedItem == rawItem.Index)
+                    {
+                        result += (isJpn ? "リルティ: " : "Lilty: ") + next.Index.ToString() + gilStr;
+                    }
+
+                    if(next.YukeCraftedItem == rawItem.Index)
+                    {
+                        result += (isJpn ? "ユーク族: " : "Yuke: ") + next.Index.ToString() + gilStr;
+                    }
+
+                    if(next.SelkieCraftedItem == rawItem.Index)
+                    {
+                        result += (isJpn ? "セルキー: " : "Selkie: ") + next.Index.ToString() + gilStr;
+                    }
+
+                    result += Environment.NewLine;
+                }
+
+                String[] lines = result.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+                // Stable sort to keep Gil order
+                lines = lines.OrderBy(line => line.FirstOrDefault()).ToArray();
+
+                result = String.Join(Environment.NewLine, lines);
+
+                Clipboard.SetText(result);
             }
         }
     }
