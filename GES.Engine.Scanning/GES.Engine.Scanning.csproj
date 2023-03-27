@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Version>2.1.4</Version>
+    <Version>2.1.5</Version>
     <Description>GES engine component for performant memory scanning. GES achieves fast memory scanning (often faster than Cheat Engine) by leveraging multi-threaded parallelism along with single core parallelism via SIMD instructions.
 
 Scanners are JIT compiled into SSE, AVX, or AVX-512 instructions via RyuJIT through the System.Numerics.Vectors library.</Description>
@@ -21,8 +21,8 @@ Scanners are JIT compiled into SSE, AVX, or AVX-512 instructions via RyuJIT thro
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <AssemblyVersion>2.1.4</AssemblyVersion>
-    <FileVersion>2.1.4</FileVersion>
+    <AssemblyVersion>2.1.5</AssemblyVersion>
+    <FileVersion>2.1.5</FileVersion>
   </PropertyGroup>
   
   <ItemGroup>
