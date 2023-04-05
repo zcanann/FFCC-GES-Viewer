@@ -1263,6 +1263,82 @@
                 case 0x04AD: return "Spell: Bio/Bioga (Self-Damage)";
                 case 0x04AE: return "Spell: Curse (Self-Curse)";
                 case 0x04B2: return "Spell: Bio/Bioga (Self-Damage)";
+                // 682 - self medium fire
+                // 683 - self medium thunder
+                // 694 - self basic fire (also self dmg)
+                // 695 - self basic ice (also self dmg)
+                // 696 - self basic thunder (also self dmg)
+                // 697 - gravity (does nothing but create a sphere)
+                // !! 698 - Strange memories effect
+                // 705 - self fire
+                // 706 - self ice
+                // 707 - self thunder
+                // 713 - self ice
+                // 714 - self medium ice
+                // 725 - self slow
+                // 728 - self slow
+                // 730 - self thunder
+                // 735 - self slow
+                // 755 - self fire
+                // 756 - self medium ice
+                // 757 - self thunder
+                // 758 - self slow
+                // 775 - self fire
+                // 776 - self ice
+                // 777 - self thunder
+                // 799 - self fire
+                // 800 - self ice
+                // 801 - self thunder
+                // 802 - self medium thunder
+                // 815 - self slow
+                // 818 - self slow
+                // 821 - self ice
+                // 825 - self ice
+                // 828 - self ice
+                // 832 - self medium ice
+                // 864 - self medium slow
+                // 876 - self medium slow
+                // 887 - self ice
+                // 888 - self thunder
+                // 889 - self fire
+                // 890 - self slow
+                // !! 913 - self fire + haste
+                // 914 - self ice
+                // 915 - self thunder
+                // 919 - self fire medium
+                // 923 - self ice medium
+                // 927 - self thunder medium
+                // 931 - self slowga
+                // 952 - self slowga
+                // 954 - self blizzaga
+                // 961 - self ice
+                // 962 - self thunder
+                // !! 963 - self fire + haste
+                // 964 - self slowga
+                // 991 - self slowga
+                // 992 - self poison
+                // !! 993 - self fire medium + haste
+                // 994 - self thunder medium
+                // 1016 - Stop
+                // !! 1020 - self fire + haste
+                // 1021 - self thunder medium
+                // 1036 - self slowga
+                // 1037 - self stop
+                // !! 1056 - self fire + haste
+                // 1057 - self ice
+                // 1058 - self thunder
+                // 1059 - gravity sphere
+                // !! 1059 - self raem
+                // !! 1064 - self fire + haste
+                // 1065 - self ice
+                // 1066 - self thunder
+                // 1067 - self thunder (instant death, infinite range)
+                // 1068 - self thunder
+                // !! 1088 - self fire + haste (weak)
+                // 1089 - self ice
+                // 1090 - self thunder
+                // 1091 - self slowga
+                // 1135 - self slowga
                 case 0xFFFF: return "<None>";
             }
 
